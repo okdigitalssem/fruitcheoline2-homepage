@@ -177,7 +177,7 @@ window.SITE_CONFIG = {
   contact: {
     // 여기에 과일철이네2 실제 카카오채널 URL을 입력하세요.
     // 예: "https://pf.kakao.com/_xxxxxx/chat"
-    kakaoChannelUrl: "",
+    kakaoChannelUrl: "https://pf.kakao.com/_duhBX",
 
     // 여기에 과일철이네2 실제 네이버플레이스 URL을 입력하세요.
     // 예: "https://naver.me/xxxxxxx"
