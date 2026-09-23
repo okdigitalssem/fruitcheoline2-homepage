@@ -288,6 +288,13 @@
   function wireExternalButtons() {
     var kakaoUrl = (config.contact && config.contact.kakaoChannelUrl) || "";
     var naverUrl = (config.contact && config.contact.naverPlaceUrl) || "";
+    var address = (config.contact && config.contact.address) || "";
+    // 네이버플레이스 주소가 없으면 매장 주소로 네이버 지도 검색을 열어 위치를 보여줍니다
+    if (!naverUrl && address) {
+      // 층수(예: ", 1층")는 지도 검색이 잘 안 되므로 빼고 도로명 주소만 검색합니다
+      var mapQuery = address.replace(/[,\s]*(지하\s*)?\d+\s*층.*$/, "").trim();
+      naverUrl = "https://map.naver.com/p/search/" + encodeURIComponent(mapQuery);
+    }
 
     function wire(selector, url, notReadyMessage) {
       document.querySelectorAll(selector).forEach(function (btn) {
@@ -312,7 +319,7 @@
     wire(
       ".btn-naver",
       naverUrl,
-      "네이버플레이스 주소가 아직 등록되지 않았습니다.\nconfig/site-config.js 파일의 naverPlaceUrl 항목을 채워주세요."
+      "매장 위치가 아직 등록되지 않았습니다.\nconfig/site-config.js 파일의 address(주소) 항목을 채워주세요."
     );
   }
 

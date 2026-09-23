@@ -179,9 +179,11 @@ window.SITE_CONFIG = {
     // 예: "https://pf.kakao.com/_xxxxxx/chat"
     kakaoChannelUrl: "https://pf.kakao.com/_duhBX/chat",
 
-    // 여기에 과일철이네2 실제 네이버플레이스 URL을 입력하세요.
-    // 예: "https://naver.me/xxxxxxx"
-    naverPlaceUrl: "https://naver.me/5hobzSBJ",
+    // 네이버플레이스(가게 페이지) 주소 (선택 사항)
+    // 비워두면 아래 매장 주소로 네이버 지도를 열어 위치를 바로 보여줍니다. (추천)
+    // 넣으려면 네이버 지도에서 가게를 찾은 뒤 "공유 → 링크 복사"한 주소를 넣으세요.
+    // ※ "리뷰 쓰기" 화면 링크는 넣지 마세요. 손님에게 위치가 안 보입니다.
+    naverPlaceUrl: "",
 
     // 매장 전화번호 (선택 사항, 비워두면 화면에 표시되지 않습니다)
     // 예: "010-1234-5678"
