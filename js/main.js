@@ -101,8 +101,10 @@
         var num = i + 1 < 10 ? "0" + (i + 1) : String(i + 1);
         return (
           '<div class="point">' +
+          '<div class="point-photo-wrap" data-3d="' + (i % 2 ? "swing-right" : "swing-left") + '">' +
           photoHtml(p.image, p.title, "🍎", "point-photo") +
-          '<div class="point-text">' +
+          "</div>" +
+          '<div class="point-text" data-3d="' + (i % 2 ? "swing-left" : "swing-right") + '">' +
           '<span class="pill">POINT ' + num + "</span>" +
           '<h3 class="point-title display">' + escapeHtml(p.title) + "</h3>" +
           '<p class="point-desc">' + nl2br(p.desc) + "</p>" +
@@ -122,10 +124,10 @@
     if (!wrap) return;
 
     wrap.innerHTML = fruits
-      .map(function (fruit) {
+      .map(function (fruit, i) {
         var alt = fruit.name + " - 과일철이네2 신선한 " + fruit.name;
         return (
-          '<article class="fruit-card" data-season="' + escapeHtml(fruit.season || "") + '">' +
+          '<article class="fruit-card" data-3d="flip" data-i="' + i + '" data-season="' + escapeHtml(fruit.season || "") + '">' +
           photoHtml(fruit.file, alt, fruit.emoji, "fruit-photo") +
           (fruit.pick ? '<span class="fruit-pick">추천</span>' : "") +
           '<div class="fruit-info">' +
@@ -181,6 +183,8 @@
       document.querySelectorAll("#fruit-grid .fruit-card").forEach(function (card) {
         card.hidden = !(season === "전체" || card.getAttribute("data-season") === season);
       });
+      // 3D 스크롤 효과가 카드 위치를 다시 재도록 알려줍니다
+      if (window.__cinemaRefresh) window.__cinemaRefresh();
     });
   }
 
@@ -192,9 +196,9 @@
     var cards = (config.gift && config.gift.cards) || [];
     if (!wrap) return;
     wrap.innerHTML = cards
-      .map(function (c) {
+      .map(function (c, i) {
         return (
-          '<div class="gift-card">' +
+          '<div class="gift-card" data-3d="fan" data-i="' + i + '" data-n="' + cards.length + '">' +
           photoHtml(c.image, c.title, c.icon || "🎁", "gift-photo") +
           '<div class="gift-body">' +
           '<p class="gift-card-title">' + escapeHtml(c.title) + "</p>" +
@@ -218,9 +222,9 @@
       return;
     }
     wrap.innerHTML = items
-      .map(function (it) {
+      .map(function (it, i) {
         return (
-          '<div class="bubble">' +
+          '<div class="bubble" data-3d="' + (i % 2 ? "swing-right" : "swing-left") + '">' +
           '<p class="bubble-title">' + escapeHtml(it.title) + "</p>" +
           '<p class="bubble-desc">' + nl2br(it.desc) + "</p>" +
           "</div>"
@@ -238,9 +242,9 @@
       return;
     }
     wrap.innerHTML = items
-      .map(function (it) {
+      .map(function (it, i) {
         return (
-          '<div class="coupon">' +
+          '<div class="coupon" data-3d="card" data-i="' + i + '">' +
           '<span class="coupon-label">' + escapeHtml(it.label) + "</span>" +
           '<p class="coupon-big display">' + escapeHtml(it.big) + "</p>" +
           '<p class="coupon-desc">' + nl2br(it.desc) + "</p>" +

@@ -22,9 +22,26 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet" />
 
+<!-- 영화 같은 3D 스크롤 효과 켜기 ("동작 줄이기" 설정 기기에서는 자동으로 꺼집니다) -->
+<script>
+  if (!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) {
+    document.documentElement.classList.add("cinema");
+  }
+</script>
 <link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/cinema.css" />
 </head>
 <body>
+
+<!-- 영화 효과: 오프닝 타이틀, 위아래 검은 띠, 필름 질감, 진행바 -->
+<div class="film-intro" id="film-intro" aria-hidden="true">
+  <p class="film-intro-small">A FRESH FRUIT STORY</p>
+  <p class="film-intro-title" data-config="storeName">과일철이네2</p>
+</div>
+<div class="letterbox letterbox-top" aria-hidden="true"></div>
+<div class="letterbox letterbox-bottom" aria-hidden="true"></div>
+<div class="film-grain" aria-hidden="true"></div>
+<div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
 
 <!-- ============================================================ -->
 <!-- ① 상단 헤더 -->
@@ -35,7 +52,7 @@
 
     <nav class="main-nav" id="main-nav">
       <a href="#about" class="nav-link">소개</a>
-      <a href="#products" class="nav-link">과일 20종</a>
+      <a href="#showcase" class="nav-link">과일 20종</a>
       <a href="#gift" class="nav-link">선물세트</a>
       <a href="#benefits" class="nav-link">이용혜택</a>
       <a href="#info" class="nav-link">배달·영업안내</a>
@@ -55,50 +72,62 @@
 <!-- ============================================================ -->
 <!-- ② 히어로 (검정 배경) -->
 <!-- ============================================================ -->
-<section class="hero" id="hero">
-  <div class="wrap hero-inner">
-    <div class="hero-text reveal">
-      <p class="hero-question" data-config="hero.question">마트 과일, 맛이 매번 복불복이셨죠?</p>
-      <h1 class="hero-headline display" data-config="hero.headline">그럼 과일철이네2!</h1>
-      <p class="hero-sub" data-config-nl="hero.subCopy">신선한 제철과일부터 소중한 분께 전하는 선물용 과일까지<br />과일철이네2가 정성껏 준비합니다.</p>
-      <div class="hero-buttons">
-        <a href="#products" class="btn btn-primary">오늘의 과일 보기</a>
-        <a href="#" class="btn btn-kakao">카카오톡 1:1 상담</a>
+<section class="hero scene-pin" id="hero" data-scene="hero">
+  <div class="scene-stage hero-stage">
+    <div class="hero-particles" id="hero-particles" aria-hidden="true"></div>
+
+    <div class="wrap hero-inner">
+      <div class="hero-text" id="hero-text">
+        <span class="scene-no">SCENE 01</span>
+        <p class="hero-question" data-config="hero.question">마트 과일, 맛이 매번 복불복이셨죠?</p>
+        <h1 class="hero-headline display" data-config="hero.headline">그럼 과일철이네2!</h1>
+        <p class="hero-sub" data-config-nl="hero.subCopy">신선한 제철과일부터 소중한 분께 전하는 선물용 과일까지<br />과일철이네2가 정성껏 준비합니다.</p>
+        <div class="hero-buttons">
+          <a href="#products" class="btn btn-primary">오늘의 과일 보기</a>
+          <a href="#" class="btn btn-kakao">카카오톡 1:1 상담</a>
+        </div>
+      </div>
+
+      <div class="hero-visual" id="hero-visual">
+        <div class="hero-photo" id="hero-photo">
+          <img data-config-img="hero.image" src="public/images/fruits/17-strawberry.jpg" alt="과일철이네2 딸기 선물세트" />
+        </div>
+        <div class="stamp" id="hero-stamp" data-config-nl="hero.stamp">오늘도<br />과일철이네</div>
       </div>
     </div>
 
-    <div class="hero-visual reveal">
-      <div class="hero-photo">
-        <img data-config-img="hero.image" src="public/images/fruits/17-strawberry.jpg" alt="과일철이네2 딸기 선물세트" />
-      </div>
-      <div class="stamp" data-config-nl="hero.stamp">오늘도<br />과일철이네</div>
+    <p class="hero-caption display" id="hero-caption" data-config-nl="hero.caption">진짜 맛있는 과일은,<br />고르는 사람이 다릅니다.</p>
+
+    <div class="scroll-cue" id="scroll-cue" aria-hidden="true"><span></span>SCROLL</div>
+
+    <div class="hero-ticker" aria-hidden="true">
+      <div class="ticker-track" id="ticker-track"></div>
     </div>
-  </div>
-  <div class="hero-ticker" aria-hidden="true">
-    <div class="ticker-track" id="ticker-track"></div>
   </div>
 </section>
 
 <!-- ============================================================ -->
 <!-- ③ 노란 띠 - 질문 & 큰 제목 -->
 <!-- ============================================================ -->
-<section class="hook">
-  <div class="wrap hook-inner reveal">
-    <p class="hook-question" data-config-nl="hook.question">가족과 함께 먹을 과일,<br />아무거나 고르진 않으셨나요?</p>
-    <div class="hook-circle">
+<section class="hook stage3d">
+  <div class="wrap hook-inner">
+    <span class="scene-no dark" data-3d="rise">SCENE 02</span>
+    <p class="hook-question" data-3d="rise" data-config-nl="hook.question">가족과 함께 먹을 과일,<br />아무거나 고르진 않으셨나요?</p>
+    <div class="hook-circle" data-3d="coin">
       <img data-config-img="hook.image" src="public/images/fruits/16-shine-muscat.jpg" alt="과일철이네2 샤인머스켓" loading="lazy" />
     </div>
-    <p class="hook-small" data-config="hook.smallCopy">아이부터 어르신까지, 온 가족이 만족하는</p>
-    <h2 class="hook-big display outline" data-config="hook.bigCopy">과일철이네2 제철과일!</h2>
+    <p class="hook-small" data-3d="rise" data-config="hook.smallCopy">아이부터 어르신까지, 온 가족이 만족하는</p>
+    <h2 class="hook-big display outline" data-3d="standup" data-config="hook.bigCopy">과일철이네2 제철과일!</h2>
   </div>
 </section>
 
 <!-- ============================================================ -->
 <!-- ④ 소개 + POINT 3가지 (흰 배경) -->
 <!-- ============================================================ -->
-<section class="section about" id="about">
-  <div class="wrap reveal">
-    <div class="section-head">
+<section class="section about stage3d" id="about">
+  <div class="wrap">
+    <div class="section-head" data-3d="rise">
+      <span class="scene-no">SCENE 03</span>
       <p class="eyebrow" data-config-nl="about.smallCopy">어린이부터 어르신까지<br />모두의 입맛을 사로잡은</p>
       <h2 class="section-title display red" data-config="about.title">과일철이네2!</h2>
       <p class="section-desc" data-config-nl="about.body"></p>
@@ -111,11 +140,32 @@
 </section>
 
 <!-- ============================================================ -->
+<!-- ④-1 3D 회전 과일 쇼케이스 (스크롤하면 원형으로 돌아갑니다) -->
+<!-- ============================================================ -->
+<section class="showcase scene-pin" id="showcase" data-scene="ring">
+  <div class="scene-stage showcase-stage">
+    <div class="showcase-glow" aria-hidden="true"></div>
+    <div class="ring-viewport">
+      <div class="ring" id="ring">
+        <!-- JS가 config.fruits 값으로 20개 카드를 원형으로 배치합니다 -->
+      </div>
+    </div>
+    <div class="showcase-center">
+      <span class="scene-no">SCENE 04</span>
+      <p class="showcase-small" data-config="showcase.smallCopy">스크롤을 내려보세요</p>
+      <h2 class="showcase-title display" data-config-nl="showcase.title">오늘의 과일<br />20가지 이야기</h2>
+    </div>
+    <p class="showcase-now" id="showcase-now"></p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
 <!-- ⑤ 과일 상품 20종 -->
 <!-- ============================================================ -->
-<section class="section products" id="products">
-  <div class="wrap reveal">
-    <div class="section-head">
+<section class="section products stage3d" id="products">
+  <div class="wrap">
+    <div class="section-head" data-3d="rise">
+      <span class="scene-no">SCENE 05</span>
       <p class="eyebrow" data-config="products.smallCopy">오늘은 어떤 과일 드실래요?</p>
       <h2 class="section-title display" data-config="products.title">과일철이네2 과일 20종</h2>
       <p class="section-desc" data-config="products.subtitle"></p>
@@ -134,9 +184,10 @@
 <!-- ============================================================ -->
 <!-- ⑥ 선물용 과일 -->
 <!-- ============================================================ -->
-<section class="section gift" id="gift">
-  <div class="wrap reveal">
-    <div class="section-head">
+<section class="section gift stage3d" id="gift">
+  <div class="wrap">
+    <div class="section-head" data-3d="rise">
+      <span class="scene-no">SCENE 06</span>
       <p class="eyebrow" data-config="gift.smallCopy">소중한 마음까지 함께 전합니다</p>
       <h2 class="section-title display red" data-config="gift.title">선물용 과일세트</h2>
       <p class="section-desc" data-config-nl="gift.body"></p>
@@ -146,7 +197,7 @@
       <!-- JS가 config.gift.cards 값으로 자동 채웁니다 -->
     </div>
 
-    <div class="section-cta">
+    <div class="section-cta" data-3d="rise">
       <a href="#" class="btn btn-kakao btn-large">카카오톡으로 선물 상담하기</a>
     </div>
   </div>
@@ -155,9 +206,10 @@
 <!-- ============================================================ -->
 <!-- ⑦ 이런 분들께 추천해요 (주황 배경 말풍선) -->
 <!-- ============================================================ -->
-<section class="section recommend" id="recommend">
-  <div class="wrap reveal">
-    <div class="section-head">
+<section class="section recommend stage3d" id="recommend">
+  <div class="wrap">
+    <div class="section-head" data-3d="rise">
+      <span class="scene-no dark">SCENE 07</span>
       <p class="eyebrow dark" data-config="recommend.smallCopy">이럴 때 과일철이네2를 찾아주세요</p>
       <h2 class="section-title display outline" data-config="recommend.title">이런 분들께 추천해요</h2>
     </div>
@@ -170,9 +222,10 @@
 <!-- ============================================================ -->
 <!-- ⑧ 이용 혜택 (쿠폰) -->
 <!-- ============================================================ -->
-<section class="section benefits" id="benefits">
-  <div class="wrap reveal">
-    <div class="section-head">
+<section class="section benefits stage3d" id="benefits">
+  <div class="wrap">
+    <div class="section-head" data-3d="rise">
+      <span class="scene-no dark">SCENE 08</span>
       <p class="eyebrow dark" data-config="benefits.smallCopy">과일철이네2에서만 누리는</p>
       <h2 class="section-title display outline tilt" data-config="benefits.title">이용 혜택</h2>
     </div>
@@ -185,10 +238,10 @@
 <!-- ============================================================ -->
 <!-- ⑨ 배달 / 영업 안내 -->
 <!-- ============================================================ -->
-<section class="section info" id="info">
-  <div class="wrap reveal">
+<section class="section info stage3d" id="info">
+  <div class="wrap">
     <div class="info-grid">
-      <div class="info-box" id="delivery">
+      <div class="info-box" id="delivery" data-3d="rise" data-i="0">
         <span class="info-badge">DELIVERY</span>
         <h3 class="info-title" data-config="delivery.title">신선한 과일, 편하게 받아보세요</h3>
         <dl class="info-list">
@@ -200,7 +253,7 @@
         <a href="#" class="btn btn-kakao">카카오톡으로 배달 문의</a>
       </div>
 
-      <div class="info-box" id="hours">
+      <div class="info-box" id="hours" data-3d="rise" data-i="1">
         <span class="info-badge">OPEN</span>
         <h3 class="info-title" data-config="hours.title">과일철이네2 영업안내</h3>
         <dl class="info-list">
@@ -210,7 +263,7 @@
         </dl>
       </div>
 
-      <div class="info-box" id="visit">
+      <div class="info-box" id="visit" data-3d="rise" data-i="2">
         <span class="info-badge">VISIT</span>
         <h3 class="info-title">매장 방문 안내</h3>
         <dl class="info-list">
@@ -226,14 +279,15 @@
 <!-- ============================================================ -->
 <!-- ⑩ 마지막 CTA (검정 배경) -->
 <!-- ============================================================ -->
-<section class="finale" id="contact">
-  <div class="finale-bg" aria-hidden="true">
+<section class="finale stage3d" id="contact">
+  <div class="finale-bg" aria-hidden="true" data-3d="kenburns">
     <img data-config-img="finale.image" src="public/images/fruits/12-watermelon.jpg" alt="" loading="lazy" />
   </div>
-  <div class="wrap finale-inner reveal">
-    <p class="finale-small" data-config="finale.smallCopy">오늘 저녁 식탁에, 소중한 분께 드릴 선물로</p>
-    <h2 class="finale-big display" data-config-nl="finale.bigCopy">지금 바로<br />과일철이네2를 만나보세요!</h2>
-    <div class="contact-buttons">
+  <div class="wrap finale-inner">
+    <span class="scene-no" data-3d="rise">FINAL SCENE</span>
+    <p class="finale-small" data-3d="rise" data-config="finale.smallCopy">오늘 저녁 식탁에, 소중한 분께 드릴 선물로</p>
+    <h2 class="finale-big display" data-3d="zoom" data-config-nl="finale.bigCopy">지금 바로<br />과일철이네2를 만나보세요!</h2>
+    <div class="contact-buttons" data-3d="rise">
       <a href="#" class="btn btn-kakao btn-large">카카오톡 1:1 상담</a>
       <a href="#" class="btn btn-naver btn-large">네이버플레이스 보기</a>
     </div>
@@ -269,5 +323,6 @@
 
 <script src="config/site-config.js"></script>
 <script src="js/main.js"></script>
+<script src="js/cinema.js"></script>
 </body>
 </html>
