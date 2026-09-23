@@ -7,6 +7,7 @@
  *  - SCENE 01 히어로 : 스크롤하면 기울어진 사진이 3D로 돌아 화면을 가득 채웁니다
  *  - SCENE 04 쇼케이스 : 과일 20종이 3D 원형으로 스크롤에 따라 회전합니다
  *  - 나머지 섹션 : data-3d="..." 가 붙은 요소가 3D로 날아 들어옵니다
+ *  - 오른쪽 장면 목차, 카드 3D 호버, 회전 과일 클릭 → 상품 카드로 이동
  *
  * "동작 줄이기" 설정을 켠 기기에서는 효과 없이 일반 페이지로 보입니다.
  */
@@ -200,11 +201,12 @@
     ring.el.innerHTML = fruits
       .map(function (f, i) {
         return (
-          '<figure class="ring-card" data-i="' + i + '">' +
-          '<div class="ring-photo"><img src="' + IMG_DIR + encodeURIComponent(f.file) + '" alt="' +
-          escapeHtml(f.name) + '" onerror="this.style.visibility=\'hidden\'" /></div>' +
-          '<figcaption><span class="ring-emoji">' + escapeHtml(f.emoji || "") + "</span>" + escapeHtml(f.name) +
-          "</figcaption></figure>"
+          '<a class="ring-card" href="#fruit-card-' + i + '" data-i="' + i + '" aria-label="' +
+          escapeHtml(f.name) + ' 자세히 보기">' +
+          '<div class="ring-photo"><img src="' + IMG_DIR + encodeURIComponent(f.file) + '" alt="" loading="lazy" ' +
+          'decoding="async" onerror="this.style.visibility=\'hidden\'" /></div>' +
+          '<span class="ring-name"><span class="ring-emoji">' + escapeHtml(f.emoji || "") + "</span>" +
+          escapeHtml(f.name) + "</span></a>"
         );
       })
       .join("");
@@ -283,6 +285,9 @@
         c: prev ? prev.c : 0,
         stagger: 0,
       };
+    });
+    items.forEach(function (it) {
+      if (it.type === "flip" || it.type === "fan") bindHover(it.el);
     });
   }
 
@@ -394,6 +399,150 @@
   }
 
   // ---------------------------------------------------------
+  // 4-1. 카드 3D 호버 (마우스를 올리면 기울어지고 빛이 반사됨, PC 전용)
+  // ---------------------------------------------------------
+  function bindHover(el) {
+    if (!finePointer || el.__hover) return;
+    var h = (el.__hover = { x: 0, y: 0, v: 0, tx: 0, ty: 0, tv: 0 });
+    el.addEventListener("pointermove", function (e) {
+      var r = el.getBoundingClientRect();
+      h.tx = clamp(((e.clientX - r.left) / r.width) * 2 - 1, -1, 1);
+      h.ty = clamp(((e.clientY - r.top) / r.height) * 2 - 1, -1, 1);
+      h.tv = 1;
+      el.style.setProperty("--gx", ((h.tx + 1) * 50).toFixed(1) + "%");
+      el.style.setProperty("--gy", ((h.ty + 1) * 50).toFixed(1) + "%");
+      kick();
+    });
+    el.addEventListener("pointerleave", function () {
+      h.tx = 0;
+      h.ty = 0;
+      h.tv = 0;
+      kick();
+    });
+  }
+
+  // 호버 값을 부드럽게 따라가게 하고, 아직 움직이는 중이면 true
+  function stepHover(el, smooth) {
+    var h = el.__hover;
+    if (!h) return false;
+    h.x += (h.tx - h.x) * smooth;
+    h.y += (h.ty - h.y) * smooth;
+    h.v += (h.tv - h.v) * smooth;
+    el.style.setProperty("--glare", h.v.toFixed(3));
+    return Math.abs(h.tx - h.x) + Math.abs(h.ty - h.y) + Math.abs(h.tv - h.v) > 0.002;
+  }
+
+  function hoverTransform(el) {
+    var h = el.__hover;
+    if (!h || h.v < 0.001) return "";
+    return (
+      " translateZ(" + (h.v * 40).toFixed(1) + "px) rotateX(" + (-h.y * 12).toFixed(2) + "deg) rotateY(" +
+      (h.x * 14).toFixed(2) + "deg)"
+    );
+  }
+
+  // ---------------------------------------------------------
+  // 4-2. 오른쪽 장면 목차 (영화 챕터처럼)
+  // ---------------------------------------------------------
+  var chapters = [];
+  var activeChapter = -1;
+
+  function buildSceneNav() {
+    var nav = document.getElementById("scene-nav");
+    if (!nav) return;
+    var sections = document.querySelectorAll("[data-chapter]");
+    nav.innerHTML = Array.prototype.map
+      .call(sections, function (sec, i) {
+        return (
+          '<a href="#' + sec.id + '" class="scene-nav-item"><span class="scene-nav-no">' +
+          (i + 1 < 10 ? "0" : "") + (i + 1) + '</span><span class="scene-nav-label">' +
+          escapeHtml(sec.getAttribute("data-chapter")) + '</span><span class="scene-nav-dot"></span></a>'
+        );
+      })
+      .join("");
+    chapters = Array.prototype.map.call(sections, function (sec, i) {
+      return { sec: sec, link: nav.children[i], top: 0 };
+    });
+  }
+
+  function measureChapters() {
+    var sy = window.scrollY;
+    chapters.forEach(function (ch) {
+      ch.top = ch.sec.getBoundingClientRect().top + sy;
+    });
+  }
+
+  function updateSceneNav() {
+    if (!chapters.length) return;
+    var mid = window.scrollY + vh * 0.45;
+    var idx = 0;
+    for (var i = 0; i < chapters.length; i++) {
+      if (!chapters[i].sec.hidden && chapters[i].top <= mid) idx = i;
+    }
+    if (idx === activeChapter) return;
+    activeChapter = idx;
+    chapters.forEach(function (ch, i) {
+      ch.link.classList.toggle("is-active", i === idx);
+      if (i === idx) ch.link.setAttribute("aria-current", "true");
+      else ch.link.removeAttribute("aria-current");
+    });
+    // 어두운 장면 / 밝은 장면에 맞춰 목차 색을 바꿉니다
+    var nav = document.getElementById("scene-nav");
+    if (nav) nav.classList.toggle("on-light", !chapters[idx].sec.hasAttribute("data-dark"));
+  }
+
+  // ---------------------------------------------------------
+  // 4-3. 첫 제목 글자를 한 글자씩 3D로 등장시키기
+  // ---------------------------------------------------------
+  function splitHeadline() {
+    var el = document.querySelector(".hero-headline");
+    if (!el) return;
+    var text = el.textContent;
+    var n = 0;
+    el.innerHTML = text
+      .split(/(\s+)/)
+      .map(function (word) {
+        if (/^\s+$/.test(word)) return " ";
+        return (
+          '<span class="word">' +
+          Array.prototype.map
+            .call(word, function (ch) {
+              return '<span class="ch" style="--i:' + n++ + '">' + escapeHtml(ch) + "</span>";
+            })
+            .join("") +
+          "</span>"
+        );
+      })
+      .join("");
+    el.setAttribute("aria-label", text);
+    el.classList.add("is-split");
+  }
+
+  // ---------------------------------------------------------
+  // 4-4. 회전하는 과일 카드를 누르면 아래 상품 카드로 이동
+  // ---------------------------------------------------------
+  function bindRingClicks() {
+    if (!ring.el) return;
+    ring.el.addEventListener("click", function (e) {
+      var card = e.target.closest(".ring-card");
+      if (!card) return;
+      e.preventDefault();
+      var target = document.getElementById("fruit-card-" + card.getAttribute("data-i"));
+      if (!target) return;
+      if (target.hidden) {
+        var all = document.querySelector('.season-tab[data-season="전체"]');
+        if (all) all.click();
+      }
+      setTimeout(function () {
+        target.scrollIntoView({ behavior: "smooth", block: "center" });
+        target.classList.remove("is-spot");
+        void target.offsetWidth;
+        target.classList.add("is-spot");
+      }, 120);
+    });
+  }
+
+  // ---------------------------------------------------------
   // 5. 고정 무대(scene-pin) 진행률
   // ---------------------------------------------------------
   function pinProgress(section) {
@@ -443,7 +592,9 @@
       var tg = targetFor(it, sy);
       var de = tg.e - it.e;
       var dc = tg.c - it.c;
-      if (Math.abs(de) < 0.0008 && Math.abs(dc) < 0.0008) {
+      var hv = stepHover(it.el, smooth);
+      if (hv) moving = true;
+      if (Math.abs(de) < 0.0008 && Math.abs(dc) < 0.0008 && !hv) {
         if (it.settled) continue;
         it.e = tg.e;
         it.c = tg.c;
@@ -457,10 +608,12 @@
       var top = it.top - sy;
       if (top > vh * 1.6 || top + it.h < -vh * 0.6) continue; // 화면 밖이면 생략
       var st = styleFor(it);
-      it.el.style.transform = st.t ? "perspective(1100px) " + st.t : "";
+      it.el.style.transform = st.t ? "perspective(1100px) " + st.t + hoverTransform(it.el) : "";
       it.el.style.opacity = st.o >= 0.999 ? "" : st.o.toFixed(3);
       if (st.origin) it.el.style.transformOrigin = st.origin;
     }
+
+    updateSceneNav();
 
     // 스크롤 진행바
     var max = document.documentElement.scrollHeight - vh;
@@ -502,6 +655,7 @@
       layoutRing();
       measureItems();
       measureHero();
+      measureChapters();
       items.forEach(function (it) {
         it.settled = false;
       });
@@ -514,12 +668,16 @@
   // 시작
   // ---------------------------------------------------------
   document.addEventListener("DOMContentLoaded", function () {
+    splitHeadline();
     playIntro();
     buildParticles();
     buildRing();
+    bindRingClicks();
+    buildSceneNav();
     collectItems();
     measureItems();
     measureHero();
+    measureChapters();
     kick();
 
     window.addEventListener("scroll", kick, { passive: true });

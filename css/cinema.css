@@ -366,6 +366,8 @@ html:not(.cinema) .scroll-cue {
   position: absolute;
   inset: 0;
   margin: 0;
+  display: block;
+  cursor: pointer;
   border-radius: 18px;
   overflow: hidden;
   background: #fff;
@@ -389,7 +391,7 @@ html:not(.cinema) .scroll-cue {
   object-fit: cover;
 }
 
-.ring-card figcaption {
+.ring-name {
   height: 22%;
   display: flex;
   align-items: center;
@@ -452,20 +454,254 @@ html:not(.cinema) .scroll-cue {
 }
 
 .showcase-now.is-swap {
-  animation: now-swap 0.45s ease;
+  animation: now-swap 0.3s ease;
 }
 
 @keyframes now-swap {
   from {
-    opacity: 0;
-    transform: translateY(12px);
-    filter: blur(4px);
+    opacity: 0.35;
+    transform: translateY(6px);
   }
 }
 
 /* sticky 무대 안에서만 보이도록 (fixed 대신 무대 기준) */
 .cinema .showcase-now {
   position: absolute;
+  z-index: 4;
+}
+
+/* 앞쪽 카드에 "눌러서 보기" 딱지 */
+.ring-card::after {
+  content: "눌러서 보기 ›";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--red);
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 900;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.ring-card.is-front::after {
+  opacity: 1;
+  transform: none;
+}
+
+.ring-card:focus-visible {
+  outline: 4px solid var(--yellow);
+  outline-offset: 4px;
+}
+
+/* 회전 쇼케이스에서 눌러서 이동한 상품 카드 강조 */
+.fruit-card.is-spot {
+  animation: spot 1.8s ease;
+}
+
+@keyframes spot {
+  0%, 60% {
+    box-shadow: 0 0 0 5px var(--yellow), 0 0 50px rgba(255, 138, 31, 0.8);
+  }
+  100% {
+    box-shadow: var(--shadow);
+  }
+}
+
+/* ============================================================
+   첫 제목: 한 글자씩 3D로 등장
+   ============================================================ */
+.cinema .hero-headline.is-split {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+}
+
+.cinema .hero-headline .word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.cinema .hero-headline .ch {
+  display: inline-block;
+  background: linear-gradient(180deg, var(--yellow-light) 0%, var(--yellow) 45%, var(--orange) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transform-origin: 50% 100%;
+  animation: ch-in 0.9s cubic-bezier(0.2, 0.9, 0.25, 1.25) both;
+  animation-delay: calc(var(--i) * 60ms + 150ms);
+  animation-play-state: paused;
+}
+
+.cinema.intro-done .hero-headline .ch {
+  animation-play-state: running;
+}
+
+@keyframes ch-in {
+  from {
+    opacity: 0;
+    transform: perspective(500px) translate3d(0, 40px, -120px) rotateX(-95deg);
+  }
+}
+
+.cinema .hero-question,
+.cinema .hero-sub,
+.cinema .hero-buttons,
+.cinema .hero-text .scene-no {
+  animation: soft-in 0.9s ease both;
+  animation-play-state: paused;
+}
+
+.cinema .hero-text .scene-no { animation-delay: 0s; }
+.cinema .hero-question { animation-delay: 0.1s; }
+.cinema .hero-sub { animation-delay: 0.9s; }
+.cinema .hero-buttons { animation-delay: 1.05s; }
+
+.cinema.intro-done .hero-question,
+.cinema.intro-done .hero-sub,
+.cinema.intro-done .hero-buttons,
+.cinema.intro-done .hero-text .scene-no {
+  animation-play-state: running;
+}
+
+@keyframes soft-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+    filter: blur(6px);
+  }
+}
+
+/* ============================================================
+   오른쪽 장면 목차 (PC)
+   ============================================================ */
+.scene-nav {
+  display: none;
+}
+
+@media (min-width: 1100px) {
+  .cinema .scene-nav {
+    position: fixed;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 97;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 8px;
+    border-radius: 16px;
+    background: rgba(20, 15, 12, 0.35);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: background 0.4s ease;
+    opacity: 0;
+    animation: nav-in 0.8s ease 1.6s forwards;
+  }
+
+  @keyframes nav-in {
+    to {
+      opacity: 1;
+    }
+  }
+
+  .scene-nav.on-light {
+    background: rgba(255, 255, 255, 0.55);
+    box-shadow: 0 6px 20px rgba(60, 30, 5, 0.12);
+  }
+
+  .scene-nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 4px 6px;
+    border-radius: 999px;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .on-light .scene-nav-item {
+    color: var(--ink-soft);
+  }
+
+  .scene-nav-no {
+    font-family: "Courier New", ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+  }
+
+  .scene-nav-label {
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    opacity: 0;
+    transition: max-width 0.35s ease, opacity 0.35s ease;
+  }
+
+  .scene-nav:hover .scene-nav-label,
+  .scene-nav-item.is-active .scene-nav-label {
+    max-width: 90px;
+    opacity: 1;
+  }
+
+  .scene-nav-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.5;
+    transition: transform 0.3s ease, background 0.3s ease, opacity 0.3s ease;
+  }
+
+  .scene-nav-item.is-active {
+    color: var(--yellow);
+  }
+
+  .on-light .scene-nav-item.is-active {
+    color: var(--red);
+  }
+
+  .scene-nav-item.is-active .scene-nav-dot {
+    opacity: 1;
+    transform: scale(1.6);
+  }
+
+  .scene-nav-item:hover {
+    color: var(--orange);
+  }
+}
+
+/* ============================================================
+   카드 3D 호버: 빛 반사 (PC)
+   ============================================================ */
+@media (hover: hover) and (pointer: fine) {
+  .cinema .fruit-card::after,
+  .cinema .gift-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, 0.55), transparent 55%);
+    mix-blend-mode: soft-light;
+    opacity: var(--glare, 0);
+  }
+
+  .cinema .gift-card {
+    position: relative;
+  }
+
+  .cinema .fruit-card,
+  .cinema .gift-card {
+    transform-style: preserve-3d;
+  }
 }
 
 /* ============================================================
@@ -566,7 +802,7 @@ html:not(.cinema) .scroll-cue {
     perspective-origin: 50% 35%;
   }
 
-  .ring-card figcaption {
+  .ring-name {
     font-size: 15px;
   }
 

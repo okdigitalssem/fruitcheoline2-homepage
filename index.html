@@ -42,6 +42,7 @@
 <div class="letterbox letterbox-bottom" aria-hidden="true"></div>
 <div class="film-grain" aria-hidden="true"></div>
 <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
+<nav class="scene-nav" id="scene-nav" aria-label="장면 바로가기"></nav>
 
 <!-- ============================================================ -->
 <!-- ① 상단 헤더 -->
@@ -72,7 +73,7 @@
 <!-- ============================================================ -->
 <!-- ② 히어로 (검정 배경) -->
 <!-- ============================================================ -->
-<section class="hero scene-pin" id="hero" data-scene="hero">
+<section class="hero scene-pin" id="hero" data-scene="hero" data-chapter="첫 만남" data-dark>
   <div class="scene-stage hero-stage">
     <div class="hero-particles" id="hero-particles" aria-hidden="true"></div>
 
@@ -109,7 +110,7 @@
 <!-- ============================================================ -->
 <!-- ③ 노란 띠 - 질문 & 큰 제목 -->
 <!-- ============================================================ -->
-<section class="hook stage3d">
+<section class="hook stage3d" id="hook" data-chapter="질문">
   <div class="wrap hook-inner">
     <span class="scene-no dark" data-3d="rise">SCENE 02</span>
     <p class="hook-question" data-3d="rise" data-config-nl="hook.question">가족과 함께 먹을 과일,<br />아무거나 고르진 않으셨나요?</p>
@@ -124,7 +125,7 @@
 <!-- ============================================================ -->
 <!-- ④ 소개 + POINT 3가지 (흰 배경) -->
 <!-- ============================================================ -->
-<section class="section about stage3d" id="about">
+<section class="section about stage3d" id="about" data-chapter="약속">
   <div class="wrap">
     <div class="section-head" data-3d="rise">
       <span class="scene-no">SCENE 03</span>
@@ -142,7 +143,7 @@
 <!-- ============================================================ -->
 <!-- ④-1 3D 회전 과일 쇼케이스 (스크롤하면 원형으로 돌아갑니다) -->
 <!-- ============================================================ -->
-<section class="showcase scene-pin" id="showcase" data-scene="ring">
+<section class="showcase scene-pin" id="showcase" data-scene="ring" data-chapter="과일 20종" data-dark>
   <div class="scene-stage showcase-stage">
     <div class="showcase-glow" aria-hidden="true"></div>
     <div class="ring-viewport">
@@ -162,7 +163,7 @@
 <!-- ============================================================ -->
 <!-- ⑤ 과일 상품 20종 -->
 <!-- ============================================================ -->
-<section class="section products stage3d" id="products">
+<section class="section products stage3d" id="products" data-chapter="골라보기">
   <div class="wrap">
     <div class="section-head" data-3d="rise">
       <span class="scene-no">SCENE 05</span>
@@ -184,7 +185,7 @@
 <!-- ============================================================ -->
 <!-- ⑥ 선물용 과일 -->
 <!-- ============================================================ -->
-<section class="section gift stage3d" id="gift">
+<section class="section gift stage3d" id="gift" data-chapter="선물">
   <div class="wrap">
     <div class="section-head" data-3d="rise">
       <span class="scene-no">SCENE 06</span>
@@ -206,7 +207,7 @@
 <!-- ============================================================ -->
 <!-- ⑦ 이런 분들께 추천해요 (주황 배경 말풍선) -->
 <!-- ============================================================ -->
-<section class="section recommend stage3d" id="recommend">
+<section class="section recommend stage3d" id="recommend" data-chapter="추천">
   <div class="wrap">
     <div class="section-head" data-3d="rise">
       <span class="scene-no dark">SCENE 07</span>
@@ -222,7 +223,7 @@
 <!-- ============================================================ -->
 <!-- ⑧ 이용 혜택 (쿠폰) -->
 <!-- ============================================================ -->
-<section class="section benefits stage3d" id="benefits">
+<section class="section benefits stage3d" id="benefits" data-chapter="혜택">
   <div class="wrap">
     <div class="section-head" data-3d="rise">
       <span class="scene-no dark">SCENE 08</span>
@@ -238,7 +239,7 @@
 <!-- ============================================================ -->
 <!-- ⑨ 배달 / 영업 안내 -->
 <!-- ============================================================ -->
-<section class="section info stage3d" id="info">
+<section class="section info stage3d" id="info" data-chapter="안내">
   <div class="wrap">
     <div class="info-grid">
       <div class="info-box" id="delivery" data-3d="rise" data-i="0">
@@ -279,7 +280,7 @@
 <!-- ============================================================ -->
 <!-- ⑩ 마지막 CTA (검정 배경) -->
 <!-- ============================================================ -->
-<section class="finale stage3d" id="contact">
+<section class="finale stage3d" id="contact" data-chapter="엔딩" data-dark>
   <div class="finale-bg" aria-hidden="true" data-3d="kenburns">
     <img data-config-img="finale.image" src="public/images/fruits/12-watermelon.jpg" alt="" loading="lazy" />
   </div>

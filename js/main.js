@@ -127,7 +127,7 @@
       .map(function (fruit, i) {
         var alt = fruit.name + " - 과일철이네2 신선한 " + fruit.name;
         return (
-          '<article class="fruit-card" data-3d="flip" data-i="' + i + '" data-season="' + escapeHtml(fruit.season || "") + '">' +
+          '<article class="fruit-card" id="fruit-card-' + i + '" data-3d="flip" data-i="' + i + '" data-season="' + escapeHtml(fruit.season || "") + '">' +
           photoHtml(fruit.file, alt, fruit.emoji, "fruit-photo") +
           (fruit.pick ? '<span class="fruit-pick">추천</span>' : "") +
           '<div class="fruit-info">' +
