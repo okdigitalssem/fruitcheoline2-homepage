@@ -350,13 +350,13 @@ html:not(.cinema) .scroll-cue {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 12vh;
+  padding-top: 4vh;
 }
 
 .ring {
   position: relative;
-  width: 210px;
-  height: 270px;
+  width: min(210px, 25vh);
+  height: min(270px, 32vh);
   transform-style: preserve-3d;
   will-change: transform;
   opacity: 0;
@@ -432,7 +432,7 @@ html:not(.cinema) .scroll-cue {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 12vh;
+  bottom: 6vh;
   text-align: center;
   display: flex;
   flex-direction: column;
