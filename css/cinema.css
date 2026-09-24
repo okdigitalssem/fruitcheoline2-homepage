@@ -14,7 +14,7 @@
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.32em;
-  color: var(--orange);
+  color: var(--green);
   font-family: "Courier New", ui-monospace, monospace;
 }
 
@@ -165,7 +165,7 @@ html:not(.cinema) .scroll-cue {
 .scroll-progress span {
   display: block;
   height: 100%;
-  background: linear-gradient(90deg, var(--yellow), var(--orange), var(--red));
+  background: linear-gradient(90deg, var(--yellow), var(--green));
   transform-origin: left;
   transform: scaleX(0);
 }
@@ -195,7 +195,7 @@ html:not(.cinema) .scroll-cue {
 .cinema .hero-stage {
   background:
     radial-gradient(ellipse at 80% 20%, rgba(255, 138, 31, 0.25), transparent 55%),
-    radial-gradient(ellipse at 10% 90%, rgba(232, 52, 28, 0.2), transparent 50%),
+    radial-gradient(ellipse at 10% 90%, rgba(46, 125, 79, 0.2), transparent 50%),
     radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.55) 100%),
     var(--ink);
   display: flex;
@@ -427,7 +427,7 @@ html:not(.cinema) .scroll-cue {
   margin-top: 6px;
   font-size: clamp(30px, 5vw, 56px);
   color: var(--yellow);
-  text-shadow: 0 4px 0 rgba(184, 32, 13, 0.9);
+  text-shadow: 0 4px 0 rgba(29, 90, 54, 0.9);
 }
 
 .showcase-now {
@@ -478,7 +478,7 @@ html:not(.cinema) .scroll-cue {
   right: 10px;
   padding: 4px 10px;
   border-radius: 999px;
-  background: var(--red);
+  background: var(--green);
   color: var(--white);
   font-size: 12px;
   font-weight: 900;
@@ -665,7 +665,7 @@ html:not(.cinema) .scroll-cue {
   }
 
   .on-light .scene-nav-item.is-active {
-    color: var(--red);
+    color: var(--green);
   }
 
   .scene-nav-item.is-active .scene-nav-dot {
@@ -674,7 +674,7 @@ html:not(.cinema) .scroll-cue {
   }
 
   .scene-nav-item:hover {
-    color: var(--orange);
+    color: var(--green);
   }
 }
 
@@ -862,7 +862,7 @@ html:not(.cinema) .scroll-cue {
 .site-header {
   background: rgba(255, 252, 244, 0.92);
   color: var(--ink);
-  box-shadow: 0 1px 0 rgba(232, 52, 28, 0.08);
+  box-shadow: 0 1px 0 rgba(46, 125, 79, 0.08);
 }
 
 .site-header.is-scrolled {
@@ -870,7 +870,7 @@ html:not(.cinema) .scroll-cue {
 }
 
 .logo {
-  color: var(--red);
+  color: var(--green);
 }
 
 .nav-link {
@@ -878,8 +878,8 @@ html:not(.cinema) .scroll-cue {
 }
 
 .nav-link:hover {
-  background: rgba(255, 138, 31, 0.14);
-  color: var(--red);
+  background: var(--green-light);
+  color: var(--green);
 }
 
 .menu-toggle span {
@@ -908,14 +908,14 @@ html:not(.cinema) .scroll-cue {
 .cinema .hero-stage {
   background:
     radial-gradient(circle at 82% 22%, rgba(255, 255, 255, 0.85), transparent 38%),
-    radial-gradient(circle at 12% 85%, rgba(255, 138, 31, 0.28), transparent 45%),
-    radial-gradient(circle at 95% 95%, rgba(232, 52, 28, 0.16), transparent 40%),
+    radial-gradient(circle at 12% 85%, rgba(255, 194, 26, 0.35), transparent 45%),
+    radial-gradient(circle at 95% 95%, rgba(46, 125, 79, 0.16), transparent 40%),
     linear-gradient(160deg, #fff8e1 0%, #ffe9a6 45%, #ffcf5a 100%);
 }
 
 /* ---------- 첫 화면 글씨 ---------- */
 .hero .scene-no {
-  color: var(--red);
+  color: var(--green);
 }
 
 .hero-question {
@@ -924,7 +924,7 @@ html:not(.cinema) .scroll-cue {
 
 .hero-headline,
 .cinema .hero-headline .ch {
-  background: linear-gradient(180deg, #ff5a2b 0%, var(--red) 55%, #c9230f 100%);
+  background: linear-gradient(180deg, #3f9a62 0%, var(--green) 55%, #1d5a36 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -932,7 +932,7 @@ html:not(.cinema) .scroll-cue {
 
 .hero-headline {
   filter: drop-shadow(0 3px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(3px 0 0 #fff)
-    drop-shadow(-3px 0 0 #fff) drop-shadow(0 10px 14px rgba(200, 80, 0, 0.25));
+    drop-shadow(-3px 0 0 #fff) drop-shadow(0 10px 14px rgba(29, 90, 54, 0.25));
 }
 
 .hero-sub {
@@ -940,9 +940,9 @@ html:not(.cinema) .scroll-cue {
 }
 
 .hero .btn-primary {
-  background: linear-gradient(180deg, #ff6a3d 0%, var(--red) 100%);
+  background: linear-gradient(180deg, #3f9a62 0%, var(--green) 100%);
   color: var(--white);
-  box-shadow: 0 6px 0 var(--red-deep);
+  box-shadow: 0 6px 0 var(--green-deep);
 }
 
 .scroll-cue {
@@ -954,7 +954,7 @@ html:not(.cinema) .scroll-cue {
 }
 
 .scroll-cue span::after {
-  background: var(--red);
+  background: var(--green);
 }
 
 /* 사진: 무거운 검은 그림자 → 따뜻한 그림자 */
@@ -979,8 +979,8 @@ html:not(.cinema) .scroll-cue {
 }
 
 .film-intro-title {
-  color: var(--red);
-  text-shadow: 0 4px 0 #fff, 0 10px 24px rgba(200, 80, 0, 0.25);
+  color: var(--green);
+  text-shadow: 0 4px 0 #fff, 0 10px 24px rgba(29, 90, 54, 0.25);
 }
 
 /* 필름 질감은 밝은 화면에서 지저분해 보이지 않도록 약하게 */
@@ -990,4 +990,14 @@ html:not(.cinema) .scroll-cue {
 
 .cinema {
   --letterbox: 0;
+}
+
+
+/* ============================================================
+   주황 = 작은 강조 전용 (추천 딱지, 눌러서 보기)
+   ============================================================ */
+.fruit-pick,
+.ring-card::after {
+  background: var(--orange);
+  box-shadow: 0 4px 10px rgba(255, 122, 15, 0.35);
 }
