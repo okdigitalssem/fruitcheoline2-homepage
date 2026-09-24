@@ -8,6 +8,8 @@
  *  - SCENE 04 쇼케이스 : 과일 20종이 3D 원형으로 스크롤에 따라 회전합니다
  *  - 나머지 섹션 : data-3d="..." 가 붙은 요소가 3D로 날아 들어옵니다
  *  - 오른쪽 장면 목차, 카드 3D 호버, 회전 과일 클릭 → 상품 카드로 이동
+ *  - 챕터 타이틀(장면 사이 제목), 장면 전환(원형·액자·가로 닦기), 자막처럼 나오는 제목
+ *  - 엔딩: 마지막 장면 → 엔딩 크레딧이 올라감 → THE END
  *
  * "동작 줄이기" 설정을 켠 기기에서는 효과 없이 일반 페이지로 보입니다.
  */
@@ -302,7 +304,9 @@
       var r = it.el.getBoundingClientRect();
       it.top = r.top + sy;
       it.h = r.height;
-      if (it.type === "flip") {
+      if (it.type === "subtitle") {
+        it.stagger = it.i * 0.12;
+      } else if (it.type === "flip") {
         if (it.el.hidden) return;
         var cols = vw <= 640 ? 2 : vw <= 1024 ? 3 : 4;
         it.stagger = (visibleIndex++ % cols) * 0.08;
@@ -326,6 +330,12 @@
     var r = 1 - k; // 1 → 0 (남은 양)
     var c = it.c;
     switch (it.type) {
+      case "subtitle":
+        return {
+          t: "translate3d(0," + 26 * r + "px,0)" + (it.el.classList.contains("tilt") ? " rotate(-4deg)" : ""),
+          o: k,
+          f: r > 0.01 ? "blur(" + (8 * r).toFixed(1) + "px)" : "",
+        };
       case "rise":
         return {
           t: "translate3d(0," + 90 * r + "px," + -220 * r + "px) rotateX(" + 38 * r + "deg)",
@@ -543,6 +553,151 @@
   }
 
   // ---------------------------------------------------------
+  // 4-5. 챕터 타이틀 (장면 사이에 화면 가득 나오는 영화 제목)
+  // ---------------------------------------------------------
+  var cards = [];
+
+  function buildTitleCards() {
+    var defs = config.titleCards || {};
+    Object.keys(defs).forEach(function (id) {
+      var target = document.getElementById(id);
+      var d = defs[id];
+      if (!target || !d || !d.title || target.hidden) return;
+      var sec = document.createElement("section");
+      sec.className = "title-card scene-pin";
+      sec.setAttribute("aria-hidden", "true");
+      sec.innerHTML =
+        '<div class="scene-stage title-card-stage">' +
+        '<div class="film-strip film-strip-top"></div>' +
+        '<div class="tc-inner">' +
+        '<p class="tc-no">' + escapeHtml(d.no || "") + "</p>" +
+        '<p class="tc-title display">' + escapeHtml(d.title) + "</p>" +
+        (d.sub ? '<p class="tc-sub">' + escapeHtml(d.sub) + "</p>" : "") +
+        "</div>" +
+        '<div class="film-strip film-strip-bottom"></div>' +
+        "</div>";
+      target.parentNode.insertBefore(sec, target);
+      target.classList.add("has-title-card");
+      cards.push({
+        section: sec,
+        inner: sec.querySelector(".tc-inner"),
+        sub: sec.querySelector(".tc-sub"),
+        strips: sec.querySelectorAll(".film-strip"),
+        p: 0,
+        target: 0,
+      });
+    });
+  }
+
+  // 타이틀이 화면 아래에서 들어올 때 0 → 다 지나갈 때 1
+  function cardProgress(section) {
+    var r = section.getBoundingClientRect();
+    return clamp((vh - r.top) / r.height, 0, 1);
+  }
+
+  function renderCard(cd) {
+    var p = cd.p;
+    var enter = easeOut(range(p, 0.3, 0.6));
+    var exit = easeInOut(range(p, 0.8, 1));
+    // 멀리서 다가왔다가, 카메라를 지나치듯 앞으로 날아가며 사라짐
+    cd.inner.style.transform =
+      "perspective(900px) translate3d(0," + (40 * (1 - enter)).toFixed(1) + "px," +
+      (lerp(-600, 0, enter) + exit * 560).toFixed(1) + "px)";
+    cd.inner.style.opacity = (enter * (1 - exit)).toFixed(3);
+    if (cd.sub) cd.sub.style.opacity = range(p, 0.45, 0.65).toFixed(3);
+    if (cd.strips[0]) cd.strips[0].style.transform = "translateX(" + (-p * 320).toFixed(1) + "px)";
+    if (cd.strips[1]) cd.strips[1].style.transform = "translateX(" + (p * 320 - 320).toFixed(1) + "px)";
+  }
+
+  // ---------------------------------------------------------
+  // 4-6. 장면 전환 (영화 컷처럼 다음 장면이 열림)
+  //   iris  : 동그랗게 열림 / frame : 액자가 넓어지듯 / wipe : 왼쪽에서 오른쪽으로 닦아냄
+  // ---------------------------------------------------------
+  var trans = [];
+
+  function collectTransitions() {
+    trans = Array.prototype.map.call(document.querySelectorAll("[data-transition]"), function (el) {
+      return { el: el, type: el.getAttribute("data-transition"), top: 0, h: 0, last: -1 };
+    });
+  }
+
+  function measureTransitions() {
+    var sy = window.scrollY;
+    trans.forEach(function (t) {
+      var r = t.el.getBoundingClientRect(); // clip-path는 위치에 영향이 없어 그대로 잽니다
+      t.top = r.top + sy;
+      t.h = r.height;
+      t.last = -1;
+    });
+  }
+
+  function renderTransitions(sy) {
+    for (var i = 0; i < trans.length; i++) {
+      var t = trans[i];
+      var top = t.top - sy;
+      var e = clamp((vh - top) / (vh * 0.8), 0, 1);
+      if (Math.abs(e - t.last) < 0.0005) continue;
+      t.last = e;
+      var k = easeInOut(e);
+      var cp = "";
+      if (k < 0.999) {
+        if (t.type === "iris") {
+          var cy = clamp((vh - top) / 2, 0, t.h);
+          cp = "circle(" + (k * Math.sqrt(vw * vw + vh * vh) * 0.8).toFixed(1) + "px at 50% " + cy.toFixed(1) + "px)";
+        } else if (t.type === "wipe") {
+          cp = "inset(0 " + ((1 - k) * 100).toFixed(2) + "% 0 0)";
+        } else {
+          var m = ((1 - k) * 12).toFixed(2);
+          cp = "inset(0 " + m + "% 0 " + m + "% round " + ((1 - k) * 48).toFixed(1) + "px)";
+        }
+      }
+      t.el.style.clipPath = cp;
+      t.el.style.webkitClipPath = cp;
+    }
+  }
+
+  // ---------------------------------------------------------
+  // 4-7. 엔딩: 마지막 장면 → 엔딩 크레딧 → THE END
+  // ---------------------------------------------------------
+  var fin = {
+    section: document.getElementById("contact"),
+    bg: document.getElementById("finale-bg"),
+    title: document.getElementById("finale-title"),
+    win: document.getElementById("credits-window"),
+    credits: document.getElementById("credits"),
+    end: document.getElementById("the-end"),
+    p: 0,
+    target: 0,
+    ch: 0,
+    wh: 0,
+  };
+
+  function measureFinale() {
+    if (!fin.credits) return;
+    fin.ch = fin.credits.offsetHeight;
+    fin.wh = fin.win ? fin.win.clientHeight : vh;
+  }
+
+  function renderFinale() {
+    if (!fin.section || !fin.credits) return;
+    var p = fin.p;
+    if (fin.bg) fin.bg.style.transform = "scale(" + (1.25 - 0.2 * p).toFixed(4) + ")";
+
+    var out = easeInOut(range(p, 0.12, 0.26));
+    fin.title.style.transform = "perspective(900px) translate3d(0," + (-90 * out).toFixed(1) + "px," + (-200 * out).toFixed(1) + "px)";
+    fin.title.style.opacity = (1 - out).toFixed(3);
+    fin.title.style.pointerEvents = out > 0.5 ? "none" : "";
+
+    var roll = range(p, 0.2, 0.84);
+    fin.credits.style.transform = "translate3d(0," + lerp(fin.wh, -fin.ch, roll).toFixed(1) + "px,0)";
+
+    var te = easeOut(range(p, 0.84, 0.95));
+    fin.end.style.opacity = te.toFixed(3);
+    fin.end.style.transform = "translateY(" + (24 * (1 - te)).toFixed(1) + "px) scale(" + (0.94 + 0.06 * te).toFixed(4) + ")";
+    fin.end.style.pointerEvents = te > 0.5 ? "auto" : "none";
+  }
+
+  // ---------------------------------------------------------
   // 5. 고정 무대(scene-pin) 진행률
   // ---------------------------------------------------------
   function pinProgress(section) {
@@ -556,7 +711,6 @@
   // 6. 메인 루프
   // ---------------------------------------------------------
   var progressBar = document.getElementById("scroll-progress-bar");
-  var finale = document.getElementById("contact");
   var running = false;
   var lastTime = 0;
 
@@ -573,7 +727,11 @@
     // 고정 무대
     hero.target = pinProgress(hero.section);
     ring.target = pinProgress(ring.section);
-    [hero, ring].forEach(function (s) {
+    fin.target = pinProgress(fin.section);
+    cards.forEach(function (cd) {
+      cd.target = cardProgress(cd.section);
+    });
+    [hero, ring, fin].concat(cards).forEach(function (s) {
       var d = s.target - s.p;
       s.p = Math.abs(d) < 0.0005 ? s.target : s.p + d * smooth;
       if (s.p !== s.target) moving = true;
@@ -592,6 +750,16 @@
       });
     }
     if (ringRect && ringRect.bottom > -50 && ringRect.top < vh + 50) renderRing();
+
+    // 챕터 타이틀 / 장면 전환 / 엔딩
+    cards.forEach(function (cd) {
+      if (cd.p > 0 && cd.p < 1) renderCard(cd);
+      else if (cd.lastP !== cd.p) renderCard(cd);
+      cd.lastP = cd.p;
+    });
+    renderTransitions(sy);
+    var finRect = fin.section && fin.section.getBoundingClientRect();
+    if (finRect && finRect.top < vh + 50 && finRect.bottom > -50) renderFinale();
 
     // 3D 등장 요소
     for (var i = 0; i < items.length; i++) {
@@ -619,6 +787,7 @@
       it.el.style.transform = st.t ? "perspective(1100px) " + st.t + hoverTransform(it.el) : "";
       it.el.style.opacity = st.o >= 0.999 ? "" : st.o.toFixed(3);
       if (st.origin) it.el.style.transformOrigin = st.origin;
+      if ("f" in st) it.el.style.filter = st.f;
     }
 
     updateSceneNav();
@@ -626,13 +795,6 @@
     // 스크롤 진행바
     var max = document.documentElement.scrollHeight - vh;
     if (progressBar) progressBar.style.transform = "scaleX(" + (max > 0 ? sy / max : 0) + ")";
-
-    // 마지막 장면에서 레터박스가 다시 닫힘 (영화 엔딩)
-    if (finale && (!heroRect || heroRect.bottom <= -50)) {
-      var fr = finale.getBoundingClientRect();
-      // 밝은 디자인으로 바꾸면서 검은 띠(레터박스)는 쓰지 않습니다
-      root.style.setProperty("--letterbox", "0");
-    }
 
     var heroVisible = heroRect && heroRect.bottom > 0;
     var mouseMoving = Math.abs(mouse.tx - mouse.x) > 0.001 || Math.abs(mouse.ty - mouse.y) > 0.001;
@@ -665,6 +827,8 @@
       measureItems();
       measureHero();
       measureChapters();
+      measureTransitions();
+      measureFinale();
       items.forEach(function (it) {
         it.settled = false;
       });
@@ -682,11 +846,15 @@
     buildParticles();
     buildRing();
     bindRingClicks();
+    buildTitleCards();
     buildSceneNav();
     collectItems();
+    collectTransitions();
     measureItems();
     measureHero();
     measureChapters();
+    measureTransitions();
+    measureFinale();
     kick();
 
     window.addEventListener("scroll", kick, { passive: true });
