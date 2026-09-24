@@ -630,7 +630,8 @@
     // 마지막 장면에서 레터박스가 다시 닫힘 (영화 엔딩)
     if (finale && (!heroRect || heroRect.bottom <= -50)) {
       var fr = finale.getBoundingClientRect();
-      root.style.setProperty("--letterbox", String(0.8 * range(vh - fr.top, vh * 0.4, vh * 1.1)));
+      // 밝은 디자인으로 바꾸면서 검은 띠(레터박스)는 쓰지 않습니다
+      root.style.setProperty("--letterbox", "0");
     }
 
     var heroVisible = heroRect && heroRect.bottom > 0;

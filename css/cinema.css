@@ -1022,3 +1022,104 @@ html:not(.cinema) .scroll-cue {
   background: var(--orange);
   box-shadow: 0 4px 10px rgba(255, 122, 15, 0.35);
 }
+
+/* ============================================================
+   밝은 SCENE 04 (과일 20종 회전) · 마지막 장면 · 푸터
+   초록(메인) / 노랑(바탕) / 주황(작은 강조) 3가지 색에 맞춤
+   ============================================================ */
+
+/* ---------- SCENE 04 ---------- */
+.cinema .showcase {
+  background: #fff4d0;
+  color: var(--ink);
+}
+
+.showcase-stage {
+  background:
+    radial-gradient(ellipse at 50% 62%, rgba(255, 255, 255, 0.9), transparent 55%),
+    radial-gradient(circle at 10% 15%, rgba(255, 194, 26, 0.35), transparent 40%),
+    radial-gradient(circle at 90% 85%, rgba(46, 125, 79, 0.12), transparent 45%),
+    linear-gradient(180deg, #fff8e1 0%, #ffe9a6 100%);
+}
+
+.showcase-glow {
+  background: radial-gradient(ellipse, rgba(46, 125, 79, 0.18), transparent 70%);
+}
+
+.showcase .scene-no {
+  color: var(--green);
+}
+
+.showcase-small {
+  color: var(--ink-soft);
+}
+
+.showcase-title {
+  color: var(--green);
+  text-shadow: 0 3px 0 #fff, 0 -2px 0 #fff, 3px 0 0 #fff, -3px 0 0 #fff, 0 8px 16px rgba(29, 90, 54, 0.2);
+}
+
+.ring-card {
+  box-shadow: 0 16px 30px rgba(120, 80, 0, 0.18);
+}
+
+.ring-card.is-front {
+  box-shadow: 0 0 0 4px var(--green), 0 18px 40px rgba(29, 90, 54, 0.3);
+}
+
+.showcase-now strong {
+  color: var(--green);
+}
+
+.showcase-now span {
+  color: var(--ink-soft);
+}
+
+/* ---------- 마지막 장면 ---------- */
+.finale,
+.cinema .finale {
+  background: #fff4d0;
+  color: var(--ink);
+}
+
+.finale-bg img,
+.cinema .finale-bg img {
+  opacity: 1;
+}
+
+/* 수박 사진 위에 밝은 크림색을 덮어 글씨가 잘 보이게 */
+.finale-bg::after {
+  background: linear-gradient(180deg, rgba(255, 248, 225, 0.72) 0%, rgba(255, 240, 200, 0.9) 100%);
+}
+
+.finale .scene-no {
+  color: var(--green);
+}
+
+.finale-small {
+  color: var(--ink);
+}
+
+.finale-big {
+  color: var(--green);
+  text-shadow: 0 3px 0 #fff, 0 -2px 0 #fff, 3px 0 0 #fff, -3px 0 0 #fff, 0 10px 20px rgba(29, 90, 54, 0.25);
+}
+
+/* ---------- 푸터: 검정 → 진한 초록 ---------- */
+.site-footer {
+  background: var(--green-deep);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.footer-store-name {
+  color: var(--yellow);
+}
+
+.footer-bottom {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* 휴대폰 하단 상담바 뒤 바탕 */
+.mobile-fixed-bar {
+  background: var(--green-deep);
+}
