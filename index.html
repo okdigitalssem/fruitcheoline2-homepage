@@ -29,8 +29,8 @@
   }
 </script>
 <!-- 디자인을 고친 뒤에는 아래 ?v= 뒤 숫자를 바꾸면 손님 휴대폰에 새 디자인이 바로 보입니다 -->
-<link rel="stylesheet" href="css/style.css?v=20260924d" />
-<link rel="stylesheet" href="css/cinema.css?v=20260924d" />
+<link rel="stylesheet" href="css/style.css?v=20260924e" />
+<link rel="stylesheet" href="css/cinema.css?v=20260924e" />
 </head>
 <body>
 
@@ -120,6 +120,35 @@
     </div>
     <p class="hook-small" data-3d="rise" data-config="hook.smallCopy">아이부터 어르신까지, 온 가족이 만족하는</p>
     <h2 class="hook-big display outline" data-3d="standup" data-config="hook.bigCopy">과일철이네2 제철과일!</h2>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ③-1 15초 홍보 영상 (예고편) -->
+<!-- ============================================================ -->
+<section class="section trailer stage3d" id="trailer" data-transition="frame">
+  <div class="wrap trailer-inner">
+    <div class="section-head trailer-head">
+      <span class="scene-no" data-3d="subtitle" data-i="0">TRAILER</span>
+      <p class="eyebrow" data-3d="subtitle" data-i="1" data-config-nl="trailer.smallCopy">15초 만에 만나보는</p>
+      <h2 class="section-title display" data-3d="subtitle" data-i="2" data-config-nl="trailer.title">과일철이네2 예고편</h2>
+      <p class="section-desc" data-3d="subtitle" data-i="3" data-config-nl="trailer.desc"></p>
+    </div>
+    <div class="trailer-phone" data-3d="zoom">
+      <video
+        class="trailer-video"
+        id="trailer-video"
+        src="public/video/promo-15s.mp4"
+        poster="public/video/promo-15s-poster.jpg"
+        muted
+        loop
+        playsinline
+        controls
+        preload="none"
+        aria-label="과일철이네2 15초 홍보 영상"
+      ></video>
+      <button class="trailer-sound" id="trailer-sound" type="button" aria-pressed="false">🔇 소리 켜기</button>
+    </div>
   </div>
 </section>
 
@@ -345,8 +374,8 @@
   <a href="#" class="mobile-bar-btn btn-naver">오시는 길</a>
 </div>
 
-<script src="config/site-config.js?v=20260924d"></script>
-<script src="js/main.js?v=20260924d"></script>
-<script src="js/cinema.js?v=20260924d"></script>
+<script src="config/site-config.js?v=20260924e"></script>
+<script src="js/main.js?v=20260924e"></script>
+<script src="js/cinema.js?v=20260924e"></script>
 </body>
 </html>

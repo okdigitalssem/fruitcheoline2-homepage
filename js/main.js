@@ -417,6 +417,53 @@
   }
 
   // ---------------------------------------------------------
+  // 15초 홍보 영상: 화면에 보이면 소리 없이 자동 재생, 벗어나면 멈춤
+  // ---------------------------------------------------------
+  function setupTrailer() {
+    var video = document.getElementById("trailer-video");
+    var soundBtn = document.getElementById("trailer-sound");
+    if (!video) return;
+
+    function syncSoundBtn() {
+      if (!soundBtn) return;
+      soundBtn.textContent = video.muted ? "🔇 소리 켜기" : "🔊 소리 끄기";
+      soundBtn.setAttribute("aria-pressed", video.muted ? "false" : "true");
+    }
+
+    if (soundBtn) {
+      soundBtn.addEventListener("click", function () {
+        video.muted = !video.muted;
+        if (!video.muted) {
+          video.currentTime = 0; // 소리를 켜면 처음부터 들려줍니다
+          var p = video.play();
+          if (p && p.catch) p.catch(function () {});
+        }
+        syncSoundBtn();
+      });
+    }
+    video.addEventListener("volumechange", syncSoundBtn);
+
+    // "동작 줄이기" 설정 기기나 오래된 브라우저에서는 자동 재생하지 않습니다 (재생 버튼으로 보기)
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce || !("IntersectionObserver" in window)) return;
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var p = video.play();
+            if (p && p.catch) p.catch(function () {});
+          } else if (!video.paused) {
+            video.pause();
+          }
+        });
+      },
+      { threshold: 0.45 }
+    );
+    observer.observe(video);
+  }
+
+  // ---------------------------------------------------------
   // 초기 실행
   // ---------------------------------------------------------
   document.addEventListener("DOMContentLoaded", function () {
@@ -433,5 +480,6 @@
     wireExternalButtons();
     setupHeader();
     setupRevealAnimation();
+    setupTrailer();
   });
 })();
