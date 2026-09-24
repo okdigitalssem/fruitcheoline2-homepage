@@ -37,6 +37,7 @@ fruitcheoline2-homepage/
 ├── js/cinema.js            ← 스크롤 3D 효과 스크립트 (건드리지 않아도 됩니다)
 ├── config/site-config.js   ← ★ 모든 내용을 수정하는 파일 (여기만 고치면 됩니다) ★
 ├── public/images/fruits/   ← 과일 사진 20장을 넣는 폴더
+├── public/video/          ← 홈페이지에 나오는 15초 홍보 영상 (promo-15s.mp4) + 미리보기 사진
 └── promo-video/            ← 15초 세로형 홍보 영상 (자세한 내용은 promo-video/README.md)
 ```
 
@@ -276,6 +277,22 @@ areas: ["성남 구시가지", "위례", "야탑", "분당"],
 - 오프닝 타이틀은 한 번 본 뒤에는 같은 창에서 다시 나오지 않습니다.
 - 효과를 완전히 끄고 싶다면 `index.html` 안의 `<script src="js/cinema.js"></script>` 줄과
   바로 위쪽 `classList.add("cinema")` 가 들어 있는 `<script>` 묶음을 지우면 됩니다.
+
+---
+
+### 홍보 영상(예고편) 바꾸기
+
+노란 띠 바로 아래 "TRAILER" 영역에 15초 홍보 영상이 나옵니다.
+화면에 보이면 소리 없이 자동 재생되고, "소리 켜기" 버튼을 누르면 소리가 나옵니다.
+
+- 문구: `config/site-config.js` 의 `trailer` 부분
+- 영상 파일: `public/video/promo-15s.mp4` (미리보기 사진: `promo-15s-poster.jpg`)
+- 새 영상으로 바꿀 때는 같은 이름으로 덮어쓰면 됩니다.
+  홈페이지용은 용량을 줄인 버전(720×1280, 약 2MB)이 좋습니다. 원본은 `promo-video/` 폴더에 있습니다.
+
+```bash
+ffmpeg -i promo-video/fruitcheoline2-promo-15s.mp4 -vf scale=720:1280 -c:v libx264 -crf 26 -c:a aac -b:a 128k -movflags +faststart public/video/promo-15s.mp4
+```
 
 ---
 

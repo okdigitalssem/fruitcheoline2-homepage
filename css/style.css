@@ -1088,6 +1088,54 @@ section {
   }
 }
 
+/* ---------- 15초 홍보 영상 (예고편) ---------- */
+.trailer {
+  background:
+    radial-gradient(circle at 50% 62%, rgba(255, 194, 26, 0.28) 0, rgba(255, 194, 26, 0) 55%),
+    var(--cream);
+  text-align: center;
+}
+
+.trailer-head {
+  margin-bottom: 36px;
+}
+
+.trailer-phone {
+  position: relative;
+  width: min(340px, 76vw);
+  margin: 0 auto;
+}
+
+.trailer-video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  border: 10px solid var(--ink);
+  border-radius: 36px;
+  background: var(--ink);
+  box-shadow: var(--shadow-strong);
+}
+
+.trailer-sound {
+  margin-top: 20px;
+  padding: 12px 26px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--ink);
+  color: var(--white);
+  font: inherit;
+  font-weight: 800;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+.trailer-sound[aria-pressed="true"] {
+  background: var(--yellow);
+  color: var(--ink);
+}
+
 /* ============================================================
    반응형
    ============================================================ */
