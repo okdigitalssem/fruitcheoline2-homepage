@@ -331,7 +331,7 @@ html:not(.cinema) .scroll-cue {
    SCENE 04 3D 회전 쇼케이스
    ============================================================ */
 .cinema .showcase {
-  height: 520vh;
+  height: 420vh;
   background: #0f0b09;
   color: var(--white);
 }
@@ -810,7 +810,7 @@ html:not(.cinema) .scroll-cue {
   }
 
   .cinema .showcase {
-    height: 440vh;
+    height: 380vh;
   }
 
   .ring {
@@ -1021,4 +1021,380 @@ html:not(.cinema) .scroll-cue {
 .ring-card::after {
   background: var(--orange);
   box-shadow: 0 4px 10px rgba(255, 122, 15, 0.35);
+}
+
+/* ============================================================
+   밝은 SCENE 04 (과일 20종 회전) · 마지막 장면 · 푸터
+   초록(메인) / 노랑(바탕) / 주황(작은 강조) 3가지 색에 맞춤
+   ============================================================ */
+
+/* ---------- SCENE 04 ---------- */
+.cinema .showcase {
+  background: #fff4d0;
+  color: var(--ink);
+}
+
+.showcase-stage {
+  background:
+    radial-gradient(ellipse at 50% 62%, rgba(255, 255, 255, 0.9), transparent 55%),
+    radial-gradient(circle at 10% 15%, rgba(255, 194, 26, 0.35), transparent 40%),
+    radial-gradient(circle at 90% 85%, rgba(46, 125, 79, 0.12), transparent 45%),
+    linear-gradient(180deg, #fff8e1 0%, #ffe9a6 100%);
+}
+
+.showcase-glow {
+  background: radial-gradient(ellipse, rgba(46, 125, 79, 0.18), transparent 70%);
+}
+
+.showcase .scene-no {
+  color: var(--green);
+}
+
+.showcase-small {
+  color: var(--ink-soft);
+}
+
+.showcase-title {
+  color: var(--green);
+  text-shadow: 0 3px 0 #fff, 0 -2px 0 #fff, 3px 0 0 #fff, -3px 0 0 #fff, 0 8px 16px rgba(29, 90, 54, 0.2);
+}
+
+.ring-card {
+  box-shadow: 0 16px 30px rgba(120, 80, 0, 0.18);
+}
+
+.ring-card.is-front {
+  box-shadow: 0 0 0 4px var(--green), 0 18px 40px rgba(29, 90, 54, 0.3);
+}
+
+.showcase-now strong {
+  color: var(--green);
+}
+
+.showcase-now span {
+  color: var(--ink-soft);
+}
+
+/* ---------- 마지막 장면 ---------- */
+.finale,
+.cinema .finale {
+  background: #fff4d0;
+  color: var(--ink);
+}
+
+.finale-bg img,
+.cinema .finale-bg img {
+  opacity: 1;
+}
+
+/* 수박 사진 위에 밝은 크림색을 덮어 글씨가 잘 보이게 */
+.finale-bg::after {
+  background: linear-gradient(180deg, rgba(255, 248, 225, 0.72) 0%, rgba(255, 240, 200, 0.9) 100%);
+}
+
+.finale .scene-no {
+  color: var(--green);
+}
+
+.finale-small {
+  color: var(--ink);
+}
+
+.finale-big {
+  color: var(--green);
+  text-shadow: 0 3px 0 #fff, 0 -2px 0 #fff, 3px 0 0 #fff, -3px 0 0 #fff, 0 10px 20px rgba(29, 90, 54, 0.25);
+}
+
+/* ---------- 푸터: 검정 → 진한 초록 ---------- */
+.site-footer {
+  background: var(--green-deep);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.footer-store-name {
+  color: var(--yellow);
+}
+
+.footer-bottom {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* 휴대폰 하단 상담바 뒤 바탕 */
+.mobile-fixed-bar {
+  background: var(--green-deep);
+}
+
+/* ============================================================
+   처음부터 끝까지 영화처럼 (2026-09)
+   - 모든 장면을 화면 가득
+   - 챕터 타이틀 / 장면 전환 / 엔딩 크레딧
+   ============================================================ */
+
+/* ---------- 모든 장면을 화면 가득 ---------- */
+.cinema .hook,
+.cinema .section {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cinema .hook > .wrap,
+.cinema .section > .wrap {
+  width: 100%;
+}
+
+/* 장면 전환 중 드러나는 바깥 바탕 */
+body {
+  background: #fff8e7;
+}
+
+/* 챕터 타이틀이 앞에 있는 장면은 제목 위 SCENE 표시를 한 번만 */
+.cinema .has-title-card .section-head .scene-no {
+  display: none;
+}
+
+/* ---------- 챕터 타이틀 ---------- */
+.title-card {
+  display: none;
+}
+
+.cinema .title-card {
+  display: block;
+  position: relative;
+  height: 170vh;
+}
+
+.cinema .title-card-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.9), transparent 55%),
+    linear-gradient(160deg, #fff8e1 0%, #ffe9a6 55%, #ffd666 100%);
+}
+
+.tc-inner {
+  padding: 0 20px;
+  will-change: transform, opacity;
+  opacity: 0;
+}
+
+.tc-no {
+  display: inline-block;
+  padding: 4px 14px;
+  border: 1px solid var(--green);
+  border-radius: 2px;
+  font-family: "Courier New", ui-monospace, monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  color: var(--green);
+}
+
+.tc-title {
+  margin-top: 18px;
+  font-size: clamp(48px, 11vw, 140px);
+  color: var(--green);
+  line-height: 1.1;
+  text-shadow: 0 4px 0 #fff, 0 -3px 0 #fff, 4px 0 0 #fff, -4px 0 0 #fff, 0 16px 30px rgba(29, 90, 54, 0.2);
+}
+
+.tc-sub {
+  margin-top: 16px;
+  font-size: clamp(16px, 2.4vw, 22px);
+  font-weight: 700;
+  color: var(--ink-soft);
+  opacity: 0;
+}
+
+/* 필름 가장자리(구멍 뚫린 띠) */
+.film-strip {
+  position: absolute;
+  left: 0;
+  width: calc(100% + 320px);
+  height: 30px;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 14px, rgba(255, 248, 231, 0.95) 14px 26px) center / 100% 12px no-repeat,
+    var(--green);
+  opacity: 0.9;
+  will-change: transform;
+}
+
+.film-strip-top {
+  top: calc(var(--header-height) + 20px);
+}
+
+.film-strip-bottom {
+  bottom: 24px;
+}
+
+/* ---------- 엔딩 (마지막 장면 + 크레딧 + THE END) ---------- */
+.finale-stage {
+  position: relative;
+}
+
+.credits-window {
+  position: relative;
+  padding: 40px 20px 20px;
+}
+
+.credits {
+  text-align: center;
+}
+
+.credits-head {
+  font-family: "Courier New", ui-monospace, monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5em;
+  color: var(--green);
+}
+
+.credits-title {
+  margin: 10px 0 34px;
+  font-size: clamp(34px, 6vw, 56px);
+  color: var(--green);
+}
+
+.credits-list {
+  display: grid;
+  gap: 26px;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.credits-list dt {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--ink-soft);
+}
+
+.credits-list dd {
+  margin-top: 4px;
+  font-size: clamp(18px, 2.6vw, 24px);
+  font-weight: 900;
+  color: var(--ink);
+}
+
+.the-end {
+  position: relative;
+  padding: 30px 20px 100px;
+  text-align: center;
+}
+
+.the-end-small {
+  font-family: "Courier New", ui-monospace, monospace;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.6em;
+  color: var(--green);
+}
+
+.the-end-big {
+  margin-top: 12px;
+  font-size: clamp(34px, 6.4vw, 64px);
+  color: var(--green);
+  text-shadow: 0 3px 0 #fff, 0 -2px 0 #fff, 3px 0 0 #fff, -3px 0 0 #fff, 0 10px 20px rgba(29, 90, 54, 0.25);
+}
+
+.btn-tel {
+  background: var(--green);
+  color: var(--white);
+}
+
+.finale .finale-inner {
+  position: relative;
+  z-index: 2;
+}
+
+/* 효과가 켜졌을 때: 화면에 고정하고 차례로 연출 */
+.cinema .finale {
+  height: 380vh;
+  min-height: 0;
+  display: block;
+  overflow: visible;
+}
+
+.cinema .finale-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cinema .finale-bg {
+  will-change: transform;
+}
+
+.cinema .finale-inner {
+  padding-top: 0;
+  padding-bottom: 0;
+  will-change: transform, opacity;
+}
+
+.cinema .credits-window {
+  position: absolute;
+  top: var(--header-height);
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  padding: 0 20px;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+}
+
+.cinema .credits {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  left: 20px;
+  will-change: transform;
+  transform: translate3d(0, 100vh, 0);
+}
+
+.cinema .the-end {
+  position: absolute;
+  top: var(--header-height);
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* ---------- 휴대폰 ---------- */
+@media (max-width: 860px) {
+  .cinema .title-card {
+    height: 150vh;
+  }
+
+  .film-strip-bottom {
+    bottom: calc(64px + 16px);
+  }
+
+  .cinema .finale {
+    height: 340vh;
+  }
+
+  .cinema .credits-window,
+  .cinema .the-end {
+    bottom: 64px;
+  }
+
+  .the-end .contact-buttons .btn {
+    flex: 1 1 100%;
+  }
 }

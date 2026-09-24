@@ -283,6 +283,37 @@
   }
 
   // ---------------------------------------------------------
+  // 7-1. 엔딩 크레딧 (영화 끝에 올라가는 매장 정보)
+  // ---------------------------------------------------------
+  function renderCredits() {
+    var list = document.getElementById("credits-list");
+    if (!list) return;
+    var f = config.finale || {};
+    var c = config.contact || {};
+    var h = config.hours || {};
+    var d = config.delivery || {};
+    var rows = (f.credits || []).slice();
+    if (c.address) rows.push({ role: "주소", name: c.address });
+    if (c.phone) rows.push({ role: "전화", name: c.phone });
+    if (h.openTime) rows.push({ role: "영업시간", name: h.openTime });
+    if (h.closedDay) rows.push({ role: "정기휴무", name: h.closedDay });
+    if (d.time) rows.push({ role: "배달시간", name: d.time });
+    if (d.areas && d.areas.length) rows.push({ role: "배달지역", name: d.areas.join(" · ") });
+    if (d.minOrder) rows.push({ role: "최소주문", name: d.minOrder });
+    list.innerHTML = rows
+      .map(function (r) {
+        return "<div><dt>" + escapeHtml(r.role) + "</dt><dd>" + escapeHtml(r.name) + "</dd></div>";
+      })
+      .join("");
+
+    var tel = document.getElementById("the-end-tel");
+    if (tel && c.phone) {
+      tel.setAttribute("href", "tel:" + c.phone.replace(/[^0-9+]/g, ""));
+      tel.hidden = false;
+    }
+  }
+
+  // ---------------------------------------------------------
   // 8. 카카오 / 네이버 버튼 링크 연결
   // ---------------------------------------------------------
   function wireExternalButtons() {
@@ -398,6 +429,7 @@
     renderBubbles();
     renderCoupons();
     renderMisc();
+    renderCredits();
     wireExternalButtons();
     setupHeader();
     setupRevealAnimation();

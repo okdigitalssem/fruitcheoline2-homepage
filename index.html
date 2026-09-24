@@ -29,8 +29,8 @@
   }
 </script>
 <!-- 디자인을 고친 뒤에는 아래 ?v= 뒤 숫자를 바꾸면 손님 휴대폰에 새 디자인이 바로 보입니다 -->
-<link rel="stylesheet" href="css/style.css?v=20260924b" />
-<link rel="stylesheet" href="css/cinema.css?v=20260924b" />
+<link rel="stylesheet" href="css/style.css?v=20260924d" />
+<link rel="stylesheet" href="css/cinema.css?v=20260924d" />
 </head>
 <body>
 
@@ -111,7 +111,7 @@
 <!-- ============================================================ -->
 <!-- ③ 노란 띠 - 질문 & 큰 제목 -->
 <!-- ============================================================ -->
-<section class="hook stage3d" id="hook" data-chapter="질문">
+<section class="hook stage3d" id="hook" data-transition="iris" data-chapter="질문">
   <div class="wrap hook-inner">
     <span class="scene-no dark" data-3d="rise">SCENE 02</span>
     <p class="hook-question" data-3d="rise" data-config-nl="hook.question">가족과 함께 먹을 과일,<br />아무거나 고르진 않으셨나요?</p>
@@ -126,13 +126,13 @@
 <!-- ============================================================ -->
 <!-- ④ 소개 + POINT 3가지 (흰 배경) -->
 <!-- ============================================================ -->
-<section class="section about stage3d" id="about" data-chapter="약속">
+<section class="section about stage3d" id="about" data-transition="frame" data-chapter="약속">
   <div class="wrap">
-    <div class="section-head" data-3d="rise">
-      <span class="scene-no">SCENE 03</span>
-      <p class="eyebrow" data-config-nl="about.smallCopy">어린이부터 어르신까지<br />모두의 입맛을 사로잡은</p>
-      <h2 class="section-title display red" data-config="about.title">과일철이네2!</h2>
-      <p class="section-desc" data-config-nl="about.body"></p>
+    <div class="section-head">
+      <span class="scene-no" data-3d="subtitle" data-i="0">SCENE 03</span>
+      <p class="eyebrow" data-3d="subtitle" data-i="1" data-config-nl="about.smallCopy">어린이부터 어르신까지<br />모두의 입맛을 사로잡은</p>
+      <h2 class="section-title display red" data-3d="subtitle" data-i="2" data-config="about.title">과일철이네2!</h2>
+      <p class="section-desc" data-3d="subtitle" data-i="3" data-config-nl="about.body"></p>
     </div>
 
     <div class="points" id="points">
@@ -144,7 +144,7 @@
 <!-- ============================================================ -->
 <!-- ④-1 3D 회전 과일 쇼케이스 (스크롤하면 원형으로 돌아갑니다) -->
 <!-- ============================================================ -->
-<section class="showcase scene-pin" id="showcase" data-scene="ring" data-chapter="과일 20종" data-dark>
+<section class="showcase scene-pin" id="showcase" data-scene="ring" data-chapter="과일 20종">
   <div class="scene-stage showcase-stage">
     <div class="showcase-glow" aria-hidden="true"></div>
     <div class="ring-viewport">
@@ -164,13 +164,13 @@
 <!-- ============================================================ -->
 <!-- ⑤ 과일 상품 20종 -->
 <!-- ============================================================ -->
-<section class="section products stage3d" id="products" data-chapter="골라보기">
+<section class="section products stage3d" id="products" data-transition="frame" data-chapter="골라보기">
   <div class="wrap">
-    <div class="section-head" data-3d="rise">
-      <span class="scene-no">SCENE 05</span>
-      <p class="eyebrow" data-config="products.smallCopy">오늘은 어떤 과일 드실래요?</p>
-      <h2 class="section-title display" data-config="products.title">과일철이네2 과일 20종</h2>
-      <p class="section-desc" data-config="products.subtitle"></p>
+    <div class="section-head">
+      <span class="scene-no" data-3d="subtitle" data-i="0">SCENE 05</span>
+      <p class="eyebrow" data-3d="subtitle" data-i="1" data-config="products.smallCopy">오늘은 어떤 과일 드실래요?</p>
+      <h2 class="section-title display" data-3d="subtitle" data-i="2" data-config="products.title">과일철이네2 과일 20종</h2>
+      <p class="section-desc" data-3d="subtitle" data-i="3" data-config="products.subtitle"></p>
     </div>
 
     <div class="season-tabs" id="season-tabs" role="tablist" aria-label="계절별 과일 보기">
@@ -186,13 +186,13 @@
 <!-- ============================================================ -->
 <!-- ⑥ 선물용 과일 -->
 <!-- ============================================================ -->
-<section class="section gift stage3d" id="gift" data-chapter="선물">
+<section class="section gift stage3d" id="gift" data-transition="wipe" data-chapter="선물">
   <div class="wrap">
-    <div class="section-head" data-3d="rise">
-      <span class="scene-no">SCENE 06</span>
-      <p class="eyebrow" data-config="gift.smallCopy">소중한 마음까지 함께 전합니다</p>
-      <h2 class="section-title display red" data-config="gift.title">선물용 과일세트</h2>
-      <p class="section-desc" data-config-nl="gift.body"></p>
+    <div class="section-head">
+      <span class="scene-no" data-3d="subtitle" data-i="0">SCENE 06</span>
+      <p class="eyebrow" data-3d="subtitle" data-i="1" data-config="gift.smallCopy">소중한 마음까지 함께 전합니다</p>
+      <h2 class="section-title display red" data-3d="subtitle" data-i="2" data-config="gift.title">선물용 과일세트</h2>
+      <p class="section-desc" data-3d="subtitle" data-i="3" data-config-nl="gift.body"></p>
     </div>
 
     <div class="gift-cards" id="gift-cards">
@@ -208,12 +208,12 @@
 <!-- ============================================================ -->
 <!-- ⑦ 이런 분들께 추천해요 (주황 배경 말풍선) -->
 <!-- ============================================================ -->
-<section class="section recommend stage3d" id="recommend" data-chapter="추천">
+<section class="section recommend stage3d" id="recommend" data-transition="iris" data-chapter="추천">
   <div class="wrap">
-    <div class="section-head" data-3d="rise">
-      <span class="scene-no dark">SCENE 07</span>
-      <p class="eyebrow dark" data-config="recommend.smallCopy">이럴 때 과일철이네2를 찾아주세요</p>
-      <h2 class="section-title display outline" data-config="recommend.title">이런 분들께 추천해요</h2>
+    <div class="section-head">
+      <span class="scene-no dark" data-3d="subtitle" data-i="0">SCENE 07</span>
+      <p class="eyebrow dark" data-3d="subtitle" data-i="1" data-config="recommend.smallCopy">이럴 때 과일철이네2를 찾아주세요</p>
+      <h2 class="section-title display outline" data-3d="subtitle" data-i="2" data-config="recommend.title">이런 분들께 추천해요</h2>
     </div>
     <div class="bubbles" id="bubbles">
       <!-- JS가 config.recommend.items 값으로 자동 채웁니다 -->
@@ -224,12 +224,12 @@
 <!-- ============================================================ -->
 <!-- ⑧ 이용 혜택 (쿠폰) -->
 <!-- ============================================================ -->
-<section class="section benefits stage3d" id="benefits" data-chapter="혜택">
+<section class="section benefits stage3d" id="benefits" data-transition="wipe" data-chapter="혜택">
   <div class="wrap">
-    <div class="section-head" data-3d="rise">
-      <span class="scene-no dark">SCENE 08</span>
-      <p class="eyebrow dark" data-config="benefits.smallCopy">과일철이네2에서만 누리는</p>
-      <h2 class="section-title display outline tilt" data-config="benefits.title">이용 혜택</h2>
+    <div class="section-head">
+      <span class="scene-no dark" data-3d="subtitle" data-i="0">SCENE 08</span>
+      <p class="eyebrow dark" data-3d="subtitle" data-i="1" data-config="benefits.smallCopy">과일철이네2에서만 누리는</p>
+      <h2 class="section-title display outline tilt" data-3d="subtitle" data-i="2" data-config="benefits.title">이용 혜택</h2>
     </div>
     <div class="coupons" id="coupons">
       <!-- JS가 config.benefits.items 값으로 자동 채웁니다 -->
@@ -240,7 +240,7 @@
 <!-- ============================================================ -->
 <!-- ⑨ 배달 / 영업 안내 -->
 <!-- ============================================================ -->
-<section class="section info stage3d" id="info" data-chapter="안내">
+<section class="section info stage3d" id="info" data-transition="frame" data-chapter="안내">
   <div class="wrap">
     <div class="info-grid">
       <div class="info-box" id="delivery" data-3d="rise" data-i="0">
@@ -279,19 +279,41 @@
 </section>
 
 <!-- ============================================================ -->
-<!-- ⑩ 마지막 CTA (검정 배경) -->
+<!-- ⑩ 엔딩: 마지막 장면 → 엔딩 크레딧 → THE END -->
 <!-- ============================================================ -->
-<section class="finale stage3d" id="contact" data-chapter="엔딩" data-dark>
-  <div class="finale-bg" aria-hidden="true" data-3d="kenburns">
-    <img data-config-img="finale.image" src="public/images/fruits/12-watermelon.jpg" alt="" loading="lazy" />
-  </div>
-  <div class="wrap finale-inner">
-    <span class="scene-no" data-3d="rise">FINAL SCENE</span>
-    <p class="finale-small" data-3d="rise" data-config="finale.smallCopy">오늘 저녁 식탁에, 소중한 분께 드릴 선물로</p>
-    <h2 class="finale-big display" data-3d="zoom" data-config-nl="finale.bigCopy">지금 바로<br />과일철이네2를 만나보세요!</h2>
-    <div class="contact-buttons" data-3d="rise">
-      <a href="#" class="btn btn-kakao btn-large">카카오톡 1:1 상담</a>
-      <a href="#" class="btn btn-naver btn-large">네이버 지도로 오시는 길</a>
+<section class="finale scene-pin" id="contact" data-chapter="엔딩" data-scene="finale">
+  <div class="scene-stage finale-stage">
+    <div class="finale-bg" id="finale-bg" aria-hidden="true">
+      <img data-config-img="finale.image" src="public/images/fruits/12-watermelon.jpg" alt="" loading="lazy" />
+    </div>
+
+    <div class="wrap finale-inner" id="finale-title">
+      <span class="scene-no">FINAL SCENE</span>
+      <p class="finale-small" data-config="finale.smallCopy">오늘 저녁 식탁에, 소중한 분께 드릴 선물로</p>
+      <h2 class="finale-big display" data-config-nl="finale.bigCopy">지금 바로<br />과일철이네2를 만나보세요!</h2>
+      <div class="contact-buttons">
+        <a href="#" class="btn btn-kakao btn-large">카카오톡 1:1 상담</a>
+        <a href="#" class="btn btn-naver btn-large">네이버 지도로 오시는 길</a>
+      </div>
+    </div>
+
+    <!-- 엔딩 크레딧 (config.finale.credits + 매장 정보로 자동 작성) -->
+    <div class="credits-window" id="credits-window">
+      <div class="credits" id="credits">
+        <p class="credits-head">CREDITS</p>
+        <p class="credits-title display" data-config="storeName">과일철이네2</p>
+        <dl class="credits-list" id="credits-list"></dl>
+      </div>
+    </div>
+
+    <div class="the-end" id="the-end">
+      <p class="the-end-small">THE END</p>
+      <p class="the-end-big display" data-config="finale.theEnd">과일철이네2에서 만나요!</p>
+      <div class="contact-buttons">
+        <a href="#" class="btn btn-kakao btn-large">카카오톡 1:1 상담</a>
+        <a href="#" class="btn btn-naver btn-large">오시는 길</a>
+        <a href="#" class="btn btn-tel btn-large" id="the-end-tel" hidden>전화하기</a>
+      </div>
     </div>
   </div>
 </section>
@@ -323,8 +345,8 @@
   <a href="#" class="mobile-bar-btn btn-naver">오시는 길</a>
 </div>
 
-<script src="config/site-config.js?v=20260924b"></script>
-<script src="js/main.js?v=20260924b"></script>
-<script src="js/cinema.js?v=20260924b"></script>
+<script src="config/site-config.js?v=20260924d"></script>
+<script src="js/main.js?v=20260924d"></script>
+<script src="js/cinema.js?v=20260924d"></script>
 </body>
 </html>
