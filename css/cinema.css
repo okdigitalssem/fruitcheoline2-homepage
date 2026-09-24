@@ -1,0 +1,852 @@
+/* ============================================================
+   과일철이네2 - 영화 같은 3D 스크롤 효과 스타일 (cinema.css)
+   html 에 .cinema 클래스가 있을 때만 적용됩니다.
+   (동작 줄이기 설정 기기 / 자바스크립트 꺼짐 → 일반 페이지)
+   ============================================================ */
+
+/* ---------- 공통: 장면 번호 ---------- */
+.scene-no {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 3px 12px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  color: var(--orange);
+  font-family: "Courier New", ui-monospace, monospace;
+}
+
+.scene-no.dark {
+  color: var(--ink);
+}
+
+.hero .scene-no {
+  color: var(--yellow);
+}
+
+.point-photo-wrap {
+  min-width: 0;
+}
+
+.point:nth-child(even) .point-photo-wrap {
+  order: 2;
+}
+
+/* 효과가 꺼져 있을 때: 쇼케이스·영화 장치는 숨김 */
+html:not(.cinema) .showcase,
+html:not(.cinema) .film-intro,
+html:not(.cinema) .letterbox,
+html:not(.cinema) .film-grain,
+html:not(.cinema) .scroll-progress,
+html:not(.cinema) .hero-caption,
+html:not(.cinema) .scroll-cue {
+  display: none;
+}
+
+/* ============================================================
+   아래부터는 효과가 켜졌을 때만
+   ============================================================ */
+
+/* ---------- 오프닝 타이틀 ---------- */
+.cinema .film-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  color: var(--white);
+  pointer-events: none;
+  transition: opacity 0.9s ease 0.1s, visibility 0s linear 1s;
+}
+
+.film-intro-small {
+  font-family: "Courier New", ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.5em;
+  color: rgba(255, 255, 255, 0.6);
+  animation: intro-in 1.2s ease both;
+}
+
+.film-intro-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-synthesis: none;
+  font-size: clamp(44px, 9vw, 96px);
+  color: var(--yellow);
+  letter-spacing: 0.06em;
+  animation: intro-title 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes intro-in {
+  from {
+    opacity: 0;
+    letter-spacing: 1.2em;
+  }
+}
+
+@keyframes intro-title {
+  from {
+    opacity: 0;
+    transform: perspective(600px) translateZ(-300px) rotateX(30deg);
+    filter: blur(12px);
+  }
+}
+
+.cinema.intro-done .film-intro {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* ---------- 레터박스 (위아래 검은 띠) ---------- */
+.cinema {
+  --letterbox: 1;
+}
+
+.cinema .letterbox {
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 9vh;
+  background: #000;
+  z-index: 95;
+  pointer-events: none;
+  transition: transform 0.05s linear;
+}
+
+.cinema .letterbox-top {
+  top: var(--header-height);
+  transform-origin: top;
+  transform: scaleY(var(--letterbox));
+}
+
+.cinema .letterbox-bottom {
+  bottom: 0;
+  transform-origin: bottom;
+  transform: scaleY(var(--letterbox));
+}
+
+/* ---------- 필름 질감 ---------- */
+.cinema .film-grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 96;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 0.9s steps(6) infinite;
+}
+
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-4%, 3%); }
+  40% { transform: translate(3%, -5%); }
+  60% { transform: translate(-6%, -2%); }
+  80% { transform: translate(5%, 4%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* ---------- 스크롤 진행바 ---------- */
+.cinema .scroll-progress {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 101;
+  pointer-events: none;
+}
+
+.scroll-progress span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--yellow), var(--orange), var(--red));
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+/* ---------- 고정 무대 공통 ---------- */
+.cinema .scene-pin {
+  position: relative;
+  overflow: visible;
+}
+
+.cinema .scene-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+
+/* ============================================================
+   SCENE 01 히어로
+   ============================================================ */
+.cinema .hero {
+  height: 280vh;
+  background: var(--ink);
+}
+
+.cinema .hero-stage {
+  background:
+    radial-gradient(ellipse at 80% 20%, rgba(255, 138, 31, 0.25), transparent 55%),
+    radial-gradient(ellipse at 10% 90%, rgba(232, 52, 28, 0.2), transparent 50%),
+    radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.55) 100%),
+    var(--ink);
+  display: flex;
+  flex-direction: column;
+}
+
+.cinema .hero-inner {
+  flex: 1;
+  width: 100%;
+  padding-top: calc(var(--header-height) + 24px);
+  padding-bottom: 72px;
+  position: relative;
+  z-index: 2;
+}
+
+.cinema .hero-text,
+.cinema .hero-photo,
+.cinema .stamp,
+.cinema .particle {
+  will-change: transform, opacity;
+}
+
+.cinema .hero-photo {
+  position: relative;
+  border-radius: var(--round, 32px);
+  transform-origin: center;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 194, 26, 0.3);
+}
+
+.cinema .hero-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.9));
+  opacity: var(--shade, 0);
+  pointer-events: none;
+}
+
+.cinema .stamp {
+  z-index: 3;
+}
+
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  line-height: 1;
+}
+
+.hero-caption {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 5;
+  width: min(92vw, 900px);
+  text-align: center;
+  color: var(--white);
+  font-size: clamp(32px, 5.6vw, 64px);
+  line-height: 1.3;
+  opacity: 0;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+  pointer-events: none;
+}
+
+.scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: 64px;
+  z-index: 4;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: "Courier New", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  pointer-events: none;
+}
+
+.scroll-cue span {
+  width: 22px;
+  height: 36px;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 12px;
+  position: relative;
+}
+
+.scroll-cue span::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 6px;
+  width: 4px;
+  height: 8px;
+  margin-left: -2px;
+  border-radius: 2px;
+  background: var(--yellow);
+  animation: cue 1.6s ease-in-out infinite;
+}
+
+@keyframes cue {
+  0% { transform: translateY(0); opacity: 1; }
+  80% { transform: translateY(12px); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.cinema .hero-ticker {
+  position: relative;
+  z-index: 6;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   SCENE 04 3D 회전 쇼케이스
+   ============================================================ */
+.cinema .showcase {
+  height: 520vh;
+  background: #0f0b09;
+  color: var(--white);
+}
+
+.showcase-stage {
+  background:
+    radial-gradient(ellipse at 50% 60%, rgba(255, 138, 31, 0.28), transparent 60%),
+    radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.7) 100%),
+    #0f0b09;
+}
+
+.showcase-glow {
+  position: absolute;
+  left: 50%;
+  top: 62%;
+  width: 70vmin;
+  height: 18vmin;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse, rgba(255, 194, 26, 0.35), transparent 70%);
+  filter: blur(20px);
+}
+
+.ring-viewport {
+  position: absolute;
+  inset: 0;
+  perspective: 1500px;
+  perspective-origin: 50% 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 4vh;
+}
+
+.ring {
+  position: relative;
+  width: min(210px, 25vh);
+  height: min(270px, 32vh);
+  transform-style: preserve-3d;
+  will-change: transform;
+  opacity: 0;
+}
+
+.ring-card {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  display: block;
+  cursor: pointer;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  backface-visibility: visible;
+  transition: box-shadow 0.4s ease;
+}
+
+.ring-card.is-front {
+  box-shadow: 0 0 0 4px var(--yellow), 0 0 60px rgba(255, 194, 26, 0.7);
+}
+
+.ring-photo {
+  height: 78%;
+  background: var(--cream-2);
+}
+
+.ring-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ring-name {
+  height: 22%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-weight: 900;
+  font-size: 18px;
+  color: var(--ink);
+}
+
+.showcase-center {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--header-height) + 5vh);
+  text-align: center;
+  z-index: 3;
+  pointer-events: none;
+  padding: 0 20px;
+}
+
+.showcase .scene-no {
+  color: var(--yellow);
+}
+
+.showcase-small {
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.showcase-title {
+  margin-top: 6px;
+  font-size: clamp(30px, 5vw, 56px);
+  color: var(--yellow);
+  text-shadow: 0 4px 0 rgba(184, 32, 13, 0.9);
+}
+
+.showcase-now {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 6vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  pointer-events: none;
+}
+
+.showcase-now strong {
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 900;
+  color: var(--white);
+}
+
+.showcase-now span {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.showcase-now.is-swap {
+  animation: now-swap 0.3s ease;
+}
+
+@keyframes now-swap {
+  from {
+    opacity: 0.35;
+    transform: translateY(6px);
+  }
+}
+
+/* sticky 무대 안에서만 보이도록 (fixed 대신 무대 기준) */
+.cinema .showcase-now {
+  position: absolute;
+  z-index: 4;
+}
+
+/* 앞쪽 카드에 "눌러서 보기" 딱지 */
+.ring-card::after {
+  content: "눌러서 보기 ›";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--red);
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 900;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.ring-card.is-front::after {
+  opacity: 1;
+  transform: none;
+}
+
+.ring-card:focus-visible {
+  outline: 4px solid var(--yellow);
+  outline-offset: 4px;
+}
+
+/* 회전 쇼케이스에서 눌러서 이동한 상품 카드 강조 */
+.fruit-card.is-spot {
+  animation: spot 1.8s ease;
+}
+
+@keyframes spot {
+  0%, 60% {
+    box-shadow: 0 0 0 5px var(--yellow), 0 0 50px rgba(255, 138, 31, 0.8);
+  }
+  100% {
+    box-shadow: var(--shadow);
+  }
+}
+
+/* ============================================================
+   첫 제목: 한 글자씩 3D로 등장
+   ============================================================ */
+.cinema .hero-headline.is-split {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+}
+
+.cinema .hero-headline .word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.cinema .hero-headline .ch {
+  display: inline-block;
+  background: linear-gradient(180deg, var(--yellow-light) 0%, var(--yellow) 45%, var(--orange) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transform-origin: 50% 100%;
+  animation: ch-in 0.9s cubic-bezier(0.2, 0.9, 0.25, 1.25) both;
+  animation-delay: calc(var(--i) * 60ms + 150ms);
+  animation-play-state: paused;
+}
+
+.cinema.intro-done .hero-headline .ch {
+  animation-play-state: running;
+}
+
+@keyframes ch-in {
+  from {
+    opacity: 0;
+    transform: perspective(500px) translate3d(0, 40px, -120px) rotateX(-95deg);
+  }
+}
+
+.cinema .hero-question,
+.cinema .hero-sub,
+.cinema .hero-buttons,
+.cinema .hero-text .scene-no {
+  animation: soft-in 0.9s ease both;
+  animation-play-state: paused;
+}
+
+.cinema .hero-text .scene-no { animation-delay: 0s; }
+.cinema .hero-question { animation-delay: 0.1s; }
+.cinema .hero-sub { animation-delay: 0.9s; }
+.cinema .hero-buttons { animation-delay: 1.05s; }
+
+.cinema.intro-done .hero-question,
+.cinema.intro-done .hero-sub,
+.cinema.intro-done .hero-buttons,
+.cinema.intro-done .hero-text .scene-no {
+  animation-play-state: running;
+}
+
+@keyframes soft-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+    filter: blur(6px);
+  }
+}
+
+/* ============================================================
+   오른쪽 장면 목차 (PC)
+   ============================================================ */
+.scene-nav {
+  display: none;
+}
+
+@media (min-width: 1100px) {
+  .cinema .scene-nav {
+    position: fixed;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 97;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 8px;
+    border-radius: 16px;
+    background: rgba(20, 15, 12, 0.35);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: background 0.4s ease;
+    opacity: 0;
+    animation: nav-in 0.8s ease 1.6s forwards;
+  }
+
+  @keyframes nav-in {
+    to {
+      opacity: 1;
+    }
+  }
+
+  .scene-nav.on-light {
+    background: rgba(255, 255, 255, 0.55);
+    box-shadow: 0 6px 20px rgba(60, 30, 5, 0.12);
+  }
+
+  .scene-nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 4px 6px;
+    border-radius: 999px;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .on-light .scene-nav-item {
+    color: var(--ink-soft);
+  }
+
+  .scene-nav-no {
+    font-family: "Courier New", ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+  }
+
+  .scene-nav-label {
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    opacity: 0;
+    transition: max-width 0.35s ease, opacity 0.35s ease;
+  }
+
+  .scene-nav:hover .scene-nav-label,
+  .scene-nav-item.is-active .scene-nav-label {
+    max-width: 90px;
+    opacity: 1;
+  }
+
+  .scene-nav-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.5;
+    transition: transform 0.3s ease, background 0.3s ease, opacity 0.3s ease;
+  }
+
+  .scene-nav-item.is-active {
+    color: var(--yellow);
+  }
+
+  .on-light .scene-nav-item.is-active {
+    color: var(--red);
+  }
+
+  .scene-nav-item.is-active .scene-nav-dot {
+    opacity: 1;
+    transform: scale(1.6);
+  }
+
+  .scene-nav-item:hover {
+    color: var(--orange);
+  }
+}
+
+/* ============================================================
+   카드 3D 호버: 빛 반사 (PC)
+   ============================================================ */
+@media (hover: hover) and (pointer: fine) {
+  .cinema .fruit-card::after,
+  .cinema .gift-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, 0.55), transparent 55%);
+    mix-blend-mode: soft-light;
+    opacity: var(--glare, 0);
+  }
+
+  .cinema .gift-card {
+    position: relative;
+  }
+
+  .cinema .fruit-card,
+  .cinema .gift-card {
+    transform-style: preserve-3d;
+  }
+}
+
+/* ============================================================
+   3D 등장 요소 공통
+   ============================================================ */
+.cinema [data-3d] {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+.cinema [data-3d="kenburns"] {
+  backface-visibility: visible;
+}
+
+.cinema .hook,
+.cinema .section,
+.cinema .finale {
+  overflow: hidden;
+}
+
+/* 3D 카드가 가려지지 않도록 */
+.cinema .fruit-grid,
+.cinema .gift-cards,
+.cinema .coupons,
+.cinema .points {
+  overflow: visible;
+}
+
+/* JS가 transform을 직접 제어하므로 hover 이동 효과는 그림자만 */
+@media (hover: hover) {
+  .cinema .fruit-card:hover {
+    transform: none;
+  }
+}
+
+.cinema .finale {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cinema .finale-inner {
+  width: 100%;
+}
+
+.cinema .finale-bg img {
+  opacity: 0.4;
+}
+
+/* ============================================================
+   모바일
+   ============================================================ */
+@media (max-width: 860px) {
+  .cinema .hero {
+    height: 240vh;
+  }
+
+  .cinema .hero-inner {
+    gap: 22px;
+    padding-top: calc(var(--header-height) + 16px);
+    padding-bottom: 56px;
+    align-content: center;
+  }
+
+  .cinema .hero-visual {
+    width: min(64vw, 30svh);
+    max-width: none;
+  }
+
+  .cinema .hero-buttons {
+    margin-top: 20px;
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  .cinema .hero-buttons .btn {
+    flex: 1 1 0;
+    padding: 12px 10px;
+    font-size: 14px;
+  }
+
+  .scroll-cue {
+    display: none;
+  }
+
+  .cinema .showcase {
+    height: 440vh;
+  }
+
+  .ring {
+    width: 150px;
+    height: 196px;
+  }
+
+  .ring-viewport {
+    padding-top: 0;
+    perspective-origin: 50% 35%;
+  }
+
+  .ring-name {
+    font-size: 15px;
+  }
+
+  .showcase-now {
+    bottom: calc(64px + 3vh);
+  }
+
+  .cinema .letterbox {
+    height: 4vh;
+  }
+
+  .cinema .letterbox-bottom {
+    bottom: 64px;
+  }
+}
+
+@media (max-width: 860px) {
+  /* 하단 고정 상담바 높이만큼 무대를 비워둡니다 */
+  .cinema .hero-stage {
+    padding-bottom: calc(64px + env(safe-area-inset-bottom));
+  }
+  .cinema .hero-sub {
+    display: none;
+  }
+  .cinema .hero-question {
+    font-size: 16px;
+  }
+  .cinema .hero-headline {
+    font-size: clamp(34px, 10.5vw, 46px);
+  }
+  .cinema .hero-inner {
+    padding-bottom: 40px;
+  }
+  .cinema .stamp {
+    width: 84px;
+    height: 84px;
+    font-size: 12px;
+    left: -12px;
+    bottom: -14px;
+  }
+}
+
+@media (max-width: 860px) {
+  .point:nth-child(even) .point-photo-wrap {
+    order: 0;
+  }
+}
