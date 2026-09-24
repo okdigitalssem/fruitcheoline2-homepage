@@ -203,7 +203,7 @@
         return (
           '<a class="ring-card" href="#fruit-card-' + i + '" data-i="' + i + '" aria-label="' +
           escapeHtml(f.name) + ' 자세히 보기">' +
-          '<div class="ring-photo"><img src="' + IMG_DIR + encodeURIComponent(f.file) + '" alt="" loading="lazy" ' +
+          '<div class="ring-photo"><img data-src="' + IMG_DIR + encodeURIComponent(f.file) + '" alt="" ' +
           'decoding="async" onerror="this.style.visibility=\'hidden\'" /></div>' +
           '<span class="ring-name"><span class="ring-emoji">' + escapeHtml(f.emoji || "") + "</span>" +
           escapeHtml(f.name) + "</span></a>"
@@ -583,6 +583,14 @@
     var heroRect = hero.section && hero.section.getBoundingClientRect();
     if (heroRect && heroRect.bottom > -50) renderHero(time);
     var ringRect = ring.section && !ring.section.hidden && ring.section.getBoundingClientRect();
+    // 쇼케이스가 가까워지면 사진을 불러옵니다 (일부 앱 내장 브라우저는 3D 안의 지연 로딩이 안 되어 직접 처리)
+    if (ringRect && !ring.loaded && ringRect.top < vh * 2.5) {
+      ring.loaded = true;
+      ring.el.querySelectorAll("img[data-src]").forEach(function (img) {
+        img.src = img.getAttribute("data-src");
+        img.removeAttribute("data-src");
+      });
+    }
     if (ringRect && ringRect.bottom > -50 && ringRect.top < vh + 50) renderRing();
 
     // 3D 등장 요소
