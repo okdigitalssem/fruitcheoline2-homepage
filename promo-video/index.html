@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <!--
+      과일철이네2 15초 세로형(1080x1920) 홍보 영상 - HyperFrames 컴포지션
+      렌더링 방법은 promo-video/README.md 를 참고하세요.
+    -->
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Black Han Sans";
+        src: url("assets/fonts/BlackHanSans-subset.woff2") format("woff2");
+        font-weight: 400;
+      }
+      @font-face {
+        font-family: "Noto Sans KR";
+        src: url("assets/fonts/NotoSansKR-subset.woff2") format("woff2");
+        font-weight: 100 900;
+      }
+
+      :root {
+        --ink: #1c1714;
+        --ink-soft: #5a4f47;
+        --yellow: #ffc21a;
+        --yellow-light: #ffe07a;
+        --green: #2e7d4f;
+        --green-deep: #1d5a36;
+        --orange: #ff8a1f;
+        --cream: #fff8ea;
+        --white: #ffffff;
+        --kakao: #fee500;
+        --kakao-text: #3a1d1d;
+        --display: "Black Han Sans", "Noto Sans KR", sans-serif;
+        --body: "Noto Sans KR", sans-serif;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: var(--ink);
+      }
+      #root {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        font-family: var(--body);
+        color: var(--ink);
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      .photo {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      /* ---------- SCENE 1: 질문 (검정) ---------- */
+      #s1 {
+        background: var(--ink);
+      }
+      #s1 .bg {
+        opacity: 0.28;
+        filter: grayscale(0.85) blur(2px);
+      }
+      #s1 .shade {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(28, 23, 20, 0.2) 0%, rgba(28, 23, 20, 0.92) 70%);
+      }
+      #s1 .q {
+        position: absolute;
+        left: 90px;
+        right: 90px;
+        top: 560px;
+        color: var(--white);
+      }
+      #s1 .q .line {
+        display: block;
+        font-family: var(--display);
+        font-size: 128px;
+        line-height: 1.18;
+        letter-spacing: -2px;
+      }
+      #s1 .q .hl {
+        color: var(--yellow);
+      }
+      #s1 .dice {
+        position: absolute;
+        right: 110px;
+        top: 360px;
+        font-family: var(--display);
+        font-size: 190px;
+        color: var(--yellow);
+      }
+      #s1 .sub {
+        position: absolute;
+        left: 90px;
+        top: 1180px;
+        font-size: 44px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      /* ---------- SCENE 2: 그럼 과일철이네2! (노랑) ---------- */
+      #s2 {
+        background: var(--yellow);
+      }
+      #s2 .then {
+        position: absolute;
+        top: 300px;
+        width: 100%;
+        text-align: center;
+        font-family: var(--display);
+        font-size: 96px;
+        color: var(--ink);
+      }
+      #s2 .brand {
+        position: absolute;
+        top: 420px;
+        width: 100%;
+        text-align: center;
+        font-family: var(--display);
+        font-size: 200px;
+        letter-spacing: -4px;
+        color: var(--ink);
+        white-space: nowrap;
+      }
+      #s2 .brand .two {
+        color: var(--green);
+      }
+      #s2 .circle {
+        position: absolute;
+        left: 170px;
+        top: 760px;
+        width: 740px;
+        height: 740px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 14px solid var(--white);
+        box-shadow: 0 30px 60px rgba(60, 30, 5, 0.25);
+      }
+      #s2 .stamp {
+        position: absolute;
+        left: 690px;
+        top: 700px;
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        background: var(--orange);
+        color: var(--white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-family: var(--display);
+        font-size: 46px;
+        line-height: 1.15;
+        border: 6px dashed rgba(255, 255, 255, 0.85);
+        outline: 8px solid var(--orange);
+      }
+      #s2 .tag {
+        position: absolute;
+        top: 1560px;
+        width: 100%;
+        text-align: center;
+        font-size: 46px;
+        font-weight: 700;
+        color: var(--ink);
+      }
+
+      /* ---------- SCENE 3: POINT 3가지 ---------- */
+      .point .photo {
+        transform-origin: 50% 40%;
+      }
+      .point .grad {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(20, 14, 10, 0.78) 100%);
+      }
+      .point .card {
+        position: absolute;
+        left: 70px;
+        right: 70px;
+        top: 1080px;
+        padding: 56px 60px 60px;
+        border-radius: 40px;
+        background: var(--white);
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+      }
+      .point .no {
+        display: inline-block;
+        padding: 10px 28px;
+        border-radius: 999px;
+        background: var(--green);
+        color: var(--white);
+        font-size: 36px;
+        font-weight: 800;
+        letter-spacing: 2px;
+      }
+      .point .title {
+        margin-top: 24px;
+        font-family: var(--display);
+        font-size: 112px;
+        line-height: 1.1;
+        color: var(--ink);
+      }
+      .point .desc {
+        margin-top: 18px;
+        font-size: 42px;
+        font-weight: 500;
+        line-height: 1.45;
+        color: var(--ink-soft);
+      }
+      .point .progress {
+        position: absolute;
+        top: 150px;
+        left: 70px;
+        right: 70px;
+        display: flex;
+        gap: 14px;
+      }
+      .point .progress span {
+        flex: 1;
+        height: 10px;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.4);
+      }
+      .point .progress span.on {
+        background: var(--yellow);
+      }
+
+      /* ---------- SCENE 4: 과일 20종 ---------- */
+      #s4 {
+        background: var(--cream);
+      }
+      #s4 .small {
+        position: absolute;
+        top: 170px;
+        width: 100%;
+        text-align: center;
+        font-size: 44px;
+        font-weight: 700;
+        color: var(--green);
+      }
+      #s4 .title {
+        position: absolute;
+        top: 240px;
+        width: 100%;
+        text-align: center;
+        font-family: var(--display);
+        font-size: 124px;
+        color: var(--ink);
+      }
+      #s4 .title em {
+        font-style: normal;
+        color: var(--orange);
+      }
+      #s4 .grid {
+        position: absolute;
+        top: 480px;
+        left: 50px;
+        right: 50px;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        column-gap: 12px;
+        row-gap: 34px;
+      }
+      #s4 .cell {
+        text-align: center;
+      }
+      #s4 .cell img {
+        display: block;
+        width: 176px;
+        height: 176px;
+        margin: 0 auto;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 6px solid var(--white);
+        box-shadow: 0 10px 22px rgba(60, 30, 5, 0.16);
+      }
+      #s4 .cell span {
+        display: block;
+        margin-top: 8px;
+        font-size: 29px;
+        font-weight: 800;
+        color: var(--ink);
+      }
+      #s4 .gift {
+        position: absolute;
+        left: 90px;
+        right: 90px;
+        top: 1520px;
+        padding: 30px 0;
+        border-radius: 999px;
+        background: var(--green);
+        color: var(--white);
+        text-align: center;
+        font-size: 44px;
+        font-weight: 800;
+      }
+
+      /* ---------- SCENE 5: 엔딩 ---------- */
+      #s5 {
+        background: var(--ink);
+      }
+      #s5 .bg {
+        opacity: 0.55;
+      }
+      #s5 .shade {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(28, 23, 20, 0.35) 0%, rgba(28, 23, 20, 0.95) 62%);
+      }
+      #s5 .small {
+        position: absolute;
+        top: 300px;
+        left: 80px;
+        right: 80px;
+        font-size: 44px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.85);
+      }
+      #s5 .big {
+        position: absolute;
+        top: 380px;
+        left: 80px;
+        right: 80px;
+        font-family: var(--display);
+        font-size: 128px;
+        line-height: 1.16;
+        color: var(--white);
+      }
+      #s5 .big .hl {
+        color: var(--yellow);
+      }
+      #s5 .info {
+        position: absolute;
+        top: 800px;
+        left: 80px;
+        right: 80px;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
+      #s5 .row {
+        display: flex;
+        align-items: center;
+        gap: 26px;
+        padding: 26px 36px;
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.16);
+        color: var(--white);
+      }
+      #s5 .row b {
+        flex: none;
+        width: 168px;
+        font-size: 34px;
+        font-weight: 800;
+        color: var(--yellow);
+      }
+      #s5 .row span {
+        font-size: 42px;
+        font-weight: 700;
+      }
+      #s5 .kakao {
+        position: absolute;
+        left: 80px;
+        right: 80px;
+        top: 1400px;
+        padding: 36px 0;
+        border-radius: 999px;
+        background: var(--kakao);
+        color: var(--kakao-text);
+        text-align: center;
+        font-size: 54px;
+        font-weight: 900;
+      }
+      #s5 .addr {
+        position: absolute;
+        left: 80px;
+        right: 80px;
+        top: 1570px;
+        text-align: center;
+        font-size: 34px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      /* 장면 전환용 와이프 */
+      .wipe {
+        position: absolute;
+        left: 0;
+        width: 1080px;
+        height: 1920px;
+        top: 1920px;
+        z-index: 50;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="15"
+      data-width="1080"
+      data-height="1920"
+    >
+      <!-- SCENE 1 : 0.0 ~ 2.8s -->
+      <section id="s1" class="scene clip" data-start="0" data-duration="2.8" data-track-index="0">
+        <img class="photo bg" src="assets/fruits/03-grapefruit.jpg" alt="" />
+        <div class="shade"></div>
+        <div class="dice">?</div>
+        <div class="q">
+          <span class="line">마트 과일,</span>
+          <span class="line">맛이 매번</span>
+          <span class="line hl">복불복</span>
+          <span class="line">이셨죠?</span>
+        </div>
+        <div class="sub">달까? 실까? 고를 때마다 고민…</div>
+      </section>
+
+      <!-- SCENE 2 : 2.8 ~ 5.6s -->
+      <section id="s2" class="scene clip" data-start="2.8" data-duration="2.8" data-track-index="1">
+        <div class="then">그럼</div>
+        <div class="brand">과일철이네<span class="two">2</span>!</div>
+        <div class="circle"><img class="photo" src="assets/fruits/17-strawberry.jpg" alt="" /></div>
+        <div class="stamp">오늘도<br />과일철이네</div>
+        <div class="tag">가족에게 드리는 마음으로, 좋은 과일만 정성껏</div>
+      </section>
+
+      <!-- SCENE 3 : POINT 01~03, 5.6 ~ 10.0s -->
+      <section id="p1" class="scene point clip" data-start="5.6" data-duration="1.6" data-track-index="2">
+        <img class="photo" src="assets/fruits/15-apple.jpg" alt="" />
+        <div class="grad"></div>
+        <div class="progress"><span class="on"></span><span></span><span></span></div>
+        <div class="card">
+          <span class="no">POINT 01</span>
+          <div class="title">신선도 최우선!</div>
+          <div class="desc">그날그날 들어온 과일을<br />직접 보고 고릅니다</div>
+        </div>
+      </section>
+      <section id="p2" class="scene point clip" data-start="7.1" data-duration="1.6" data-track-index="3">
+        <img class="photo" src="assets/fruits/08-mango.jpg" alt="" />
+        <div class="grad"></div>
+        <div class="progress"><span class="on"></span><span class="on"></span><span></span></div>
+        <div class="card">
+          <span class="no">POINT 02</span>
+          <div class="title">당도 꼼꼼 체크!</div>
+          <div class="desc">먹어보고 맛있는 과일만<br />권해드립니다</div>
+        </div>
+      </section>
+      <section id="p3" class="scene point clip" data-start="8.6" data-duration="1.5" data-track-index="4">
+        <img class="photo" src="assets/fruits/18-peach.jpg" alt="" />
+        <div class="grad"></div>
+        <div class="progress"><span class="on"></span><span class="on"></span><span class="on"></span></div>
+        <div class="card">
+          <span class="no">POINT 03</span>
+          <div class="title">정성 가득 포장!</div>
+          <div class="desc">선물용은 물론, 집에서 드실 과일도<br />꼼꼼하게 포장합니다</div>
+        </div>
+      </section>
+
+      <!-- SCENE 4 : 과일 20종, 10.0 ~ 12.6s -->
+      <section id="s4" class="scene clip" data-start="10" data-duration="2.6" data-track-index="5">
+        <div class="small">오늘은 어떤 과일 드실래요?</div>
+        <div class="title">제철 과일 <em>20</em>종</div>
+        <div class="grid" id="grid"></div>
+        <div class="gift">선물용 과일세트도 정성껏 준비해요</div>
+      </section>
+
+      <!-- SCENE 5 : 엔딩, 12.6 ~ 15.0s -->
+      <section id="s5" class="scene clip" data-start="12.6" data-duration="2.4" data-track-index="6">
+        <img class="photo bg" src="assets/fruits/12-watermelon.jpg" alt="" />
+        <div class="shade"></div>
+        <div class="small">오늘 저녁 식탁에, 소중한 분께 드릴 선물로</div>
+        <div class="big">지금 바로<br /><span class="hl">과일철이네2</span>를<br />만나보세요!</div>
+        <div class="info">
+          <div class="row"><b>동네 배달</b><span>20,000원 이상 주문 시</span></div>
+          <div class="row"><b>배달 지역</b><span>성남 구시가지 · 위례 · 야탑</span></div>
+          <div class="row"><b>영업 시간</b><span>08:00 ~ 19:00</span></div>
+          <div class="row"><b>전화 문의</b><span>010-2237-3494</span></div>
+        </div>
+        <div class="kakao">카카오톡으로 1:1 주문·상담</div>
+        <div class="addr">경기 성남시 수정구 산성대로334번길 1, 1층</div>
+      </section>
+
+      <!-- 장면 전환 와이프 -->
+      <div id="wipe1" class="wipe" style="background: var(--yellow)"></div>
+      <div id="wipe2" class="wipe" style="background: var(--green)"></div>
+      <div id="wipe3" class="wipe" style="background: var(--orange)"></div>
+    </div>
+
+    <script>
+      // 과일 20종 (config/site-config.js 의 fruits 순서와 같습니다)
+      const FRUITS = [
+        ["01-persimmon", "감"],
+        ["02-orange", "오렌지"],
+        ["03-grapefruit", "자몽"],
+        ["04-blueberry", "블루베리"],
+        ["05-cherry-tomato", "방울토마토"],
+        ["06-kiwi", "키위"],
+        ["07-mandarin", "귤"],
+        ["08-mango", "망고"],
+        ["09-melon", "멜론"],
+        ["10-banana", "바나나"],
+        ["11-pineapple", "파인애플"],
+        ["12-watermelon", "수박"],
+        ["13-korean-melon", "참외"],
+        ["14-cherry", "체리"],
+        ["15-apple", "사과"],
+        ["16-shine-muscat", "샤인머스켓"],
+        ["17-strawberry", "딸기"],
+        ["18-peach", "복숭아"],
+        ["19-pear", "배"],
+        ["20-kyoho-grape", "거봉"],
+      ];
+      const grid = document.getElementById("grid");
+      FRUITS.forEach(([file, name]) => {
+        const cell = document.createElement("div");
+        cell.className = "cell";
+        cell.innerHTML = `<img src="assets/fruits/${file}.jpg" alt="" /><span>${name}</span>`;
+        grid.appendChild(cell);
+      });
+
+      const tl = gsap.timeline({ paused: true });
+
+      // ---------- SCENE 1 ----------
+      tl.fromTo("#s1 .bg", { scale: 1.15 }, { scale: 1, duration: 2.8, ease: "none" }, 0);
+      tl.from("#s1 .line", { y: 90, opacity: 0, duration: 0.45, stagger: 0.22, ease: "back.out(1.6)" }, 0.15);
+      tl.from("#s1 .dice", { scale: 0, rotation: -120, duration: 0.5, ease: "back.out(2)" }, 1.0);
+      tl.to("#s1 .dice", { rotation: 20, duration: 0.12, yoyo: true, repeat: 5, ease: "sine.inOut" }, 1.5);
+      tl.from("#s1 .sub", { opacity: 0, y: 30, duration: 0.4 }, 1.3);
+      tl.to("#s1 .q .hl", { x: 12, duration: 0.05, yoyo: true, repeat: 7, ease: "none" }, 1.9);
+
+      // 1 → 2 : 노란 와이프
+      tl.fromTo("#wipe1", { y: 0 }, { y: -3840, duration: 0.7, ease: "power2.inOut" }, 2.45);
+
+      // ---------- SCENE 2 ----------
+      tl.from("#s2 .then", { y: 60, opacity: 0, duration: 0.35, ease: "power2.out" }, 2.95);
+      tl.from("#s2 .brand", { scale: 2.4, opacity: 0, duration: 0.5, ease: "expo.out" }, 3.15);
+      tl.from("#s2 .circle", { scale: 0, duration: 0.6, ease: "back.out(1.5)" }, 3.45);
+      tl.fromTo("#s2 .circle .photo", { scale: 1.35 }, { scale: 1, duration: 2.1, ease: "power1.out" }, 3.45);
+      tl.from("#s2 .stamp", { scale: 0, rotation: -200, duration: 0.6, ease: "back.out(1.8)" }, 3.85);
+      tl.to("#s2 .stamp", { rotation: "+=25", duration: 1.2, ease: "none" }, 4.45);
+      tl.from("#s2 .tag", { y: 40, opacity: 0, duration: 0.4 }, 4.2);
+
+      // 2 → 3 : 초록 와이프
+      tl.fromTo("#wipe2", { y: 0 }, { y: -3840, duration: 0.7, ease: "power2.inOut" }, 5.25);
+
+      // ---------- SCENE 3 : POINT ----------
+      [
+        ["#p1", 5.6],
+        ["#p2", 7.1],
+        ["#p3", 8.6],
+      ].forEach(([id, t], i) => {
+        if (i > 0) {
+          // 옆으로 밀려 들어오는 전환
+          tl.fromTo(id, { xPercent: 100 }, { xPercent: 0, duration: 0.35, ease: "power3.out" }, t);
+        }
+        tl.fromTo(`${id} .photo`, { scale: 1.2 }, { scale: 1.02, duration: 1.7, ease: "none" }, t);
+        tl.from(`${id} .card`, { y: 260, opacity: 0, duration: 0.45, ease: "back.out(1.4)" }, t + 0.2);
+        tl.from(`${id} .title`, { x: -60, opacity: 0, duration: 0.35, ease: "power2.out" }, t + 0.4);
+        tl.from(`${id} .desc`, { opacity: 0, duration: 0.3 }, t + 0.6);
+      });
+
+      // 3 → 4 : 주황 와이프
+      tl.fromTo("#wipe3", { y: 0 }, { y: -3840, duration: 0.7, ease: "power2.inOut" }, 9.65);
+
+      // ---------- SCENE 4 : 과일 20종 ----------
+      tl.from("#s4 .small", { y: 30, opacity: 0, duration: 0.3 }, 10.1);
+      tl.from("#s4 .title", { scale: 0.6, opacity: 0, duration: 0.4, ease: "back.out(2)" }, 10.15);
+      tl.from("#s4 .cell", { scale: 0, opacity: 0, duration: 0.35, stagger: 0.045, ease: "back.out(2)" }, 10.35);
+      tl.from("#s4 .gift", { y: 120, opacity: 0, duration: 0.4, ease: "back.out(1.6)" }, 11.5);
+
+      // ---------- SCENE 5 : 엔딩 ----------
+      tl.fromTo("#s5", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 12.6);
+      tl.fromTo("#s5 .bg", { scale: 1.2 }, { scale: 1, duration: 2.4, ease: "power1.out" }, 12.6);
+      tl.from("#s5 .small", { y: 30, opacity: 0, duration: 0.3 }, 12.75);
+      tl.from("#s5 .big", { y: 60, opacity: 0, duration: 0.45, ease: "power3.out" }, 12.85);
+      tl.from("#s5 .row", { x: -80, opacity: 0, duration: 0.3, stagger: 0.1, ease: "power2.out" }, 13.2);
+      tl.from("#s5 .kakao", { scale: 0.5, opacity: 0, duration: 0.4, ease: "back.out(2)" }, 13.7);
+      tl.to("#s5 .kakao", { scale: 1.05, duration: 0.3, yoyo: true, repeat: 1, ease: "sine.inOut" }, 14.2);
+      tl.from("#s5 .addr", { opacity: 0, duration: 0.3 }, 13.9);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

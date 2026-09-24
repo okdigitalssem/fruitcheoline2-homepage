@@ -36,7 +36,8 @@ fruitcheoline2-homepage/
 ├── js/main.js              ← 동작 스크립트 (건드리지 않아도 됩니다)
 ├── js/cinema.js            ← 스크롤 3D 효과 스크립트 (건드리지 않아도 됩니다)
 ├── config/site-config.js   ← ★ 모든 내용을 수정하는 파일 (여기만 고치면 됩니다) ★
-└── public/images/fruits/   ← 과일 사진 20장을 넣는 폴더
+├── public/images/fruits/   ← 과일 사진 20장을 넣는 폴더
+└── promo-video/            ← 15초 세로형 홍보 영상 (자세한 내용은 promo-video/README.md)
 ```
 
 **정보 수정은 거의 대부분 `config/site-config.js` 파일 한 곳에서 끝납니다.**
