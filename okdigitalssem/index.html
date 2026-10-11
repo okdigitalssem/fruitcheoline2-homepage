@@ -193,6 +193,15 @@ p{margin:0}
 .reel-frame video{object-fit:cover;opacity:0;transition:opacity .4s}
 .reel-frame.is-video video{opacity:1}
 .reel-frame.is-video .reel-slides{visibility:hidden}
+.reel-frame{cursor:pointer}
+.reel-spk{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:3;display:inline-flex;align-items:center;gap:8px;padding:11px 18px 11px 14px;border-radius:999px;border:0;background:var(--sign);color:var(--sign-ink);font-family:var(--body);font-weight:700;font-size:.95rem;line-height:1;cursor:pointer;white-space:nowrap;box-shadow:0 8px 26px rgba(0,0,0,.5)}
+.reel-spk::after{content:"";position:absolute;inset:0;border-radius:inherit;border:2px solid var(--sign);animation:ping 2.4s ease-out infinite;pointer-events:none}
+.reel-spk .w{display:none}
+.snd-on .reel-spk{background:rgba(10,9,20,.72);color:#fff;box-shadow:none}
+.snd-on .reel-spk::after{display:none}
+.snd-on .reel-spk .w{display:inline}
+.snd-on .reel-spk .x{display:none}
+@media (prefers-reduced-motion:reduce){.reel-spk::after{display:none}}
 .reel-badge{position:absolute;left:12px;top:12px;z-index:2;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;color:#fff;background:rgba(10,9,20,.6);padding:4px 9px;border-radius:999px}
 @media (max-width:860px){.reel{grid-template-columns:minmax(0,1fr)}.reel-frame{order:-1;width:min(78%,300px);transform:rotate(1.5deg)}}
 @media (prefers-reduced-motion:reduce){.reel-slides img.on{animation:none}}
@@ -425,6 +434,7 @@ section[id]{scroll-margin-top:72px}
         <div class="reel-slides" aria-hidden="true"><img class="on" src="ad-1.jpg" alt=""><img src="ad-2.jpg" alt="" loading="lazy"><img src="ad-3.jpg" alt="" loading="lazy"><img src="ad-4.jpg" alt="" loading="lazy"><img src="ad-5.jpg" alt="" loading="lazy"><img src="ad-6.jpg" alt="" loading="lazy"></div>
         <video id="reelVid" muted loop playsinline preload="none" data-full="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/532e29e2-af0d-4f50-88e6-53562415f738.mp4" aria-label="30초 세로 광고 영상 샘플"><source src="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/f78de28d-5c49-4e7a-94d2-e5c102f8014f.mp4" type="video/mp4"></video>
         <span class="reel-badge">SAMPLE · 30s</span>
+        <button class="reel-spk" type="button" id="reelSpk" aria-pressed="false" aria-label="광고 영상 소리 켜기 또는 끄기"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path class="x" d="M16.5 9.5l5 5M21.5 9.5l-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><path class="w" d="M16 8.6a5 5 0 0 1 0 6.8M18.6 6a8.6 8.6 0 0 1 0 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg><span id="reelSpkT">소리 켜기</span></button>
       </div>
     </div>
   </div>
@@ -806,13 +816,17 @@ section[id]{scroll-margin-top:72px}
       if(vid&&!fr.classList.contains('no-video')&&!reduce){ tryPlay(); if(!fr.classList.contains('is-video')){slides(true)} } else { slides(true) }
     }
     if('IntersectionObserver' in window){ new IntersectionObserver(function(en){show(en[0].isIntersecting)},{threshold:.35}).observe(fr) } else { show(true) }
-    if(btn){ btn.addEventListener('click',function(){
+    var spk=$('reelSpk'), spkT=$('reelSpkT');
+    function label(on){ fr.classList.toggle('snd-on',on); if(btn){btn.textContent=on?'소리 끄기':'소리 켜고 보기'} if(spkT){spkT.textContent=on?'소리 끄기':'소리 켜기'} if(spk){spk.setAttribute('aria-pressed',on?'true':'false')} }
+    function sound(e){
+      if(e){e.preventDefault(); e.stopPropagation()}
       if(vid&&!fr.classList.contains('no-video')){
-        var on=fr.classList.contains('is-video')&&!vid.paused;
-        if(on&&!vid.muted){ vid.muted=true; btn.textContent='소리 켜고 보기' }
-        else { vid.muted=false; try{vid.currentTime=0}catch(e){} var p; try{p=vid.play()}catch(e){} if(p&&p.catch){p.catch(function(){vid.muted=true;btn.textContent='소리 켜고 보기';window.open(FULL,'_blank','noopener')})} btn.textContent='소리 끄기' }
+        var on=fr.classList.contains('is-video')&&!vid.paused&&!vid.muted;
+        if(on){ vid.muted=true; label(false) }
+        else { vid.muted=false; try{vid.currentTime=0}catch(x){} var p; try{p=vid.play()}catch(x){} if(p&&p.catch){p.catch(function(){vid.muted=true;label(false);window.open(FULL,'_blank','noopener')})} label(true) }
       } else { window.open(FULL,'_blank','noopener') }
-    }) }
+    }
+    if(btn){btn.addEventListener('click',sound)} if(spk){spk.addEventListener('click',sound)} fr.addEventListener('click',sound);
   })();
 
   /* reveal on scroll, from a readable resting state */
