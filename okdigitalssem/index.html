@@ -214,7 +214,7 @@ p{margin:0}
 .reel-frame{cursor:pointer}
 .reel-frame .reel-open,.reel .reel-alt{display:none;text-decoration:none}
 .reel.nv .reel-frame .reel-open,.reel.nv .reel-alt{display:inline-flex}
-.reel.nv #reelSpk,.reel.nv #reelSound{display:none}
+.reel.nv button.reel-spk,.reel.nv .reel-btn{display:none}
 .reel.nv .reel-frame{cursor:default}
 .reel-note{position:absolute;left:10px;right:10px;bottom:72px;z-index:4;background:rgba(10,9,20,.92);border:1px solid rgba(243,241,250,.22);border-radius:16px;padding:14px;display:grid;gap:10px;text-align:center;font-size:.86rem;line-height:1.5;color:var(--text);cursor:default}
 .reel-note p{margin:0}
@@ -228,7 +228,10 @@ p{margin:0}
 .snd-on .reel-spk .x{display:none}
 @media (prefers-reduced-motion:reduce){.reel-spk::after{display:none}}
 .reel-badge{position:absolute;left:12px;top:12px;z-index:2;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;color:#fff;background:rgba(10,9,20,.6);padding:4px 9px;border-radius:999px}
-@media (max-width:860px){.reel{grid-template-columns:minmax(0,1fr)}.reel-frame{order:-1;width:min(78%,300px);transform:rotate(1.5deg)}}
+.reel.flip{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}
+.reel.flip .reel-frame{order:-1;transform:rotate(-2deg)}
+.works .reel{margin-top:clamp(40px,6vw,80px)}
+@media (max-width:860px){.reel,.reel.flip{grid-template-columns:minmax(0,1fr)}.reel-frame{order:-1;width:min(78%,300px);transform:rotate(1.5deg)}}
 @media (prefers-reduced-motion:reduce){.reel-slides img.on{animation:none}}
 @media (max-width:860px){.case{grid-template-columns:minmax(0,1fr)}}
 
@@ -369,6 +372,28 @@ section[id]{scroll-margin-top:72px}
   </div>
   <div class="mqw" data-mq><div class="mq"><button class="wk" type="button" data-cap="쥬얼리 광고 이미지"><img src="w-01.jpg" alt="쥬얼리 광고 이미지" width="1137" height="640" loading="lazy" decoding="async"><span>쥬얼리 광고 이미지</span></button><button class="wk" type="button" data-cap="쇼핑몰 상품 카드"><img src="w-03.jpg" alt="쇼핑몰 상품 카드" width="960" height="640" loading="lazy" decoding="async"><span>쇼핑몰 상품 카드</span></button><button class="wk" type="button" data-cap="제품 클로즈업"><img src="w-02.jpg" alt="제품 클로즈업" width="1137" height="640" loading="lazy" decoding="async"><span>제품 클로즈업</span></button><button class="wk" type="button" data-cap="광고 컷 모음"><img src="w-04.jpg" alt="광고 컷 모음" width="1137" height="640" loading="lazy" decoding="async"><span>광고 컷 모음</span></button><button class="wk" type="button" data-cap="제품 클로즈업"><img src="w-05.jpg" alt="제품 클로즈업" width="1137" height="640" loading="lazy" decoding="async"><span>제품 클로즈업</span></button><button class="wk" type="button" data-cap="영상용 장면 구성"><img src="w-06.jpg" alt="영상용 장면 구성" width="1137" height="640" loading="lazy" decoding="async"><span>영상용 장면 구성</span></button><button class="wk" type="button" data-cap="광고 컷 모음"><img src="w-07.jpg" alt="광고 컷 모음" width="1137" height="640" loading="lazy" decoding="async"><span>광고 컷 모음</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="쥬얼리 광고 이미지"><img src="w-01.jpg" alt="쥬얼리 광고 이미지" width="1137" height="640" loading="lazy" decoding="async"><span>쥬얼리 광고 이미지</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="쇼핑몰 상품 카드"><img src="w-03.jpg" alt="쇼핑몰 상품 카드" width="960" height="640" loading="lazy" decoding="async"><span>쇼핑몰 상품 카드</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="제품 클로즈업"><img src="w-02.jpg" alt="제품 클로즈업" width="1137" height="640" loading="lazy" decoding="async"><span>제품 클로즈업</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="광고 컷 모음"><img src="w-04.jpg" alt="광고 컷 모음" width="1137" height="640" loading="lazy" decoding="async"><span>광고 컷 모음</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="제품 클로즈업"><img src="w-05.jpg" alt="제품 클로즈업" width="1137" height="640" loading="lazy" decoding="async"><span>제품 클로즈업</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="영상용 장면 구성"><img src="w-06.jpg" alt="영상용 장면 구성" width="1137" height="640" loading="lazy" decoding="async"><span>영상용 장면 구성</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="광고 컷 모음"><img src="w-07.jpg" alt="광고 컷 모음" width="1137" height="640" loading="lazy" decoding="async"><span>광고 컷 모음</span></button></div></div>
   <div class="mqw" data-mq><div class="mq"><button class="wk" type="button" data-cap="귀걸이 상품 이미지"><img src="w-08.jpg" alt="귀걸이 상품 이미지" width="533" height="640" loading="lazy" decoding="async"><span>귀걸이 상품 이미지</span></button><button class="wk" type="button" data-cap="카드뉴스"><img src="w-09.jpg" alt="카드뉴스" width="512" height="640" loading="lazy" decoding="async"><span>카드뉴스</span></button><button class="wk" type="button" data-cap="목걸이 상품 이미지"><img src="w-10.jpg" alt="목걸이 상품 이미지" width="533" height="640" loading="lazy" decoding="async"><span>목걸이 상품 이미지</span></button><button class="wk" type="button" data-cap="카드뉴스·릴스 홍보물"><img src="w-11.jpg" alt="카드뉴스·릴스 홍보물" width="853" height="640" loading="lazy" decoding="async"><span>카드뉴스·릴스 홍보물</span></button><button class="wk" type="button" data-cap="팔찌 상품 이미지"><img src="w-12.jpg" alt="팔찌 상품 이미지" width="533" height="640" loading="lazy" decoding="async"><span>팔찌 상품 이미지</span></button><button class="wk" type="button" data-cap="제품 클로즈업"><img src="w-14.jpg" alt="제품 클로즈업" width="1137" height="640" loading="lazy" decoding="async"><span>제품 클로즈업</span></button><button class="wk" type="button" data-cap="팔찌 연출 이미지"><img src="w-13.jpg" alt="팔찌 연출 이미지" width="640" height="640" loading="lazy" decoding="async"><span>팔찌 연출 이미지</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="귀걸이 상품 이미지"><img src="w-08.jpg" alt="귀걸이 상품 이미지" width="533" height="640" loading="lazy" decoding="async"><span>귀걸이 상품 이미지</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="카드뉴스"><img src="w-09.jpg" alt="카드뉴스" width="512" height="640" loading="lazy" decoding="async"><span>카드뉴스</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="목걸이 상품 이미지"><img src="w-10.jpg" alt="목걸이 상품 이미지" width="533" height="640" loading="lazy" decoding="async"><span>목걸이 상품 이미지</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="카드뉴스·릴스 홍보물"><img src="w-11.jpg" alt="카드뉴스·릴스 홍보물" width="853" height="640" loading="lazy" decoding="async"><span>카드뉴스·릴스 홍보물</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="팔찌 상품 이미지"><img src="w-12.jpg" alt="팔찌 상품 이미지" width="533" height="640" loading="lazy" decoding="async"><span>팔찌 상품 이미지</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="제품 클로즈업"><img src="w-14.jpg" alt="제품 클로즈업" width="1137" height="640" loading="lazy" decoding="async"><span>제품 클로즈업</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="팔찌 연출 이미지"><img src="w-13.jpg" alt="팔찌 연출 이미지" width="640" height="640" loading="lazy" decoding="async"><span>팔찌 연출 이미지</span></button></div></div>
+  <div class="wrap">
+    <div class="reel flip" data-rv>
+      <div class="reel-text">
+        <p class="eyebrow">Ad Film <b>광고 영상</b></p>
+        <h3 class="reel-h">쥬얼리 30초 광고 영상</h3>
+        <p class="lead">위 사진들로 만든 세로 광고 영상입니다. 사진에 움직임과 반짝임, 자막, 음악을 입혀 한 편으로 완성했습니다.</p>
+        <div class="links">
+          <button class="btn btn-sign reel-btn" type="button">소리 켜고 보기</button>
+          <a class="btn btn-sign reel-alt" href="jewelry-ad.mp4" target="_blank" rel="noopener">소리와 함께 보기</a>
+          <a class="btn btn-ghost" href="jewelry-ad.mp4" target="_blank" rel="noopener">큰 화면으로 보기</a>
+        </div>
+        <p class="note">쥬얼리 쇼핑몰용으로 만든 샘플 영상입니다.</p>
+      </div>
+      <div class="reel-frame">
+        <div class="reel-slides" aria-hidden="true"><img class="on" src="jw-1.jpg" alt=""><img src="jw-2.jpg" alt="" loading="lazy"><img src="jw-3.jpg" alt="" loading="lazy"><img src="jw-4.jpg" alt="" loading="lazy"><img src="jw-5.jpg" alt="" loading="lazy"><img src="jw-6.jpg" alt="" loading="lazy"></div>
+        <video muted loop playsinline preload="none" aria-label="쥬얼리 30초 세로 광고 영상"><source src="jewelry-ad.mp4" type="video/mp4"></video>
+        <span class="reel-badge">SAMPLE · 30s</span>
+        <button class="reel-spk" type="button" aria-pressed="false" aria-label="광고 영상 소리 켜기 또는 끄기"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path class="x" d="M16.5 9.5l5 5M21.5 9.5l-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><path class="w" d="M16 8.6a5 5 0 0 1 0 6.8M18.6 6a8.6 8.6 0 0 1 0 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg><span>소리 켜기</span></button>
+        <a class="reel-spk reel-open" href="jewelry-ad.mp4" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M7 4.5v15l12-7.5z" fill="currentColor"/></svg><span>소리와 함께 보기</span></a>
+      </div>
+    </div>
+  </div>
 </section>
 <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="작업물 크게 보기"><button class="lb-x" type="button" aria-label="닫기">닫기</button><img alt=""><p></p></div>
 
@@ -461,20 +486,20 @@ section[id]{scroll-margin-top:72px}
     <div class="reel" data-rv>
       <div class="reel-text">
         <p class="eyebrow">Ad Film <b>광고 영상</b></p>
-        <h3 class="reel-h">30초 세로 광고 영상</h3>
+        <h3 class="reel-h">버거 30초 광고 영상</h3>
         <p class="lead">기획, 장면 연출, 자막, 내레이션, 음악까지 한 편으로 만듭니다. 인스타 릴스와 유튜브 쇼츠에 바로 올릴 수 있는 세로 영상입니다.</p>
         <div class="links">
-          <button class="btn btn-sign" type="button" id="reelSound">소리 켜고 보기</button>
+          <button class="btn btn-sign reel-btn" type="button">소리 켜고 보기</button>
           <a class="btn btn-sign reel-alt" href="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/f78de28d-5c49-4e7a-94d2-e5c102f8014f.mp4" target="_blank" rel="noopener">소리와 함께 보기</a>
           <a class="btn btn-ghost" href="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/532e29e2-af0d-4f50-88e6-53562415f738.mp4" target="_blank" rel="noopener">큰 화면으로 보기</a>
         </div>
         <p class="note">가상의 버거 브랜드로 만든 샘플 영상입니다.</p>
       </div>
-      <div class="reel-frame" id="reel">
+      <div class="reel-frame">
         <div class="reel-slides" aria-hidden="true"><img class="on" src="ad-1.jpg" alt=""><img src="ad-2.jpg" alt="" loading="lazy"><img src="ad-3.jpg" alt="" loading="lazy"><img src="ad-4.jpg" alt="" loading="lazy"><img src="ad-5.jpg" alt="" loading="lazy"><img src="ad-6.jpg" alt="" loading="lazy"></div>
-        <video id="reelVid" muted loop playsinline preload="none" data-full="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/532e29e2-af0d-4f50-88e6-53562415f738.mp4" aria-label="30초 세로 광고 영상 샘플"><source src="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/f78de28d-5c49-4e7a-94d2-e5c102f8014f.mp4" type="video/mp4"></video>
+        <video muted loop playsinline preload="none" data-full="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/532e29e2-af0d-4f50-88e6-53562415f738.mp4" aria-label="30초 세로 광고 영상 샘플"><source src="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/f78de28d-5c49-4e7a-94d2-e5c102f8014f.mp4" type="video/mp4"></video>
         <span class="reel-badge">SAMPLE · 30s</span>
-        <button class="reel-spk" type="button" id="reelSpk" aria-pressed="false" aria-label="광고 영상 소리 켜기 또는 끄기"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path class="x" d="M16.5 9.5l5 5M21.5 9.5l-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><path class="w" d="M16 8.6a5 5 0 0 1 0 6.8M18.6 6a8.6 8.6 0 0 1 0 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg><span id="reelSpkT">소리 켜기</span></button>
+        <button class="reel-spk" type="button" aria-pressed="false" aria-label="광고 영상 소리 켜기 또는 끄기"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path class="x" d="M16.5 9.5l5 5M21.5 9.5l-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><path class="w" d="M16 8.6a5 5 0 0 1 0 6.8M18.6 6a8.6 8.6 0 0 1 0 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg><span>소리 켜기</span></button>
         <a class="reel-spk reel-open" href="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/f78de28d-5c49-4e7a-94d2-e5c102f8014f.mp4" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M7 4.5v15l12-7.5z" fill="currentColor"/></svg><span>소리와 함께 보기</span></a>
       </div>
     </div>
@@ -870,55 +895,61 @@ section[id]{scroll-margin-top:72px}
     }
   })();
 
-  /* ad film: the real video where it can load, a slideshow of its frames where it cannot */
+  /* ad films: the real video where it can load, a slideshow of its frames where it cannot */
   (function(){
-    var fr=$('reel'), vid=$('reelVid'), btn=$('reelSound'), spk=$('reelSpk'), spkT=$('reelSpkT'); if(!fr) return;
-    var box=fr.parentNode, imgs=[].slice.call(fr.querySelectorAll('.reel-slides img')), k=0, timer=null, seen=false, want=false, wait=null, probe=null;
-    function next(){ imgs[k].classList.remove('on'); k=(k+1)%imgs.length; imgs[k].classList.add('on') }
-    function slides(on){ if(on){ if(!timer&&!reduce&&imgs.length>1){timer=setInterval(next,2600)} } else if(timer){clearInterval(timer);timer=null} }
-    function isOn(){ return !!vid&&fr.classList.contains('is-video')&&!vid.paused&&!vid.muted }
-    /* the button always says what will happen next, and only says "끄기" while sound is really playing */
-    function label(){
-      var on=isOn(), busy=want&&!on;
-      fr.classList.toggle('snd-on',on);
-      if(spkT){spkT.textContent=busy?'불러오는 중…':(on?'소리 끄기':'소리 켜기')}
-      if(btn){btn.textContent=busy?'불러오는 중…':(on?'소리 끄기':'소리 켜고 보기')}
-      if(spk){spk.setAttribute('aria-pressed',on?'true':'false')}
-    }
-    function dead(){ want=false; clearTimeout(wait); clearTimeout(probe); fr.classList.remove('is-video'); box.classList.add('nv'); if(vid){try{vid.muted=true}catch(e){}} label(); if(seen){slides(true)} }
-    function alive(){ box.classList.remove('nv'); fr.classList.add('is-video'); slides(false); want=false; clearTimeout(wait); clearTimeout(probe); label() }
-    if(vid){
-      vid.addEventListener('playing',alive); vid.addEventListener('pause',label); vid.addEventListener('volumechange',label);
-      vid.addEventListener('error',dead); var so=vid.querySelector('source'); if(so){so.addEventListener('error',dead)}
-    }
-    function tryPlay(){
-      var p; try{p=vid.play()}catch(e){dead();return}
-      if(p&&p.catch){p.catch(function(err){ var n=err&&err.name; if(n==='NotAllowedError'){clearTimeout(probe)} else if(n==='NotSupportedError'){dead()} if(!fr.classList.contains('is-video')){slides(true)} })}
-    }
-    function show(on){
-      seen=on;
-      if(!on){ slides(false); clearTimeout(probe); if(vid){try{vid.pause()}catch(e){}} return }
-      if(vid&&!box.classList.contains('nv')&&!reduce){
-        tryPlay();
-        if(!fr.classList.contains('is-video')){ slides(true); clearTimeout(probe); probe=setTimeout(function(){ if(!fr.classList.contains('is-video')&&vid.readyState<1){dead()} },4000) }
-      } else { slides(true) }
-    }
-    if('IntersectionObserver' in window){ new IntersectionObserver(function(en){show(en[0].isIntersecting)},{threshold:.35}).observe(fr) } else { show(true) }
-    function sound(e){
-      if(e&&e.target&&e.target.closest&&e.target.closest('a')){ return }
-      if(!vid||box.classList.contains('nv')){ return }
-      if(e){e.preventDefault(); e.stopPropagation()}
-      if(isOn()){ vid.muted=true; want=false; label(); return }
-      if(e&&btn&&e.currentTarget===btn){ try{fr.scrollIntoView({block:'center',behavior:reduce?'auto':'smooth'})}catch(x){} }
-      want=true; vid.muted=false; try{vid.currentTime=0}catch(x){}
-      var p; try{p=vid.play()}catch(x){}
-      if(p&&p.catch){p.catch(function(err){ if(err&&err.name==='AbortError'){return} dead() })}
-      if(fr.classList.contains('is-video')&&!vid.paused){ want=false }
-      label(); clearTimeout(wait);
-      wait=setTimeout(function(){ if(!want){return} if(vid.paused||vid.readyState<2){dead()} else {want=false;label()} },5000);
-    }
-    if(btn){btn.addEventListener('click',sound)} if(spk){spk.addEventListener('click',sound)} fr.addEventListener('click',sound);
-    label();
+    var all=[];
+    [].forEach.call(document.querySelectorAll('.reel'),function(box){
+      var fr=box.querySelector('.reel-frame'), vid=box.querySelector('video'), btn=box.querySelector('.reel-btn'), spk=box.querySelector('button.reel-spk'), spkT=spk?spk.querySelector('span'):null; if(!fr) return;
+      var imgs=[].slice.call(fr.querySelectorAll('.reel-slides img')), k=0, timer=null, seen=false, want=false, wait=null, probe=null;
+      function next(){ imgs[k].classList.remove('on'); k=(k+1)%imgs.length; imgs[k].classList.add('on') }
+      function slides(on){ if(on){ if(!timer&&!reduce&&imgs.length>1){timer=setInterval(next,2600)} } else if(timer){clearInterval(timer);timer=null} }
+      function isOn(){ return !!vid&&fr.classList.contains('is-video')&&!vid.paused&&!vid.muted }
+      /* the button always says what will happen next, and only says "끄기" while sound is really playing */
+      function label(){
+        var on=isOn(), busy=want&&!on;
+        fr.classList.toggle('snd-on',on);
+        if(spkT){spkT.textContent=busy?'불러오는 중…':(on?'소리 끄기':'소리 켜기')}
+        if(btn){btn.textContent=busy?'불러오는 중…':(on?'소리 끄기':'소리 켜고 보기')}
+        if(spk){spk.setAttribute('aria-pressed',on?'true':'false')}
+      }
+      function hush(){ if(vid&&!vid.muted){vid.muted=true} want=false; label() }
+      all.push(hush);
+      function dead(){ want=false; clearTimeout(wait); clearTimeout(probe); fr.classList.remove('is-video'); box.classList.add('nv'); if(vid){try{vid.muted=true}catch(e){}} label(); if(seen){slides(true)} }
+      function alive(){ box.classList.remove('nv'); fr.classList.add('is-video'); slides(false); want=false; clearTimeout(wait); clearTimeout(probe); label() }
+      if(vid){
+        vid.addEventListener('playing',alive); vid.addEventListener('pause',label); vid.addEventListener('volumechange',label);
+        vid.addEventListener('error',dead); var so=vid.querySelector('source'); if(so){so.addEventListener('error',dead)}
+      }
+      function tryPlay(){
+        var p; try{p=vid.play()}catch(e){dead();return}
+        if(p&&p.catch){p.catch(function(err){ var n=err&&err.name; if(n==='NotAllowedError'){clearTimeout(probe)} else if(n==='NotSupportedError'){dead()} if(!fr.classList.contains('is-video')){slides(true)} })}
+      }
+      function show(on){
+        seen=on;
+        if(!on){ slides(false); clearTimeout(probe); if(vid){try{vid.pause()}catch(e){}} return }
+        if(vid&&!box.classList.contains('nv')&&!reduce){
+          tryPlay();
+          if(!fr.classList.contains('is-video')){ slides(true); clearTimeout(probe); probe=setTimeout(function(){ if(!fr.classList.contains('is-video')&&vid.readyState<1){dead()} },4000) }
+        } else { slides(true) }
+      }
+      if('IntersectionObserver' in window){ new IntersectionObserver(function(en){show(en[0].isIntersecting)},{threshold:.35}).observe(fr) } else { show(true) }
+      function sound(e){
+        if(e&&e.target&&e.target.closest&&e.target.closest('a')){ return }
+        if(!vid||box.classList.contains('nv')){ return }
+        if(e){e.preventDefault(); e.stopPropagation()}
+        if(isOn()){ vid.muted=true; want=false; label(); return }
+        all.forEach(function(h){ if(h!==hush){h()} });
+        if(e&&btn&&e.currentTarget===btn){ try{fr.scrollIntoView({block:'center',behavior:reduce?'auto':'smooth'})}catch(x){} }
+        want=true; vid.muted=false; try{vid.currentTime=0}catch(x){}
+        var p; try{p=vid.play()}catch(x){}
+        if(p&&p.catch){p.catch(function(err){ if(err&&err.name==='AbortError'){return} dead() })}
+        if(fr.classList.contains('is-video')&&!vid.paused){ want=false }
+        label(); clearTimeout(wait);
+        wait=setTimeout(function(){ if(!want){return} if(vid.paused||vid.readyState<2){dead()} else {want=false;label()} },5000);
+      }
+      if(btn){btn.addEventListener('click',sound)} if(spk){spk.addEventListener('click',sound)} fr.addEventListener('click',sound);
+      label();
+    });
   })();
 
   /* reveal on scroll, from a readable resting state */
