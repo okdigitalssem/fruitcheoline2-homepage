@@ -113,7 +113,25 @@ p{margin:0}
 .cue{display:flex;align-items:center;gap:10px}
 .cue i{width:1px;height:26px;background:linear-gradient(var(--sign),transparent);animation:cue 2.2s infinite var(--ease)}
 @keyframes cue{0%{transform:scaleY(0);transform-origin:50% 0}50%{transform:scaleY(1);transform-origin:50% 0}51%{transform-origin:50% 100%}100%{transform:scaleY(0);transform-origin:50% 100%}}
-@media (max-width:760px){.hero-in{gap:16px;padding-block:20px 26px;margin-top:228px}.hero h1{font-size:clamp(1.7rem,9vw,2.6rem);font-size:min(2.6rem,calc((100vw - 48px)/9.4))}.hero .lead{font-size:.98rem;line-height:1.7;color:rgba(243,241,250,.9)}.hero .eyebrow b{color:rgba(243,241,250,.86)}.hero-foot{display:none}.cta-row{flex-wrap:nowrap;gap:10px}.cta-row .btn{flex:1;padding:14px 8px;font-size:.94rem}.cta-row .lg{display:none}}
+@media (max-width:760px){.hero-in{gap:16px;padding-block:20px 26px;margin-top:228px}.hero h1{font-size:clamp(1.7rem,9vw,2.6rem);font-size:min(2.6rem,calc((100vw - 48px)/9.4))}.hero .lead{font-size:.98rem;line-height:1.7;color:rgba(243,241,250,.9)}.hero .eyebrow b{color:rgba(243,241,250,.86)}.hero-foot{display:none}.cta-row{flex-wrap:nowrap;gap:10px}.cta-row .btn{flex:1;padding:14px 8px;font-size:.94rem}.cta-row .lg,.hero .eyebrow .lg{display:none}}
+
+/* works gallery */
+.works{padding-block:clamp(64px,9vw,120px) clamp(30px,5vw,70px);overflow:hidden;background:linear-gradient(180deg,var(--night),var(--deep) 60%,var(--night))}
+.works .head{margin-bottom:clamp(22px,4vw,40px)}
+.works h2{text-wrap:balance;max-width:16em}
+.mqw{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-block:14px}
+.mqw::-webkit-scrollbar{display:none}
+.mq{display:flex;width:max-content}
+.wk{position:relative;flex:none;height:clamp(170px,24vw,290px);margin:0 16px 0 0;border-radius:18px;overflow:hidden;border:0;padding:0;background:var(--haze);cursor:zoom-in;box-shadow:0 16px 44px rgba(0,0,0,.5);transition:transform .35s var(--ease),box-shadow .35s}
+.wk:nth-child(odd){transform:rotate(-1.1deg)}
+.wk:nth-child(even){transform:rotate(.9deg) translateY(5px)}
+.wk:hover,.wk:focus-visible{transform:scale(1.04);box-shadow:0 22px 64px rgba(255,201,53,.28);z-index:2}
+.wk img{height:100%;width:auto;display:block}
+.wk span{position:absolute;left:10px;bottom:10px;font-family:var(--body);font-size:.74rem;font-weight:600;color:#fff;background:rgba(10,9,20,.66);padding:4px 10px;border-radius:999px}
+.lb{position:fixed;inset:0;z-index:120;background:rgba(5,4,12,.94);display:grid;place-items:center;align-content:center;gap:14px;padding:20px;cursor:zoom-out}
+.lb img{max-width:min(94vw,1200px);max-height:76vh;width:auto;height:auto;border-radius:14px;box-shadow:0 30px 90px rgba(0,0,0,.7)}
+.lb p{color:var(--text);font-size:.95rem;text-align:center}
+.lb-x{position:absolute;right:16px;top:calc(16px + env(safe-area-inset-top,0px));border:1px solid rgba(243,241,250,.4);background:rgba(10,9,20,.6);color:#fff;font-family:var(--body);font-weight:700;font-size:.9rem;border-radius:999px;padding:9px 16px;cursor:pointer}
 
 /* statement */
 .say{font-family:var(--display);font-weight:600;font-size:clamp(1.6rem,4.3vw,3.1rem);line-height:1.5;max-width:22em;letter-spacing:-.015em}
@@ -303,6 +321,7 @@ section[id]{scroll-margin-top:72px}
     <a class="brand" href="#top"><i></i>옥디지털쌤</a>
     <nav class="nav" aria-label="주요 메뉴">
       <a href="#road">손님이 오는 길</a>
+      <a href="#works">작업물</a>
       <a href="#case">사례</a>
       <a href="#packs">하는 일</a>
       <a href="#check">자가 진단</a>
@@ -320,7 +339,7 @@ section[id]{scroll-margin-top:72px}
   <div class="hero-3d" id="hero3d" aria-hidden="true"></div>
   <div class="bars" aria-hidden="true"><i></i><i></i></div>
   <div class="wrap hero-in">
-    <p class="eyebrow fade">OK Digital Ssem <b>홈페이지 제작 · 온라인 마케팅</b></p>
+    <p class="eyebrow fade">OK Digital Ssem <b>자영업자·사업자를 위한 홈페이지 제작<span class="lg"> · 온라인 마케팅</span></b></p>
     <h1><span class="l"><span>검색하면 나오고,</span></span><span class="l"><span><em>누르면 문의가 오는</em></span></span><span class="l"><span>홈페이지를 만듭니다</span></span></h1>
     <p class="lead fade"><b>홈페이지 제작</b>이 중심입니다. 여기에 네이버 지도, 카카오톡 채널, 광고 영상까지 이어서 손님이 가게를 찾아오는 길 전체를 만들어 드립니다.</p>
     <div class="cta-row fade">
@@ -332,6 +351,19 @@ section[id]{scroll-margin-top:72px}
 </section>
 
 <div class="ticker" aria-hidden="true"><div class="ticker-in"><span>홈페이지 제작</span><i></i><span>네이버 지도</span><i></i><span>카카오톡 채널</span><i></i><span>블로그</span><i></i><span>인스타그램</span><i></i><span>30초 광고 영상</span><i></i><span>홈페이지 제작</span><i></i><span>네이버 지도</span><i></i><span>카카오톡 채널</span><i></i><span>블로그</span><i></i><span>인스타그램</span><i></i><span>30초 광고 영상</span><i></i><span>홈페이지 제작</span><i></i><span>네이버 지도</span><i></i><span>카카오톡 채널</span><i></i><span>블로그</span><i></i><span>인스타그램</span><i></i><span>30초 광고 영상</span><i></i><span>홈페이지 제작</span><i></i><span>네이버 지도</span><i></i><span>카카오톡 채널</span><i></i><span>블로그</span><i></i><span>인스타그램</span><i></i><span>30초 광고 영상</span><i></i></div></div>
+
+<section class="works" id="works">
+  <div class="wrap">
+    <div class="head" data-rv>
+      <p class="eyebrow">Works <b>작업물</b></p>
+      <h2>홈페이지에 들어가는 사진과 광고 이미지까지 직접 만듭니다</h2>
+      <p class="lead">쥬얼리 쇼핑몰용으로 만든 광고 이미지, 상품 사진, 카드뉴스입니다. 옆으로 밀어서 보고, 누르면 크게 볼 수 있습니다.</p>
+    </div>
+  </div>
+  <div class="mqw" data-mq><div class="mq"><button class="wk" type="button" data-cap="쥬얼리 광고 이미지"><img src="w-01.jpg" alt="쥬얼리 광고 이미지" width="1137" height="640" loading="lazy" decoding="async"><span>쥬얼리 광고 이미지</span></button><button class="wk" type="button" data-cap="쇼핑몰 상품 카드"><img src="w-03.jpg" alt="쇼핑몰 상품 카드" width="960" height="640" loading="lazy" decoding="async"><span>쇼핑몰 상품 카드</span></button><button class="wk" type="button" data-cap="제품 클로즈업"><img src="w-02.jpg" alt="제품 클로즈업" width="1137" height="640" loading="lazy" decoding="async"><span>제품 클로즈업</span></button><button class="wk" type="button" data-cap="광고 컷 모음"><img src="w-04.jpg" alt="광고 컷 모음" width="1137" height="640" loading="lazy" decoding="async"><span>광고 컷 모음</span></button><button class="wk" type="button" data-cap="제품 클로즈업"><img src="w-05.jpg" alt="제품 클로즈업" width="1137" height="640" loading="lazy" decoding="async"><span>제품 클로즈업</span></button><button class="wk" type="button" data-cap="영상용 장면 구성"><img src="w-06.jpg" alt="영상용 장면 구성" width="1137" height="640" loading="lazy" decoding="async"><span>영상용 장면 구성</span></button><button class="wk" type="button" data-cap="광고 컷 모음"><img src="w-07.jpg" alt="광고 컷 모음" width="1137" height="640" loading="lazy" decoding="async"><span>광고 컷 모음</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="쥬얼리 광고 이미지"><img src="w-01.jpg" alt="쥬얼리 광고 이미지" width="1137" height="640" loading="lazy" decoding="async"><span>쥬얼리 광고 이미지</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="쇼핑몰 상품 카드"><img src="w-03.jpg" alt="쇼핑몰 상품 카드" width="960" height="640" loading="lazy" decoding="async"><span>쇼핑몰 상품 카드</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="제품 클로즈업"><img src="w-02.jpg" alt="제품 클로즈업" width="1137" height="640" loading="lazy" decoding="async"><span>제품 클로즈업</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="광고 컷 모음"><img src="w-04.jpg" alt="광고 컷 모음" width="1137" height="640" loading="lazy" decoding="async"><span>광고 컷 모음</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="제품 클로즈업"><img src="w-05.jpg" alt="제품 클로즈업" width="1137" height="640" loading="lazy" decoding="async"><span>제품 클로즈업</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="영상용 장면 구성"><img src="w-06.jpg" alt="영상용 장면 구성" width="1137" height="640" loading="lazy" decoding="async"><span>영상용 장면 구성</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="광고 컷 모음"><img src="w-07.jpg" alt="광고 컷 모음" width="1137" height="640" loading="lazy" decoding="async"><span>광고 컷 모음</span></button></div></div>
+  <div class="mqw" data-mq><div class="mq"><button class="wk" type="button" data-cap="귀걸이 상품 이미지"><img src="w-08.jpg" alt="귀걸이 상품 이미지" width="533" height="640" loading="lazy" decoding="async"><span>귀걸이 상품 이미지</span></button><button class="wk" type="button" data-cap="카드뉴스"><img src="w-09.jpg" alt="카드뉴스" width="512" height="640" loading="lazy" decoding="async"><span>카드뉴스</span></button><button class="wk" type="button" data-cap="목걸이 상품 이미지"><img src="w-10.jpg" alt="목걸이 상품 이미지" width="533" height="640" loading="lazy" decoding="async"><span>목걸이 상품 이미지</span></button><button class="wk" type="button" data-cap="카드뉴스·릴스 홍보물"><img src="w-11.jpg" alt="카드뉴스·릴스 홍보물" width="853" height="640" loading="lazy" decoding="async"><span>카드뉴스·릴스 홍보물</span></button><button class="wk" type="button" data-cap="팔찌 상품 이미지"><img src="w-12.jpg" alt="팔찌 상품 이미지" width="533" height="640" loading="lazy" decoding="async"><span>팔찌 상품 이미지</span></button><button class="wk" type="button" data-cap="제품 클로즈업"><img src="w-14.jpg" alt="제품 클로즈업" width="1137" height="640" loading="lazy" decoding="async"><span>제품 클로즈업</span></button><button class="wk" type="button" data-cap="팔찌 연출 이미지"><img src="w-13.jpg" alt="팔찌 연출 이미지" width="640" height="640" loading="lazy" decoding="async"><span>팔찌 연출 이미지</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="귀걸이 상품 이미지"><img src="w-08.jpg" alt="귀걸이 상품 이미지" width="533" height="640" loading="lazy" decoding="async"><span>귀걸이 상품 이미지</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="카드뉴스"><img src="w-09.jpg" alt="카드뉴스" width="512" height="640" loading="lazy" decoding="async"><span>카드뉴스</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="목걸이 상품 이미지"><img src="w-10.jpg" alt="목걸이 상품 이미지" width="533" height="640" loading="lazy" decoding="async"><span>목걸이 상품 이미지</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="카드뉴스·릴스 홍보물"><img src="w-11.jpg" alt="카드뉴스·릴스 홍보물" width="853" height="640" loading="lazy" decoding="async"><span>카드뉴스·릴스 홍보물</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="팔찌 상품 이미지"><img src="w-12.jpg" alt="팔찌 상품 이미지" width="533" height="640" loading="lazy" decoding="async"><span>팔찌 상품 이미지</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="제품 클로즈업"><img src="w-14.jpg" alt="제품 클로즈업" width="1137" height="640" loading="lazy" decoding="async"><span>제품 클로즈업</span></button><button class="wk" type="button" tabindex="-1" aria-hidden="true" data-cap="팔찌 연출 이미지"><img src="w-13.jpg" alt="팔찌 연출 이미지" width="640" height="640" loading="lazy" decoding="async"><span>팔찌 연출 이미지</span></button></div></div>
+</section>
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="작업물 크게 보기"><button class="lb-x" type="button" aria-label="닫기">닫기</button><img alt=""><p></p></div>
 
 <section class="sec">
   <div class="wrap">
@@ -796,6 +828,37 @@ section[id]{scroll-margin-top:72px}
       }catch(e){ host.classList.remove('gl-on') }
     };
     img.src=m[1];
+  })();
+
+  /* works gallery: rows drift on their own, can be swiped, and open large on tap */
+  (function(){
+    var rows=[].slice.call(document.querySelectorAll('[data-mq]')), sec=$('works'), lb=$('lb'), live=false;
+    if(!rows.length) return;
+    var st=rows.map(function(w,i){ return {w:w,dir:i%2?-1:1,sp:i%2?.34:.44,pos:-1,hold:0} });
+    function grab(s){ s.hold=performance.now()+2600; s.pos=-1 }
+    st.forEach(function(s){ ['pointerdown','touchstart','wheel'].forEach(function(ev){ s.w.addEventListener(ev,function(){grab(s)},{passive:true}) }); s.w.addEventListener('touchmove',function(){grab(s)},{passive:true}); s.w.addEventListener('focusin',function(){s.hold=performance.now()+6000}) });
+    function step(t){
+      if(!live) return;
+      st.forEach(function(s){
+        var half=s.w.scrollWidth/2; if(half<10) return;
+        if(t<s.hold||(lb&&!lb.hidden)){ return }
+        if(s.pos<0){ s.pos=s.w.scrollLeft; if(s.dir<0&&s.pos<2){s.pos=half} }
+        s.pos+=s.sp*s.dir; if(s.pos>=half){s.pos-=half} else if(s.pos<=0){s.pos+=half}
+        s.w.scrollLeft=s.pos;
+      });
+      requestAnimationFrame(step);
+    }
+    if(!reduce){
+      if('IntersectionObserver' in window){ new IntersectionObserver(function(en){var on=en[0].isIntersecting; if(on&&!live){live=true;requestAnimationFrame(step)} else if(!on){live=false}},{rootMargin:'80px'}).observe(sec) }
+      else { live=true; requestAnimationFrame(step) }
+    }
+    if(lb){
+      var big=lb.querySelector('img'), cap=lb.querySelector('p'), last=null;
+      function shut(){ lb.hidden=true; document.documentElement.style.overflow=''; if(last){try{last.focus({preventScroll:true})}catch(e){}} }
+      sec.addEventListener('click',function(e){ var b=e.target.closest?e.target.closest('.wk'):null; if(!b) return; var im=b.querySelector('img'); last=b; big.src=im.currentSrc||im.src; big.alt=im.alt; cap.textContent=b.getAttribute('data-cap')||''; lb.hidden=false; document.documentElement.style.overflow='hidden'; try{lb.querySelector('.lb-x').focus({preventScroll:true})}catch(x){} });
+      lb.addEventListener('click',shut);
+      document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!lb.hidden){shut()} });
+    }
   })();
 
   /* ad film: the real video where it can load, a slideshow of its frames where it cannot */
