@@ -212,6 +212,10 @@ p{margin:0}
 .reel-frame.is-video video{opacity:1}
 .reel-frame.is-video .reel-slides{visibility:hidden}
 .reel-frame{cursor:pointer}
+.reel-frame .reel-open,.reel .reel-alt{display:none;text-decoration:none}
+.reel.nv .reel-frame .reel-open,.reel.nv .reel-alt{display:inline-flex}
+.reel.nv #reelSpk,.reel.nv #reelSound{display:none}
+.reel.nv .reel-frame{cursor:default}
 .reel-note{position:absolute;left:10px;right:10px;bottom:72px;z-index:4;background:rgba(10,9,20,.92);border:1px solid rgba(243,241,250,.22);border-radius:16px;padding:14px;display:grid;gap:10px;text-align:center;font-size:.86rem;line-height:1.5;color:var(--text);cursor:default}
 .reel-note p{margin:0}
 .reel-note .btn{padding:11px 14px;font-size:.92rem}
@@ -461,6 +465,7 @@ section[id]{scroll-margin-top:72px}
         <p class="lead">기획, 장면 연출, 자막, 내레이션, 음악까지 한 편으로 만듭니다. 인스타 릴스와 유튜브 쇼츠에 바로 올릴 수 있는 세로 영상입니다.</p>
         <div class="links">
           <button class="btn btn-sign" type="button" id="reelSound">소리 켜고 보기</button>
+          <a class="btn btn-sign reel-alt" href="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/f78de28d-5c49-4e7a-94d2-e5c102f8014f.mp4" target="_blank" rel="noopener">소리와 함께 보기</a>
           <a class="btn btn-ghost" href="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/532e29e2-af0d-4f50-88e6-53562415f738.mp4" target="_blank" rel="noopener">큰 화면으로 보기</a>
         </div>
         <p class="note">가상의 버거 브랜드로 만든 샘플 영상입니다.</p>
@@ -470,7 +475,7 @@ section[id]{scroll-margin-top:72px}
         <video id="reelVid" muted loop playsinline preload="none" data-full="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/532e29e2-af0d-4f50-88e6-53562415f738.mp4" aria-label="30초 세로 광고 영상 샘플"><source src="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/f78de28d-5c49-4e7a-94d2-e5c102f8014f.mp4" type="video/mp4"></video>
         <span class="reel-badge">SAMPLE · 30s</span>
         <button class="reel-spk" type="button" id="reelSpk" aria-pressed="false" aria-label="광고 영상 소리 켜기 또는 끄기"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path class="x" d="M16.5 9.5l5 5M21.5 9.5l-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><path class="w" d="M16 8.6a5 5 0 0 1 0 6.8M18.6 6a8.6 8.6 0 0 1 0 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg><span id="reelSpkT">소리 켜기</span></button>
-        <div class="reel-note" id="reelNote" hidden><p>이 화면에서는 영상 소리가 재생되지 않아요.<br>아래 버튼을 누르면 소리와 함께 열립니다.</p><a class="btn btn-sign" href="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/f78de28d-5c49-4e7a-94d2-e5c102f8014f.mp4" target="_blank" rel="noopener">소리 나는 영상 열기</a></div>
+        <a class="reel-spk reel-open" href="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/f78de28d-5c49-4e7a-94d2-e5c102f8014f.mp4" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M7 4.5v15l12-7.5z" fill="currentColor"/></svg><span>소리와 함께 보기</span></a>
       </div>
     </div>
   </div>
@@ -867,39 +872,52 @@ section[id]{scroll-margin-top:72px}
 
   /* ad film: the real video where it can load, a slideshow of its frames where it cannot */
   (function(){
-    var fr=$('reel'), vid=$('reelVid'), btn=$('reelSound'); if(!fr) return;
-    var imgs=[].slice.call(fr.querySelectorAll('.reel-slides img')), k=0, timer=null, seen=false, FULL=vid?vid.getAttribute('data-full'):'';
+    var fr=$('reel'), vid=$('reelVid'), btn=$('reelSound'), spk=$('reelSpk'), spkT=$('reelSpkT'); if(!fr) return;
+    var box=fr.parentNode, imgs=[].slice.call(fr.querySelectorAll('.reel-slides img')), k=0, timer=null, seen=false, want=false, wait=null, probe=null;
     function next(){ imgs[k].classList.remove('on'); k=(k+1)%imgs.length; imgs[k].classList.add('on') }
     function slides(on){ if(on){ if(!timer&&!reduce&&imgs.length>1){timer=setInterval(next,2600)} } else if(timer){clearInterval(timer);timer=null} }
-    var want=false, retried=false, note=$('reelNote');
-    function tell(){ if(note){note.hidden=false} }
-    function dead(){ fr.classList.remove('is-video'); fr.classList.add('no-video'); if(seen){slides(true)} if(want){want=false; label(false); tell()} }
+    function isOn(){ return !!vid&&fr.classList.contains('is-video')&&!vid.paused&&!vid.muted }
+    /* the button always says what will happen next, and only says "끄기" while sound is really playing */
+    function label(){
+      var on=isOn(), busy=want&&!on;
+      fr.classList.toggle('snd-on',on);
+      if(spkT){spkT.textContent=busy?'불러오는 중…':(on?'소리 끄기':'소리 켜기')}
+      if(btn){btn.textContent=busy?'불러오는 중…':(on?'소리 끄기':'소리 켜고 보기')}
+      if(spk){spk.setAttribute('aria-pressed',on?'true':'false')}
+    }
+    function dead(){ want=false; clearTimeout(wait); clearTimeout(probe); fr.classList.remove('is-video'); box.classList.add('nv'); if(vid){try{vid.muted=true}catch(e){}} label(); if(seen){slides(true)} }
+    function alive(){ box.classList.remove('nv'); fr.classList.add('is-video'); slides(false); want=false; clearTimeout(wait); clearTimeout(probe); label() }
     if(vid){
-      vid.addEventListener('playing',function(){fr.classList.add('is-video');slides(false);want=false});
+      vid.addEventListener('playing',alive); vid.addEventListener('pause',label); vid.addEventListener('volumechange',label);
       vid.addEventListener('error',dead); var so=vid.querySelector('source'); if(so){so.addEventListener('error',dead)}
     }
-    function tryPlay(){ var p; try{p=vid.play()}catch(e){dead();return} if(p&&p.catch){p.catch(function(){ if(!fr.classList.contains('is-video')){slides(true)} })} }
+    function tryPlay(){
+      var p; try{p=vid.play()}catch(e){dead();return}
+      if(p&&p.catch){p.catch(function(err){ var n=err&&err.name; if(n==='NotAllowedError'){clearTimeout(probe)} else if(n==='NotSupportedError'){dead()} if(!fr.classList.contains('is-video')){slides(true)} })}
+    }
     function show(on){
       seen=on;
-      if(!on){ slides(false); if(vid){try{vid.pause()}catch(e){}} return }
-      if(vid&&!fr.classList.contains('no-video')&&!reduce){ tryPlay(); if(!fr.classList.contains('is-video')){slides(true)} } else { slides(true) }
+      if(!on){ slides(false); clearTimeout(probe); if(vid){try{vid.pause()}catch(e){}} return }
+      if(vid&&!box.classList.contains('nv')&&!reduce){
+        tryPlay();
+        if(!fr.classList.contains('is-video')){ slides(true); clearTimeout(probe); probe=setTimeout(function(){ if(!fr.classList.contains('is-video')&&vid.readyState<1){dead()} },4000) }
+      } else { slides(true) }
     }
     if('IntersectionObserver' in window){ new IntersectionObserver(function(en){show(en[0].isIntersecting)},{threshold:.35}).observe(fr) } else { show(true) }
-    var spk=$('reelSpk'), spkT=$('reelSpkT');
-    function label(on){ fr.classList.toggle('snd-on',on); if(btn){btn.textContent=on?'소리 끄기':'소리 켜고 보기'} if(spkT){spkT.textContent=on?'소리 끄기':'소리 켜기'} if(spk){spk.setAttribute('aria-pressed',on?'true':'false')} }
     function sound(e){
-      if(e&&e.target&&e.target.closest&&e.target.closest('.reel-note')){ return }
+      if(e&&e.target&&e.target.closest&&e.target.closest('a')){ return }
+      if(!vid||box.classList.contains('nv')){ return }
       if(e){e.preventDefault(); e.stopPropagation()}
-      if(!vid){ tell(); return }
-      if(fr.classList.contains('no-video')){
-        if(retried){ tell(); return }
-        retried=true; fr.classList.remove('no-video'); try{vid.load()}catch(x){}
-      }
-      var on=fr.classList.contains('is-video')&&!vid.paused&&!vid.muted;
-      if(on){ vid.muted=true; want=false; label(false) }
-      else { want=true; if(note){note.hidden=true} vid.muted=false; try{vid.currentTime=0}catch(x){} var p; try{p=vid.play()}catch(x){} if(p&&p.catch){p.catch(function(){ vid.muted=true; label(false); if(want){want=false; tell()} })} label(true) }
+      if(isOn()){ vid.muted=true; want=false; label(); return }
+      want=true; vid.muted=false; try{vid.currentTime=0}catch(x){}
+      var p; try{p=vid.play()}catch(x){}
+      if(p&&p.catch){p.catch(function(err){ if(err&&err.name==='AbortError'){return} dead() })}
+      if(fr.classList.contains('is-video')&&!vid.paused){ want=false }
+      label(); clearTimeout(wait);
+      wait=setTimeout(function(){ if(!want){return} if(vid.paused||vid.readyState<2){dead()} else {want=false;label()} },5000);
     }
     if(btn){btn.addEventListener('click',sound)} if(spk){spk.addEventListener('click',sound)} fr.addEventListener('click',sound);
+    label();
   })();
 
   /* reveal on scroll, from a readable resting state */
