@@ -205,8 +205,10 @@ p{margin:0}
 .reel-h{font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,3.6vw,2.6rem);line-height:1.25;margin:0}
 .reel-frame{position:relative;width:min(100%,320px);aspect-ratio:9/16;border-radius:30px;overflow:hidden;justify-self:center;background:#000;box-shadow:0 0 0 8px #1c1930,0 0 0 9px rgba(243,241,250,.18),0 40px 90px rgba(0,0,0,.6),0 0 100px rgba(255,201,53,.18);transform:rotate(2deg)}
 .reel-slides,.reel-frame video{position:absolute;inset:0;width:100%;height:100%}
-.reel-slides img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .9s ease}
-.reel-slides img.on{opacity:1;animation:reelzoom 3.6s linear both}
+.reel-slides img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0}
+.reel-slides img.prev{opacity:1;z-index:1}
+.reel-slides img.on{opacity:1;z-index:2;animation:reelin .3s ease both,reelzoom 3.6s linear both}
+@keyframes reelin{from{opacity:0}to{opacity:1}}
 @keyframes reelzoom{from{transform:scale(1.02)}to{transform:scale(1.11)}}
 .reel-frame video{object-fit:cover;opacity:0;transition:opacity .4s}
 .reel-frame.is-video video{opacity:1}
@@ -901,7 +903,7 @@ section[id]{scroll-margin-top:72px}
     [].forEach.call(document.querySelectorAll('.reel'),function(box){
       var fr=box.querySelector('.reel-frame'), vid=box.querySelector('video'), btn=box.querySelector('.reel-btn'), spk=box.querySelector('button.reel-spk'), spkT=spk?spk.querySelector('span'):null; if(!fr) return;
       var imgs=[].slice.call(fr.querySelectorAll('.reel-slides img')), k=0, timer=null, seen=false, want=false, wait=null, probe=null;
-      function next(){ imgs[k].classList.remove('on'); k=(k+1)%imgs.length; imgs[k].classList.add('on') }
+      function next(){ imgs.forEach(function(im){im.classList.remove('prev')}); imgs[k].classList.remove('on'); imgs[k].classList.add('prev'); k=(k+1)%imgs.length; imgs[k].classList.add('on') }
       function slides(on){ if(on){ if(!timer&&!reduce&&imgs.length>1){timer=setInterval(next,2600)} } else if(timer){clearInterval(timer);timer=null} }
       function isOn(){ return !!vid&&fr.classList.contains('is-video')&&!vid.paused&&!vid.muted }
       /* the button always says what will happen next, and only says "끄기" while sound is really playing */
