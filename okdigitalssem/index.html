@@ -181,6 +181,21 @@ p{margin:0}
 .done span{color:var(--muted);font-size:.95rem}
 .links{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
 .note{font-size:.88rem;color:var(--muted)}
+.reel{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(30px,6vw,84px);align-items:center;margin-top:clamp(56px,9vw,110px);padding-top:clamp(48px,7vw,90px);border-top:1px solid var(--line)}
+.reel-text{display:grid;gap:16px;justify-items:start}
+.reel .links{margin-top:6px}
+.reel-h{font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,3.6vw,2.6rem);line-height:1.25;margin:0}
+.reel-frame{position:relative;width:min(100%,320px);aspect-ratio:9/16;border-radius:30px;overflow:hidden;justify-self:center;background:#000;box-shadow:0 0 0 8px #1c1930,0 0 0 9px rgba(243,241,250,.18),0 40px 90px rgba(0,0,0,.6),0 0 100px rgba(255,201,53,.18);transform:rotate(2deg)}
+.reel-slides,.reel-frame video{position:absolute;inset:0;width:100%;height:100%}
+.reel-slides img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .9s ease}
+.reel-slides img.on{opacity:1;animation:reelzoom 3.6s linear both}
+@keyframes reelzoom{from{transform:scale(1.02)}to{transform:scale(1.11)}}
+.reel-frame video{object-fit:cover;opacity:0;transition:opacity .4s}
+.reel-frame.is-video video{opacity:1}
+.reel-frame.is-video .reel-slides{visibility:hidden}
+.reel-badge{position:absolute;left:12px;top:12px;z-index:2;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;color:#fff;background:rgba(10,9,20,.6);padding:4px 9px;border-radius:999px}
+@media (max-width:860px){.reel{grid-template-columns:minmax(0,1fr)}.reel-frame{order:-1;width:min(78%,300px);transform:rotate(1.5deg)}}
+@media (prefers-reduced-motion:reduce){.reel-slides img.on{animation:none}}
 @media (max-width:860px){.case{grid-template-columns:minmax(0,1fr)}}
 
 /* packages */
@@ -392,9 +407,24 @@ section[id]{scroll-margin-top:72px}
         </ul>
         <div class="links">
           <a class="btn btn-sign" href="https://okdigitalssem.github.io/fruitcheoline2-homepage" target="_blank" rel="noopener">홈페이지 보기</a>
-          <a class="btn btn-ghost" href="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/532e29e2-af0d-4f50-88e6-53562415f738.mp4" target="_blank" rel="noopener">30초 광고 영상 샘플</a>
         </div>
-        <p class="note" style="margin-top:12px">광고 영상은 가상의 버거 브랜드로 만든 샘플입니다.</p>
+      </div>
+    </div>
+    <div class="reel" data-rv>
+      <div class="reel-text">
+        <p class="eyebrow">Ad Film <b>광고 영상</b></p>
+        <h3 class="reel-h">30초 세로 광고 영상</h3>
+        <p class="lead">기획, 장면 연출, 자막, 내레이션, 음악까지 한 편으로 만듭니다. 인스타 릴스와 유튜브 쇼츠에 바로 올릴 수 있는 세로 영상입니다.</p>
+        <div class="links">
+          <button class="btn btn-sign" type="button" id="reelSound">소리 켜고 보기</button>
+          <a class="btn btn-ghost" href="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/532e29e2-af0d-4f50-88e6-53562415f738.mp4" target="_blank" rel="noopener">큰 화면으로 보기</a>
+        </div>
+        <p class="note">가상의 버거 브랜드로 만든 샘플 영상입니다.</p>
+      </div>
+      <div class="reel-frame" id="reel">
+        <div class="reel-slides" aria-hidden="true"><img class="on" src="ad-1.jpg" alt=""><img src="ad-2.jpg" alt="" loading="lazy"><img src="ad-3.jpg" alt="" loading="lazy"><img src="ad-4.jpg" alt="" loading="lazy"><img src="ad-5.jpg" alt="" loading="lazy"><img src="ad-6.jpg" alt="" loading="lazy"></div>
+        <video id="reelVid" muted loop playsinline preload="none" data-full="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/532e29e2-af0d-4f50-88e6-53562415f738.mp4" aria-label="30초 세로 광고 영상 샘플"><source src="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/f78de28d-5c49-4e7a-94d2-e5c102f8014f.mp4" type="video/mp4"></video>
+        <span class="reel-badge">SAMPLE · 30s</span>
       </div>
     </div>
   </div>
@@ -756,6 +786,33 @@ section[id]{scroll-margin-top:72px}
       }catch(e){ host.classList.remove('gl-on') }
     };
     img.src=m[1];
+  })();
+
+  /* ad film: the real video where it can load, a slideshow of its frames where it cannot */
+  (function(){
+    var fr=$('reel'), vid=$('reelVid'), btn=$('reelSound'); if(!fr) return;
+    var imgs=[].slice.call(fr.querySelectorAll('.reel-slides img')), k=0, timer=null, seen=false, FULL=vid?vid.getAttribute('data-full'):'';
+    function next(){ imgs[k].classList.remove('on'); k=(k+1)%imgs.length; imgs[k].classList.add('on') }
+    function slides(on){ if(on){ if(!timer&&!reduce&&imgs.length>1){timer=setInterval(next,2600)} } else if(timer){clearInterval(timer);timer=null} }
+    function dead(){ fr.classList.remove('is-video'); fr.classList.add('no-video'); if(seen){slides(true)} }
+    if(vid){
+      vid.addEventListener('playing',function(){fr.classList.add('is-video');slides(false)});
+      vid.addEventListener('error',dead); var so=vid.querySelector('source'); if(so){so.addEventListener('error',dead)}
+    }
+    function tryPlay(){ var p; try{p=vid.play()}catch(e){dead();return} if(p&&p.catch){p.catch(function(){ if(!fr.classList.contains('is-video')){slides(true)} })} }
+    function show(on){
+      seen=on;
+      if(!on){ slides(false); if(vid){try{vid.pause()}catch(e){}} return }
+      if(vid&&!fr.classList.contains('no-video')&&!reduce){ tryPlay(); if(!fr.classList.contains('is-video')){slides(true)} } else { slides(true) }
+    }
+    if('IntersectionObserver' in window){ new IntersectionObserver(function(en){show(en[0].isIntersecting)},{threshold:.35}).observe(fr) } else { show(true) }
+    if(btn){ btn.addEventListener('click',function(){
+      if(vid&&!fr.classList.contains('no-video')){
+        var on=fr.classList.contains('is-video')&&!vid.paused;
+        if(on&&!vid.muted){ vid.muted=true; btn.textContent='소리 켜고 보기' }
+        else { vid.muted=false; try{vid.currentTime=0}catch(e){} var p; try{p=vid.play()}catch(e){} if(p&&p.catch){p.catch(function(){vid.muted=true;btn.textContent='소리 켜고 보기';window.open(FULL,'_blank','noopener')})} btn.textContent='소리 끄기' }
+      } else { window.open(FULL,'_blank','noopener') }
+    }) }
   })();
 
   /* reveal on scroll, from a readable resting state */
