@@ -61,10 +61,12 @@ p{margin:0}
 @media (max-width:820px){.nav{display:none}.top .btn{margin-left:auto}}
 
 /* hero */
-.hero{position:relative;min-height:clamp(600px,88vh,880px);display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;margin-top:-62px;padding-top:62px;isolation:isolate}
+.hero{position:relative;min-height:clamp(620px,calc(100vh - 40px),940px);display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;margin-top:-62px;padding-top:62px;isolation:isolate}
 #bokeh{position:absolute;inset:0;width:100%;height:100%;z-index:-3;display:block}
+.hero-3d{position:absolute;inset:0;z-index:-1;pointer-events:none}
+.hero-3d canvas{position:absolute;inset:0;width:100%!important;height:100%!important;display:block}
 .hero::before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(120% 70% at 50% 108%,rgba(10,9,20,.96) 0%,rgba(10,9,20,.55) 45%,rgba(10,9,20,0) 75%),linear-gradient(180deg,rgba(10,9,20,.7) 0%,rgba(10,9,20,0) 30%)}
-.hero.has-photo::before{background:linear-gradient(90deg,rgba(10,9,20,.86) 0%,rgba(10,9,20,.5) 40%,rgba(10,9,20,0) 72%),radial-gradient(120% 60% at 50% 110%,rgba(10,9,20,.97) 0%,rgba(10,9,20,.5) 50%,rgba(10,9,20,0) 80%),linear-gradient(180deg,rgba(10,9,20,.72) 0%,rgba(10,9,20,0) 26%)}
+.hero.has-photo::before{background:linear-gradient(90deg,rgba(10,9,20,.86) 0%,rgba(10,9,20,.5) 36%,rgba(10,9,20,0) 60%),radial-gradient(120% 60% at 50% 110%,rgba(10,9,20,.97) 0%,rgba(10,9,20,.5) 50%,rgba(10,9,20,0) 80%),linear-gradient(180deg,rgba(10,9,20,.72) 0%,rgba(10,9,20,0) 26%)}
 .hero-photo{position:absolute;inset:-5%;z-index:-4;will-change:transform}
 .hero-kb{position:absolute;inset:0;transform-origin:72% 38%;animation:kb 18s ease-in-out infinite alternate;will-change:transform}
 .hero-photo img{width:100%;height:100%;object-fit:cover;object-position:74% 50%;display:block}
@@ -78,7 +80,7 @@ p{margin:0}
 .hero .btn-sign::after{content:"";position:absolute;top:0;bottom:0;left:0;width:38%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent);transform:translateX(-170%) skewX(-18deg);animation:shine 4.6s ease-in-out 3.4s infinite;pointer-events:none}
 @keyframes shine{0%{transform:translateX(-170%) skewX(-18deg)}30%,100%{transform:translateX(380%) skewX(-18deg)}}
 .hero.has-photo #bokeh{mix-blend-mode:screen}
-@media (max-width:760px){.hero-photo img{object-position:90% 50%}.hero.has-photo::before{background:linear-gradient(180deg,rgba(10,9,20,.74) 0%,rgba(10,9,20,.4) 22%,rgba(10,9,20,.7) 46%,rgba(10,9,20,.96) 80%)}}
+@media (max-width:760px){.hero{min-height:max(640px,calc(100vh - 62px));min-height:max(640px,calc(100svh - 62px))}.hero-photo img{object-position:90% 50%}.hero.has-photo::before{background:linear-gradient(180deg,rgba(10,9,20,.62) 0%,rgba(10,9,20,.06) 15%,rgba(10,9,20,.1) 34%,rgba(10,9,20,.8) 50%,rgba(10,9,20,.97) 74%)}.hero-in{gap:16px;padding-block:20px 26px}.hero h1{font-size:clamp(2rem,10vw,2.6rem)}.hero .lead{font-size:.96rem;line-height:1.7}.hero-foot{display:none}.cta-row{flex-wrap:nowrap;gap:10px}.cta-row .btn{flex:1;padding:14px 8px;font-size:.94rem}.cta-row .lg{display:none}}
 /* ticker */
 .ticker{overflow:hidden;border-block:1px solid var(--line);padding-block:20px;background:var(--night)}
 .ticker-in{display:flex;align-items:center;gap:46px;width:max-content;animation:tick 28s linear infinite}
@@ -99,7 +101,8 @@ p{margin:0}
 .hero .l:nth-child(2)>span{animation-delay:.7s}
 .hero .l:nth-child(3)>span{animation-delay:.85s}
 @keyframes rise{from{transform:translateY(112%)}to{transform:none}}
-.hero em{font-style:normal;color:var(--sign);text-shadow:0 0 42px rgba(255,201,53,.45)}
+.hero em{font-style:normal;color:var(--sign);background:linear-gradient(100deg,#FFC935 0%,#FFF1BF 20%,#FF9E4A 42%,#FFC935 62%,#FFF6D2 82%,#FFC935 100%);background-size:240% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:sheen 4.5s linear infinite;filter:drop-shadow(0 0 16px rgba(255,186,56,.6))}
+@keyframes sheen{from{background-position:0 0}to{background-position:-240% 0}}
 .fade{animation:fade 1.2s 1.25s var(--ease) both}
 @keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .cta-row{display:flex;flex-wrap:wrap;gap:12px}
@@ -257,7 +260,7 @@ footer{background:var(--night);color:var(--muted);font-size:.84rem;border-top:1p
 @keyframes ping{0%{transform:scale(1);opacity:.75}70%,100%{transform:scale(1.28,1.55);opacity:0}}
 section[id]{scroll-margin-top:72px}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
-@media (prefers-reduced-motion:reduce){.hero-photo img,.ticker-in,.phone-screen,.hero-kb,.hero.has-photo .hero-photo img,.hero.has-photo .hero-glow,.portrait img,.end-photo,.float::after,.hero .btn-sign::after{animation:none}.hero.has-photo .hero-glow{opacity:.5}.float::after{display:none}.ticker-in{flex-wrap:wrap;width:auto;justify-content:center;padding-inline:20px;row-gap:10px}.bars i,.hero .l>span,.fade,.cue i{animation:none}.bars i{display:none}[data-rv],.steps li::before{transition:none}}
+@media (prefers-reduced-motion:reduce){.hero-photo img,.ticker-in,.phone-screen,.hero em,.hero-kb,.hero.has-photo .hero-photo img,.hero.has-photo .hero-glow,.portrait img,.end-photo,.float::after,.hero .btn-sign::after{animation:none}.hero.has-photo .hero-glow{opacity:.5}.float::after{display:none}.ticker-in{flex-wrap:wrap;width:auto;justify-content:center;padding-inline:20px;row-gap:10px}.bars i,.hero .l>span,.fade,.cue i{animation:none}.bars i{display:none}[data-rv],.steps li::before{transition:none}}
 </style>
 </head>
 <body>
@@ -284,14 +287,15 @@ section[id]{scroll-margin-top:72px}
   <div class="hero-photo" id="heroPhoto" aria-hidden="true"><div class="hero-kb"><img data-opt src="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/549a229c-29af-40d5-94a1-3443cc37d225.jpg" alt=""><i class="hero-glow" id="heroGlow"></i></div></div>
   <canvas id="bokeh" aria-hidden="true"></canvas>
   <div class="grain" aria-hidden="true"></div>
+  <div class="hero-3d" id="hero3d" aria-hidden="true"></div>
   <div class="bars" aria-hidden="true"><i></i><i></i></div>
   <div class="wrap hero-in">
     <p class="eyebrow fade">OK Digital Ssem <b>동네 가게 전문 온라인 마케팅</b></p>
     <h1><span class="l"><span>검색하면 나오고,</span></span><span class="l"><span><em>누르면 문의가 오는</em></span></span><span class="l"><span>가게로 만듭니다</span></span></h1>
     <p class="lead fade">홈페이지 하나만 만들고 끝내지 않습니다. 네이버 지도, 카카오톡 채널, 광고 영상까지 손님이 가게를 찾아오는 길 전체를 이어 드립니다.</p>
     <div class="cta-row fade">
-      <a class="btn btn-sign" href="#contact">우리 가게 무료 진단 받기</a>
-      <a class="btn btn-ghost" href="#check">1분 자가 진단 해보기</a>
+      <a class="btn btn-sign" href="#contact"><span class="lg">우리 가게&nbsp;</span>무료 진단 받기</a>
+      <a class="btn btn-ghost" href="#check">1분 자가 진단<span class="lg">&nbsp;해보기</span></a>
     </div>
   </div>
   <div class="wrap"><div class="hero-foot fade"><span class="ko">불 켜진 간판은 많습니다</span><span class="cue"><i></i>Scroll</span></div></div>
@@ -537,17 +541,18 @@ section[id]{scroll-margin-top:72px}
   /* hero: out-of-focus shop signs at night */
   var cv=$('bokeh'), hero=$('top'), ctx=cv.getContext('2d'), W=0,H=0,dpr=1, lights=[], px=0,py=0,tx=0,ty=0, running=false, sy=0;
   var cols=[[255,201,53],[255,138,91],[141,184,255],[255,236,200],[255,201,53],[255,110,120]];
-  var photoOn=false, hp=$('heroPhoto'), glow=$('heroGlow'), himg=hp&&hp.querySelector('img'), rain=[], lastT=0;
+  var photoOn=false, hp=$('heroPhoto'), glow=$('heroGlow'), himg=hp&&hp.querySelector('img'), rain=[], lastT=0, photoAt=0, signN=null;
   function placeGlow(){
     if(!glow||!himg||!himg.naturalWidth) return;
     var bw=hp.clientWidth,bh=hp.clientHeight,iw=himg.naturalWidth,ih=himg.naturalHeight,s=Math.max(bw/iw,bh/ih),dw=iw*s,dh=ih*s;
     var op=(getComputedStyle(himg).objectPosition||'').split(' '), ox=parseFloat(op[0])/100, oy=parseFloat(op[1])/100; if(isNaN(ox))ox=.74; if(isNaN(oy))oy=.5;
     var d=dh*.6, x=(bw-dw)*ox+.885*dw, y=(bh-dh)*oy+.165*dh;
     glow.style.width=glow.style.height=d+'px'; glow.style.left=(x-d/2)+'px'; glow.style.top=(y-d/2)+'px';
+    signN={x:(x-bw*.05/1.1)/(bw/1.1),y:(y-bh*.05/1.1)/(bh/1.1)};
   }
   [].forEach.call(document.querySelectorAll('img[data-opt]'),function(im){
     var isHero = hp && hp.contains(im);
-    function ok(){ if(isHero){photoOn=true;hero.classList.add('has-photo');placeGlow()} }
+    function ok(){ if(isHero){photoOn=true;photoAt=performance.now();hero.classList.add('has-photo');placeGlow()} }
     function bad(){ if(isHero){hp.hidden=true}else{im.hidden=true} }
     if(im.complete){ im.naturalWidth?ok():bad() } else { im.addEventListener('load',ok); im.addEventListener('error',bad) }
   });
@@ -601,6 +606,99 @@ section[id]{scroll-margin-top:72px}
       new IntersectionObserver(function(en){var on=en[0].isIntersecting; if(on&&!running){running=true;requestAnimationFrame(loop)} else if(!on){running=false}}).observe(hero);
     }else{running=true;requestAnimationFrame(loop)}
   }
+
+  /* hero: the channels pop out of the sign as glossy 3D tiles */
+  (function(){
+    var host=$('hero3d'); if(!host||!window.THREE) return;
+    var T=THREE, probe=document.createElement('canvas'); if(!(probe.getContext('webgl')||probe.getContext('experimental-webgl'))) return;
+    var started=false;
+    function rr(w,h,r){var s=new T.Shape(),x=-w/2,y=-h/2; s.moveTo(x+r,y); s.lineTo(x+w-r,y); s.quadraticCurveTo(x+w,y,x+w,y+r); s.lineTo(x+w,y+h-r); s.quadraticCurveTo(x+w,y+h,x+w-r,y+h); s.lineTo(x+r,y+h); s.quadraticCurveTo(x,y+h,x,y+h-r); s.lineTo(x,y+r); s.quadraticCurveTo(x,y,x+r,y); return s}
+    var defs=[
+      {label:'카톡 상담',c:['#FFE584','#FFB700'],ink:'#1B1730',side:0xc98f00,glow:0xffc935,d:[.705,.5,1.2,1.15],m:[.3,.285,1,1.2],
+        draw:function(x,b){x.beginPath();x.ellipse(128,94,62,46,0,0,6.2832);x.fill();x.beginPath();x.moveTo(92,126);x.lineTo(82,162);x.lineTo(126,136);x.closePath();x.fill();x.fillStyle=b;[104,128,152].forEach(function(v){x.beginPath();x.arc(v,94,8,0,6.2832);x.fill()})}},
+      {label:'지도',c:['#34E39A','#0C9B5F'],ink:'#ffffff',side:0x0b7d4d,glow:0x2be08f,d:[.585,.26,0,.9],m:[.57,.17,-.5,.85],
+        draw:function(x,b){x.beginPath();x.moveTo(128,166);x.bezierCurveTo(128,166,84,124,84,92);x.arc(128,92,44,Math.PI,0);x.bezierCurveTo(172,124,128,166,128,166);x.fill();x.fillStyle=b;x.beginPath();x.arc(128,92,16,0,6.2832);x.fill()}},
+      {label:'광고 영상',c:['#FF7A66','#DE2A22'],ink:'#ffffff',side:0x9e1712,glow:0xff5a4e,d:[.81,.235,-1.2,.85],m:[.13,.15,-1.2,.8],
+        draw:function(x){x.lineWidth=16;x.beginPath();x.moveTo(106,62);x.lineTo(166,102);x.lineTo(106,142);x.closePath();x.fill();x.stroke()}},
+      {label:'블로그',c:['#A9CBFF','#3F74F0'],ink:'#ffffff',side:0x2b55bd,glow:0x6fa0ff,d:[.6,.8,-.6,.85],m:[.51,.365,0,.85],
+        draw:function(x,b){var X=80,Y=48,W=96,H=112,r=16;x.beginPath();x.moveTo(X+r,Y);x.lineTo(X+W-r,Y);x.quadraticCurveTo(X+W,Y,X+W,Y+r);x.lineTo(X+W,Y+H-r);x.quadraticCurveTo(X+W,Y+H,X+W-r,Y+H);x.lineTo(X+r,Y+H);x.quadraticCurveTo(X,Y+H,X,Y+H-r);x.lineTo(X,Y+r);x.quadraticCurveTo(X,Y,X+r,Y);x.fill();x.fillStyle=b;x.fillRect(98,74,60,10);x.fillRect(98,98,60,10);x.fillRect(98,122,36,10)}},
+      {label:'인스타',c:['#FF9A5B','#E23C86'],ink:'#ffffff',side:0xa82460,glow:0xff5f8f,d:[.8,.8,.5,.95],m:[.1,.365,-.8,.78],
+        draw:function(x){x.beginPath();x.moveTo(128,158);x.bezierCurveTo(52,106,82,40,128,78);x.bezierCurveTo(174,40,204,106,128,158);x.fill()}},
+      {label:'후기',c:['#FFFBEE','#F1E3BF'],ink:'#1B1730',side:0xb9a56f,glow:0xfff0c0,d:[.69,.155,-2,.7],m:[.86,.4,.4,.85],
+        draw:function(x){x.fillStyle='#FFB400';x.beginPath();for(var i=0;i<10;i++){var a=-Math.PI/2+i*Math.PI/5,r=i%2?24:56;x[i?'lineTo':'moveTo'](128+Math.cos(a)*r,100+Math.sin(a)*r)}x.closePath();x.fill();x.fillStyle='#1B1730'}}
+    ];
+    function start(){
+      if(started) return; started=true;
+      try{
+        var w=host.clientWidth,h=host.clientHeight; if(!w||!h) return;
+        var renderer=new T.WebGLRenderer({antialias:true,alpha:true}); renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2)); renderer.setSize(w,h,false);
+        renderer.outputEncoding=T.sRGBEncoding; renderer.toneMapping=T.ACESFilmicToneMapping; renderer.toneMappingExposure=1.15;
+        var scene=new T.Scene(), FOV=35, CZ=10, cam=new T.PerspectiveCamera(FOV,w/h,.1,60); cam.position.set(0,0,CZ);
+        var env=new T.Scene(); env.background=new T.Color(0x0a0914);
+        function panel(c,k,x,y,z,sx,sy){var col=new T.Color(c).multiplyScalar(k); var p=new T.Mesh(new T.PlaneGeometry(sx,sy),new T.MeshBasicMaterial({color:col,side:T.DoubleSide})); p.position.set(x,y,z); p.lookAt(0,0,0); env.add(p)}
+        panel(0xffc935,3,-6,2,4,5,7); panel(0x8db8ff,2.4,7,3,2,4,8); panel(0xffffff,3.2,0,8,3,9,3); panel(0xff8a5b,2,3,-6,5,6,2); panel(0xffffff,1.1,0,0,9,5,5);
+        var pm=new T.PMREMGenerator(renderer); scene.environment=pm.fromScene(env,0.04).texture;
+        scene.add(new T.AmbientLight(0xffffff,.4)); var key=new T.DirectionalLight(0xffe2a8,1.1); key.position.set(-3,4,6); scene.add(key);
+        var bodyG=new T.ExtrudeGeometry(rr(1,1,.25),{depth:.14,bevelEnabled:true,bevelThickness:.04,bevelSize:.04,bevelSegments:5,curveSegments:20}); bodyG.translate(0,0,-.09);
+        var faceG=new T.ShapeGeometry(rr(.98,.98,.24),20), fp=faceG.attributes.position, fu=faceG.attributes.uv;
+        for(var i=0;i<fp.count;i++){fu.setXY(i,(fp.getX(i)+.49)/.98,(fp.getY(i)+.49)/.98)}
+        var hc=document.createElement('canvas'); hc.width=hc.height=128; var hx=hc.getContext('2d'), hg=hx.createRadialGradient(64,64,0,64,64,64);
+        hg.addColorStop(0,'rgba(255,255,255,1)'); hg.addColorStop(.35,'rgba(255,255,255,.42)'); hg.addColorStop(1,'rgba(255,255,255,0)'); hx.fillStyle=hg; hx.fillRect(0,0,128,128);
+        var haloTex=new T.CanvasTexture(hc);
+        function face(d){
+          var c=document.createElement('canvas'); c.width=c.height=256; var x=c.getContext('2d');
+          var g=x.createLinearGradient(0,0,256,256); g.addColorStop(0,d.c[0]); g.addColorStop(1,d.c[1]); x.fillStyle=g; x.fillRect(0,0,256,256);
+          var hl=x.createLinearGradient(0,0,0,256); hl.addColorStop(0,'rgba(255,255,255,.3)'); hl.addColorStop(.55,'rgba(255,255,255,0)'); x.fillStyle=hl; x.fillRect(0,0,256,256);
+          x.fillStyle=d.ink; x.strokeStyle=d.ink; x.lineJoin='round'; x.lineCap='round'; d.draw(x,d.c[1]);
+          x.fillStyle=d.ink; x.font='700 36px "IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif'; x.textAlign='center'; x.textBaseline='middle'; x.fillText(d.label,128,210);
+          var t=new T.CanvasTexture(c); t.encoding=T.sRGBEncoding; t.anisotropy=4; return t;
+        }
+        var items=defs.map(function(d,i){
+          var g=new T.Group();
+          g.add(new T.Mesh(bodyG,new T.MeshStandardMaterial({color:d.side,metalness:.4,roughness:.28,envMapIntensity:1.2})));
+          var f=new T.Mesh(faceG,new T.MeshBasicMaterial({map:face(d),toneMapped:false})); f.position.z=.092; g.add(f);
+          var gl=new T.Mesh(faceG,new T.MeshStandardMaterial({color:0xffffff,metalness:1,roughness:.06,transparent:true,opacity:.13,envMapIntensity:1.6})); gl.position.z=.095; g.add(gl);
+          var hs=new T.Sprite(new T.SpriteMaterial({map:haloTex,color:d.glow,blending:T.AdditiveBlending,transparent:true,opacity:.55,depthWrite:false})); hs.scale.set(3,3,1); hs.position.z=-.5; hs.renderOrder=-1; g.add(hs);
+          g.scale.setScalar(.0001); scene.add(g);
+          return {g:g,d:d,home:new T.Vector3(),size:1,f:.5+i*.11,ph:i*1.7};
+        });
+        var N=70, pg=new T.BufferGeometry(), pa=new Float32Array(N*3), dust=new T.Points(pg,new T.PointsMaterial({color:0xffd66b,size:.085,map:haloTex,transparent:true,opacity:.85,blending:T.AdditiveBlending,depthWrite:false,sizeAttenuation:true}));
+        pg.setAttribute('position',new T.BufferAttribute(pa,3)); scene.add(dust);
+        var vh=1,vw=1,unit=.01,mob=false,ox=0,oy=0;
+        function lay(){
+          w=host.clientWidth;h=host.clientHeight; if(!w||!h) return;
+          renderer.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix();
+          vh=2*CZ*Math.tan(FOV*Math.PI/360); vw=vh*cam.aspect; unit=vh/h; mob=w<760;
+          items.forEach(function(it){var p=mob?it.d.m:it.d.d,k=(CZ-p[2])/CZ; it.home.set((p[0]-.5)*vw*k,(.5-p[1])*vh*k,p[2]); it.size=p[3]*(mob?74:118)*unit});
+          var s=signN||{x:mob?.86:.93,y:.14}; ox=(s.x-.5)*vw; oy=(.5-s.y)*vh;
+          for(var i=0;i<N;i++){pa[i*3]=(Math.random()-.5)*vw*1.3; pa[i*3+1]=(Math.random()-.5)*vh*1.2; pa[i*3+2]=-3+Math.random()*4.5}
+          pg.attributes.position.needsUpdate=true;
+        }
+        function back(e){var c=1.9; return 1+(c+1)*Math.pow(e-1,3)+c*Math.pow(e-1,2)}
+        var born=0, tInit=performance.now(), vis=false, last=0;
+        function pose(now){
+          if(!born){ if(photoOn){born=Math.max(now,photoAt+1250)} else if(now-tInit>1400){born=now} }
+          var s=now/1000, dt=last?Math.min(60,now-last):16; last=now;
+          for(var i=0;i<items.length;i++){
+            var it=items[i], e=reduce?1:(born?clamp((now-born-i*140)/1100,0,1):0), es=e<=0?0:back(e), ep=1-Math.pow(1-e,3), z=it.home.z;
+            if(signN&&e<1){var sg=signN; ox=(sg.x-.5)*vw; oy=(.5-sg.y)*vh}
+            it.g.position.set(ox+(it.home.x-ox)*ep+px*(.34+z*.16), oy+(it.home.y-oy)*ep+Math.sin(s*it.f*1.6+it.ph)*.085-py*(.24+z*.1)+sy*unit*(.22+(z+2)*.16), z);
+            it.g.scale.setScalar(Math.max(.0001,es*it.size));
+            it.g.rotation.set(Math.cos(s*it.f*.9+it.ph)*.2-py*.3, Math.sin(s*it.f+it.ph)*.4+px*.55+(1-ep)*3.2, Math.sin(s*.4+it.ph)*.06);
+          }
+          if(!reduce){ for(var j=0;j<N;j++){var k=j*3+1; pa[k]+=dt*.00022*(1+(j%4)*.5); if(pa[k]>vh*.62){pa[k]=-vh*.62} } pg.attributes.position.needsUpdate=true; dust.rotation.y=px*.12 }
+        }
+        function frame(t){ if(!vis) return; pose(performance.now()); renderer.render(scene,cam); requestAnimationFrame(frame) }
+        lay(); host.appendChild(renderer.domElement); hero.classList.add('has-3d');
+        window.addEventListener('resize',function(){lay(); if(reduce||!vis){pose(performance.now());renderer.render(scene,cam)}});
+        if(reduce){ pose(performance.now()); renderer.render(scene,cam) }
+        else if('IntersectionObserver' in window){ new IntersectionObserver(function(en){var on=en[0].isIntersecting; if(on&&!vis){vis=true;last=0;requestAnimationFrame(frame)}else if(!on){vis=false}}).observe(hero) }
+        else { vis=true; requestAnimationFrame(frame) }
+      }catch(e){ host.innerHTML='' }
+    }
+    try{ if(document.fonts&&document.fonts.load){ document.fonts.load('700 36px "IBM Plex Sans KR"','카톡 상담지도광고영상블로그인스타후기').then(start,start) } }catch(e){}
+    setTimeout(start,1600);
+  })();
 
   /* 3D phone showing the real site */
   (function(){
