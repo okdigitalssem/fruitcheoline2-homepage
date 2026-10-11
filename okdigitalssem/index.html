@@ -909,6 +909,7 @@ section[id]{scroll-margin-top:72px}
       if(!vid||box.classList.contains('nv')){ return }
       if(e){e.preventDefault(); e.stopPropagation()}
       if(isOn()){ vid.muted=true; want=false; label(); return }
+      if(e&&btn&&e.currentTarget===btn){ try{fr.scrollIntoView({block:'center',behavior:reduce?'auto':'smooth'})}catch(x){} }
       want=true; vid.muted=false; try{vid.currentTime=0}catch(x){}
       var p; try{p=vid.play()}catch(x){}
       if(p&&p.catch){p.catch(function(err){ if(err&&err.name==='AbortError'){return} dead() })}
