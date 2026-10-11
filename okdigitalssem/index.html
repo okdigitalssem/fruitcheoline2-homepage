@@ -80,7 +80,7 @@ p{margin:0}
 .hero .btn-sign::after{content:"";position:absolute;top:0;bottom:0;left:0;width:38%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent);transform:translateX(-170%) skewX(-18deg);animation:shine 4.6s ease-in-out 3.4s infinite;pointer-events:none}
 @keyframes shine{0%{transform:translateX(-170%) skewX(-18deg)}30%,100%{transform:translateX(380%) skewX(-18deg)}}
 .hero.has-photo #bokeh{mix-blend-mode:screen}
-@media (max-width:760px){.hero{min-height:max(640px,calc(100vh - 62px));min-height:max(640px,calc(100svh - 62px))}.hero-photo img{object-position:90% 50%}.hero.has-photo::before{background:linear-gradient(180deg,rgba(10,9,20,.62) 0%,rgba(10,9,20,.06) 15%,rgba(10,9,20,.1) 34%,rgba(10,9,20,.8) 50%,rgba(10,9,20,.97) 74%)}.hero-in{gap:16px;padding-block:20px 26px}.hero h1{font-size:clamp(2rem,10vw,2.6rem)}.hero .lead{font-size:.96rem;line-height:1.7}.hero-foot{display:none}.cta-row{flex-wrap:nowrap;gap:10px}.cta-row .btn{flex:1;padding:14px 8px;font-size:.94rem}.cta-row .lg{display:none}}
+@media (max-width:760px){.hero{min-height:max(640px,calc(100vh - 62px));min-height:max(640px,calc(100svh - 62px))}.hero-photo img{object-position:90% 50%}.hero.has-photo::before{background:linear-gradient(180deg,rgba(10,9,20,.62) 0%,rgba(10,9,20,.06) 15%,rgba(10,9,20,.1) 34%,rgba(10,9,20,.8) 50%,rgba(10,9,20,.97) 74%)}}
 /* ticker */
 .ticker{overflow:hidden;border-block:1px solid var(--line);padding-block:20px;background:var(--night)}
 .ticker-in{display:flex;align-items:center;gap:46px;width:max-content;animation:tick 28s linear infinite}
@@ -111,6 +111,7 @@ p{margin:0}
 .cue{display:flex;align-items:center;gap:10px}
 .cue i{width:1px;height:26px;background:linear-gradient(var(--sign),transparent);animation:cue 2.2s infinite var(--ease)}
 @keyframes cue{0%{transform:scaleY(0);transform-origin:50% 0}50%{transform:scaleY(1);transform-origin:50% 0}51%{transform-origin:50% 100%}100%{transform:scaleY(0);transform-origin:50% 100%}}
+@media (max-width:760px){.hero-in{gap:16px;padding-block:20px 26px}.hero h1{font-size:clamp(2rem,10vw,2.6rem)}.hero .lead{font-size:.96rem;line-height:1.7}.hero-foot{display:none}.cta-row{flex-wrap:nowrap;gap:10px}.cta-row .btn{flex:1;padding:14px 8px;font-size:.94rem}.cta-row .lg{display:none}}
 
 /* statement */
 .say{font-family:var(--display);font-weight:600;font-size:clamp(1.6rem,4.3vw,3.1rem);line-height:1.5;max-width:22em;letter-spacing:-.015em}
@@ -294,8 +295,8 @@ section[id]{scroll-margin-top:72px}
     <h1><span class="l"><span>검색하면 나오고,</span></span><span class="l"><span><em>누르면 문의가 오는</em></span></span><span class="l"><span>가게로 만듭니다</span></span></h1>
     <p class="lead fade">홈페이지 하나만 만들고 끝내지 않습니다. 네이버 지도, 카카오톡 채널, 광고 영상까지 손님이 가게를 찾아오는 길 전체를 이어 드립니다.</p>
     <div class="cta-row fade">
-      <a class="btn btn-sign" href="#contact"><span class="lg">우리 가게&nbsp;</span>무료 진단 받기</a>
-      <a class="btn btn-ghost" href="#check">1분 자가 진단<span class="lg">&nbsp;해보기</span></a>
+      <a class="btn btn-sign" href="#contact"><span><span class="lg">우리 가게 </span>무료 진단 받기</span></a>
+      <a class="btn btn-ghost" href="#check"><span>1분 자가 진단<span class="lg"> 해보기</span></span></a>
     </div>
   </div>
   <div class="wrap"><div class="hero-foot fade"><span class="ko">불 켜진 간판은 많습니다</span><span class="cue"><i></i>Scroll</span></div></div>
@@ -614,17 +615,17 @@ section[id]{scroll-margin-top:72px}
     var started=false;
     function rr(w,h,r){var s=new T.Shape(),x=-w/2,y=-h/2; s.moveTo(x+r,y); s.lineTo(x+w-r,y); s.quadraticCurveTo(x+w,y,x+w,y+r); s.lineTo(x+w,y+h-r); s.quadraticCurveTo(x+w,y+h,x+w-r,y+h); s.lineTo(x+r,y+h); s.quadraticCurveTo(x,y+h,x,y+h-r); s.lineTo(x,y+r); s.quadraticCurveTo(x,y,x+r,y); return s}
     var defs=[
-      {label:'카톡 상담',c:['#FFE584','#FFB700'],ink:'#1B1730',side:0xc98f00,glow:0xffc935,d:[.705,.5,1.2,1.15],m:[.3,.285,1,1.2],
+      {label:'카톡 상담',c:['#FFE584','#FFB700'],ink:'#1B1730',side:0xc98f00,glow:0xffc935,d:[.705,.5,1.2,1.15],m:[.31,.275,1,1.15],
         draw:function(x,b){x.beginPath();x.ellipse(128,94,62,46,0,0,6.2832);x.fill();x.beginPath();x.moveTo(92,126);x.lineTo(82,162);x.lineTo(126,136);x.closePath();x.fill();x.fillStyle=b;[104,128,152].forEach(function(v){x.beginPath();x.arc(v,94,8,0,6.2832);x.fill()})}},
-      {label:'지도',c:['#34E39A','#0C9B5F'],ink:'#ffffff',side:0x0b7d4d,glow:0x2be08f,d:[.585,.26,0,.9],m:[.57,.17,-.5,.85],
+      {label:'지도',c:['#34E39A','#0C9B5F'],ink:'#ffffff',side:0x0b7d4d,glow:0x2be08f,d:[.585,.26,0,.9],m:[.58,.165,-.5,.85],
         draw:function(x,b){x.beginPath();x.moveTo(128,166);x.bezierCurveTo(128,166,84,124,84,92);x.arc(128,92,44,Math.PI,0);x.bezierCurveTo(172,124,128,166,128,166);x.fill();x.fillStyle=b;x.beginPath();x.arc(128,92,16,0,6.2832);x.fill()}},
-      {label:'광고 영상',c:['#FF7A66','#DE2A22'],ink:'#ffffff',side:0x9e1712,glow:0xff5a4e,d:[.81,.235,-1.2,.85],m:[.13,.15,-1.2,.8],
+      {label:'광고 영상',c:['#FF7A66','#DE2A22'],ink:'#ffffff',side:0x9e1712,glow:0xff5a4e,d:[.81,.235,-1.2,.85],m:[.14,.17,-1.2,.8],
         draw:function(x){x.lineWidth=16;x.beginPath();x.moveTo(106,62);x.lineTo(166,102);x.lineTo(106,142);x.closePath();x.fill();x.stroke()}},
-      {label:'블로그',c:['#A9CBFF','#3F74F0'],ink:'#ffffff',side:0x2b55bd,glow:0x6fa0ff,d:[.6,.8,-.6,.85],m:[.51,.365,0,.85],
+      {label:'블로그',c:['#A9CBFF','#3F74F0'],ink:'#ffffff',side:0x2b55bd,glow:0x6fa0ff,d:[.6,.8,-.6,.85],m:[.53,.345,0,.8],
         draw:function(x,b){var X=80,Y=48,W=96,H=112,r=16;x.beginPath();x.moveTo(X+r,Y);x.lineTo(X+W-r,Y);x.quadraticCurveTo(X+W,Y,X+W,Y+r);x.lineTo(X+W,Y+H-r);x.quadraticCurveTo(X+W,Y+H,X+W-r,Y+H);x.lineTo(X+r,Y+H);x.quadraticCurveTo(X,Y+H,X,Y+H-r);x.lineTo(X,Y+r);x.quadraticCurveTo(X,Y,X+r,Y);x.fill();x.fillStyle=b;x.fillRect(98,74,60,10);x.fillRect(98,98,60,10);x.fillRect(98,122,36,10)}},
-      {label:'인스타',c:['#FF9A5B','#E23C86'],ink:'#ffffff',side:0xa82460,glow:0xff5f8f,d:[.8,.8,.5,.95],m:[.1,.365,-.8,.78],
+      {label:'인스타',c:['#FF9A5B','#E23C86'],ink:'#ffffff',side:0xa82460,glow:0xff5f8f,d:[.8,.8,.5,.95],m:[.09,.35,-.8,.75],
         draw:function(x){x.beginPath();x.moveTo(128,158);x.bezierCurveTo(52,106,82,40,128,78);x.bezierCurveTo(174,40,204,106,128,158);x.fill()}},
-      {label:'후기',c:['#FFFBEE','#F1E3BF'],ink:'#1B1730',side:0xb9a56f,glow:0xfff0c0,d:[.69,.155,-2,.7],m:[.86,.4,.4,.85],
+      {label:'후기',c:['#FFFBEE','#F1E3BF'],ink:'#1B1730',side:0xb9a56f,glow:0xfff0c0,d:[.69,.155,-2,.7],m:[.87,.37,.4,.8],
         draw:function(x){x.fillStyle='#FFB400';x.beginPath();for(var i=0;i<10;i++){var a=-Math.PI/2+i*Math.PI/5,r=i%2?24:56;x[i?'lineTo':'moveTo'](128+Math.cos(a)*r,100+Math.sin(a)*r)}x.closePath();x.fill();x.fillStyle='#1B1730'}}
     ];
     function start(){
