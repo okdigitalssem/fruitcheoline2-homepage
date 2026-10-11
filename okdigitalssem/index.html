@@ -212,6 +212,9 @@ p{margin:0}
 .reel-frame.is-video video{opacity:1}
 .reel-frame.is-video .reel-slides{visibility:hidden}
 .reel-frame{cursor:pointer}
+.reel-note{position:absolute;left:10px;right:10px;bottom:72px;z-index:4;background:rgba(10,9,20,.92);border:1px solid rgba(243,241,250,.22);border-radius:16px;padding:14px;display:grid;gap:10px;text-align:center;font-size:.86rem;line-height:1.5;color:var(--text);cursor:default}
+.reel-note p{margin:0}
+.reel-note .btn{padding:11px 14px;font-size:.92rem}
 .reel-spk{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:3;display:inline-flex;align-items:center;gap:8px;padding:11px 18px 11px 14px;border-radius:999px;border:0;background:var(--sign);color:var(--sign-ink);font-family:var(--body);font-weight:700;font-size:.95rem;line-height:1;cursor:pointer;white-space:nowrap;box-shadow:0 8px 26px rgba(0,0,0,.5)}
 .reel-spk::after{content:"";position:absolute;inset:0;border-radius:inherit;border:2px solid var(--sign);animation:ping 2.4s ease-out infinite;pointer-events:none}
 .reel-spk .w{display:none}
@@ -467,6 +470,7 @@ section[id]{scroll-margin-top:72px}
         <video id="reelVid" muted loop playsinline preload="none" data-full="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/532e29e2-af0d-4f50-88e6-53562415f738.mp4" aria-label="30초 세로 광고 영상 샘플"><source src="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/f78de28d-5c49-4e7a-94d2-e5c102f8014f.mp4" type="video/mp4"></video>
         <span class="reel-badge">SAMPLE · 30s</span>
         <button class="reel-spk" type="button" id="reelSpk" aria-pressed="false" aria-label="광고 영상 소리 켜기 또는 끄기"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path class="x" d="M16.5 9.5l5 5M21.5 9.5l-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><path class="w" d="M16 8.6a5 5 0 0 1 0 6.8M18.6 6a8.6 8.6 0 0 1 0 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg><span id="reelSpkT">소리 켜기</span></button>
+        <div class="reel-note" id="reelNote" hidden><p>이 화면에서는 영상 소리가 재생되지 않아요.<br>아래 버튼을 누르면 소리와 함께 열립니다.</p><a class="btn btn-sign" href="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/f78de28d-5c49-4e7a-94d2-e5c102f8014f.mp4" target="_blank" rel="noopener">소리 나는 영상 열기</a></div>
       </div>
     </div>
   </div>
@@ -867,9 +871,11 @@ section[id]{scroll-margin-top:72px}
     var imgs=[].slice.call(fr.querySelectorAll('.reel-slides img')), k=0, timer=null, seen=false, FULL=vid?vid.getAttribute('data-full'):'';
     function next(){ imgs[k].classList.remove('on'); k=(k+1)%imgs.length; imgs[k].classList.add('on') }
     function slides(on){ if(on){ if(!timer&&!reduce&&imgs.length>1){timer=setInterval(next,2600)} } else if(timer){clearInterval(timer);timer=null} }
-    function dead(){ fr.classList.remove('is-video'); fr.classList.add('no-video'); if(seen){slides(true)} }
+    var want=false, retried=false, note=$('reelNote');
+    function tell(){ if(note){note.hidden=false} }
+    function dead(){ fr.classList.remove('is-video'); fr.classList.add('no-video'); if(seen){slides(true)} if(want){want=false; label(false); tell()} }
     if(vid){
-      vid.addEventListener('playing',function(){fr.classList.add('is-video');slides(false)});
+      vid.addEventListener('playing',function(){fr.classList.add('is-video');slides(false);want=false});
       vid.addEventListener('error',dead); var so=vid.querySelector('source'); if(so){so.addEventListener('error',dead)}
     }
     function tryPlay(){ var p; try{p=vid.play()}catch(e){dead();return} if(p&&p.catch){p.catch(function(){ if(!fr.classList.contains('is-video')){slides(true)} })} }
@@ -882,12 +888,16 @@ section[id]{scroll-margin-top:72px}
     var spk=$('reelSpk'), spkT=$('reelSpkT');
     function label(on){ fr.classList.toggle('snd-on',on); if(btn){btn.textContent=on?'소리 끄기':'소리 켜고 보기'} if(spkT){spkT.textContent=on?'소리 끄기':'소리 켜기'} if(spk){spk.setAttribute('aria-pressed',on?'true':'false')} }
     function sound(e){
+      if(e&&e.target&&e.target.closest&&e.target.closest('.reel-note')){ return }
       if(e){e.preventDefault(); e.stopPropagation()}
-      if(vid&&!fr.classList.contains('no-video')){
-        var on=fr.classList.contains('is-video')&&!vid.paused&&!vid.muted;
-        if(on){ vid.muted=true; label(false) }
-        else { vid.muted=false; try{vid.currentTime=0}catch(x){} var p; try{p=vid.play()}catch(x){} if(p&&p.catch){p.catch(function(){vid.muted=true;label(false);window.open(FULL,'_blank','noopener')})} label(true) }
-      } else { window.open(FULL,'_blank','noopener') }
+      if(!vid){ tell(); return }
+      if(fr.classList.contains('no-video')){
+        if(retried){ tell(); return }
+        retried=true; fr.classList.remove('no-video'); try{vid.load()}catch(x){}
+      }
+      var on=fr.classList.contains('is-video')&&!vid.paused&&!vid.muted;
+      if(on){ vid.muted=true; want=false; label(false) }
+      else { want=true; if(note){note.hidden=true} vid.muted=false; try{vid.currentTime=0}catch(x){} var p; try{p=vid.play()}catch(x){} if(p&&p.catch){p.catch(function(){ vid.muted=true; label(false); if(want){want=false; tell()} })} label(true) }
     }
     if(btn){btn.addEventListener('click',sound)} if(spk){spk.addEventListener('click',sound)} fr.addEventListener('click',sound);
   })();
