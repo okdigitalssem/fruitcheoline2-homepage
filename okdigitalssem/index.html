@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="홈페이지 제작 전문 옥디지털쌤. 홈페이지 제작부터 네이버 지도, 카카오톡 채널, 광고 영상까지 손님이 찾아오는 길을 이어 드립니다.">
 <meta name="theme-color" content="#0A0914">
-<link rel="preload" as="image" href="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/549a229c-29af-40d5-94a1-3443cc37d225.jpg">
+<link rel="preload" as="image" href="hero.jpg">
 <style>html{color-scheme:dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>옥디지털쌤 | 홈페이지 제작 · 온라인 마케팅</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -242,6 +242,7 @@ p{margin:0}
 .portrait{position:relative;margin:0;aspect-ratio:4/5;border-radius:24px;overflow:hidden;display:grid;place-items:center;background:radial-gradient(60% 60% at 50% 40%,var(--haze),var(--deep));max-width:460px;width:100%;box-shadow:0 40px 90px rgba(0,0,0,.5)}
 .portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:kb2 20s ease-in-out infinite alternate}
 @keyframes kb2{from{transform:scale(1.02)}to{transform:scale(1.15) translate(-2%,1.6%)}}
+.portrait.no-img figcaption{display:none}
 .portrait figcaption{position:absolute;right:12px;bottom:10px;font-size:.72rem;color:rgba(243,241,250,.7);background:rgba(10,9,20,.5);padding:2px 8px;border-radius:999px}
 .face{width:132px;height:132px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:3.2rem;color:var(--sign);border:1px solid var(--sign);box-shadow:0 0 60px rgba(255,201,53,.22),inset 0 0 40px rgba(255,201,53,.12)}
 .about div{display:grid;gap:14px}
@@ -260,6 +261,7 @@ p{margin:0}
 footer{background:var(--night);color:var(--muted);font-size:.84rem;border-top:1px solid var(--line);padding-block:24px 100px}
 .float{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:50;box-shadow:0 10px 34px rgba(0,0,0,.5);opacity:0;visibility:hidden;transform:translateY(14px);transition:opacity .35s,transform .35s var(--ease),visibility 0s .35s}
 .float.show{opacity:1;visibility:visible;transform:none;transition:opacity .35s,transform .35s var(--ease)}
+@media (max-width:760px){.float{padding:12px 20px;font-size:.92rem}}
 .float::after{content:"";position:absolute;inset:0;border-radius:inherit;border:2px solid var(--sign);animation:ping 2.8s ease-out infinite;pointer-events:none}
 @keyframes ping{0%{transform:scale(1);opacity:.75}70%,100%{transform:scale(1.28,1.55);opacity:0}}
 section[id]{scroll-margin-top:72px}
@@ -288,7 +290,7 @@ section[id]{scroll-margin-top:72px}
 
 <main>
 <section class="hero" id="top">
-  <div class="hero-photo" id="heroPhoto" aria-hidden="true"><div class="hero-kb"><img data-opt src="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/549a229c-29af-40d5-94a1-3443cc37d225.jpg" alt=""><i class="hero-glow" id="heroGlow"></i></div></div>
+  <div class="hero-photo" id="heroPhoto" aria-hidden="true"><div class="hero-kb"><img data-opt src="hero.jpg" alt=""><i class="hero-glow" id="heroGlow"></i></div></div>
   <canvas id="bokeh" aria-hidden="true"></canvas>
   <div class="grain" aria-hidden="true"></div>
   <div class="hero-3d" id="hero3d" aria-hidden="true"></div>
@@ -500,7 +502,7 @@ section[id]{scroll-margin-top:72px}
 <section class="sec" style="padding-top:0">
   <div class="wrap">
     <div class="about" data-rv>
-      <figure class="portrait"><span class="face" aria-hidden="true">옥</span><img data-opt src="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/c6703946-9b42-43b6-9e52-c7f708da1d15.jpg" alt="밤에 책상에서 노트북과 폰으로 홈페이지 화면을 다듬는 모습" loading="lazy"><figcaption>연출 이미지</figcaption></figure>
+      <figure class="portrait"><span class="face" aria-hidden="true">옥</span><img data-opt src="maker.jpg" alt="밤에 책상에서 노트북과 폰으로 홈페이지 화면을 다듬는 모습" loading="lazy"><figcaption>연출 이미지</figcaption></figure>
       <div>
         <p class="eyebrow">About <b>만드는 사람</b></p>
         <h2>옥디지털쌤입니다</h2>
@@ -512,7 +514,7 @@ section[id]{scroll-margin-top:72px}
 </section>
 
 <section class="sec end" id="contact">
-  <img class="end-photo" data-opt src="https://d2ol7oe51mr4n9.cloudfront.net/user_3KRctp6rYymKMx9BOVCJp8o64UW/549a229c-29af-40d5-94a1-3443cc37d225.jpg" alt="" loading="lazy">
+  <img class="end-photo" data-opt src="hero.jpg" alt="" loading="lazy">
   <div class="wrap contact">
     <p class="eyebrow" data-rv>Free Check <b>무료 진단</b></p>
     <h2 data-rv>가게 이름만 보내 주세요.<br>지금 상태를 정리해 드립니다.</h2>
@@ -557,7 +559,7 @@ section[id]{scroll-margin-top:72px}
   [].forEach.call(document.querySelectorAll('img[data-opt]'),function(im){
     var isHero = hp && hp.contains(im);
     function ok(){ if(isHero){photoOn=true;photoAt=performance.now();hero.classList.add('has-photo');placeGlow()} }
-    function bad(){ if(isHero){hp.hidden=true}else{im.hidden=true} }
+    function bad(){ if(isHero){hp.hidden=true}else{im.hidden=true; var f=im.parentNode; if(f&&f.classList){f.classList.add('no-img')}} }
     if(im.complete){ im.naturalWidth?ok():bad() } else { im.addEventListener('load',ok); im.addEventListener('error',bad) }
   });
   function seed(){
