@@ -295,6 +295,14 @@
       footerPhoneRow.hidden = false;
     }
 
+    var footerBizRow = document.getElementById("footer-biz-row");
+    var footerBizEl = document.getElementById("footer-biz");
+    var bizNumber = config.contact && config.contact.businessNumber;
+    if (footerBizRow && footerBizEl && bizNumber) {
+      footerBizEl.textContent = bizNumber;
+      footerBizRow.hidden = false;
+    }
+
     var yearEl = document.getElementById("footer-year");
     if (yearEl) yearEl.textContent = new Date().getFullYear();
   }
