@@ -278,6 +278,23 @@
       phoneRow.hidden = false;
     }
 
+    // 하단(푸터)에도 주소·전화번호 표시
+    var footerAddressRow = document.getElementById("footer-address-row");
+    var footerAddressEl = document.getElementById("footer-address");
+    var footerAddress = config.contact && config.contact.address;
+    if (footerAddressRow && footerAddressEl && footerAddress) {
+      footerAddressEl.textContent = footerAddress;
+      footerAddressRow.hidden = false;
+    }
+
+    var footerPhoneRow = document.getElementById("footer-phone-row");
+    var footerPhoneEl = document.getElementById("footer-phone");
+    if (footerPhoneRow && footerPhoneEl && phone) {
+      footerPhoneEl.textContent = phone;
+      footerPhoneEl.setAttribute("href", "tel:" + phone.replace(/[^0-9+]/g, ""));
+      footerPhoneRow.hidden = false;
+    }
+
     var yearEl = document.getElementById("footer-year");
     if (yearEl) yearEl.textContent = new Date().getFullYear();
   }
