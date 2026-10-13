@@ -295,6 +295,14 @@
       footerPhoneRow.hidden = false;
     }
 
+    var footerOwnerRow = document.getElementById("footer-owner-row");
+    var footerOwnerEl = document.getElementById("footer-owner");
+    var ownerName = config.contact && config.contact.ownerName;
+    if (footerOwnerRow && footerOwnerEl && ownerName) {
+      footerOwnerEl.textContent = ownerName;
+      footerOwnerRow.hidden = false;
+    }
+
     var footerBizRow = document.getElementById("footer-biz-row");
     var footerBizEl = document.getElementById("footer-biz");
     var bizNumber = config.contact && config.contact.businessNumber;
